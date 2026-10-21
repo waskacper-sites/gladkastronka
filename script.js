@@ -23,6 +23,8 @@ document.addEventListener('DOMContentLoaded', () => {
   initCounters();
   initCookieConsent();
   initModalListeners();
+  initNavSlimeIndicator();
+  initHeroNotificationStream();
 });
 
 /* ==========================================================================
@@ -114,23 +116,21 @@ function initCustomCursor() {
     }
   });
 
-  // Pętla renderowania z interpolacją (Lerp)
+  // Pętla renderowania z interpolacją i akceleracją sprzętową translate3d (zero Reflow)
   function renderCursor() {
     if (cursorEnabled && isMouseInside) {
-      cursorX += (mouseX - cursorX) * 0.35;
-      cursorY += (mouseY - cursorY) * 0.35;
+      cursorX += (mouseX - cursorX) * 0.85;
+      cursorY += (mouseY - cursorY) * 0.85;
 
       if (customCursor) {
-        customCursor.style.left = `${cursorX}px`;
-        customCursor.style.top = `${cursorY}px`;
+        customCursor.style.transform = `translate3d(${cursorX}px, ${cursorY}px, 0) translate(-38%, -24.5%)`;
       }
     }
 
     auraX += (mouseX - auraX) * 0.08;
     auraY += (mouseY - auraY) * 0.08;
     if (cursorAura) {
-      cursorAura.style.left = `${auraX}px`;
-      cursorAura.style.top = `${auraY}px`;
+      cursorAura.style.transform = `translate3d(${auraX - 180}px, ${auraY - 180}px, 0)`;
     }
 
     requestAnimationFrame(renderCursor);
@@ -231,7 +231,7 @@ function initHeroMascot() {
     "Zero abonamentów! 🚀",
     "Szybkie jak błyskawica ⚡",
     "Twoi klienci to pokochają! 🤍",
-    "Gotowe w 7 dni! 📅"
+    "Gotowe w < 7 dni! ⚡"
   ];
   let phraseIdx = 0;
 
@@ -476,18 +476,56 @@ function animateAllCounters(counterEls) {
 function initCookieConsent() {
   const isAccepted = localStorage.getItem('cookies_accepted');
   const banner = document.getElementById('cookieBanner');
-  if (!isAccepted && banner) {
-    setTimeout(() => {
-      banner.classList.add('is-shown');
-    }, 1200);
+  const badge = document.getElementById('cookieFloatingBtn');
+
+  if (!isAccepted) {
+    if (badge) badge.classList.add('is-hidden');
+    if (banner) {
+      setTimeout(() => {
+        banner.classList.add('is-shown');
+      }, 1200);
+    }
+  } else {
+    if (banner) banner.classList.remove('is-shown');
+    if (badge) badge.classList.remove('is-hidden');
   }
 }
 
 function acceptCookies() {
   localStorage.setItem('cookies_accepted', 'true');
   const banner = document.getElementById('cookieBanner');
+  const badge = document.getElementById('cookieFloatingBtn');
+
   if (banner) {
     banner.classList.remove('is-shown');
+  }
+  if (badge) {
+    badge.classList.remove('is-hidden');
+    createSparkleBurst(36, window.innerHeight - 36);
+  }
+}
+
+function closeCookieBanner() {
+  const banner = document.getElementById('cookieBanner');
+  const badge = document.getElementById('cookieFloatingBtn');
+
+  if (banner) {
+    banner.classList.remove('is-shown');
+  }
+  if (badge) {
+    badge.classList.remove('is-hidden');
+  }
+}
+
+function openCookieSettings() {
+  const banner = document.getElementById('cookieBanner');
+  const badge = document.getElementById('cookieFloatingBtn');
+
+  if (badge) {
+    badge.classList.add('is-hidden');
+  }
+  if (banner) {
+    banner.classList.add('is-shown');
   }
 }
 
@@ -528,4 +566,281 @@ function initModalListeners() {
     }
   });
 }
+
+/* ==========================================================================
+   13. SLIME NAV INDICATOR (Sprężysty paseczek przeskakujący pod aktywną sekcję)
+   ========================================================================== */
+function initNavSlimeIndicator() {
+  const nav = document.getElementById('desktopNav');
+  const indicator = document.getElementById('navSlimeIndicator');
+  if (!nav || !indicator) return;
+
+  const links = nav.querySelectorAll('a.nav-link');
+  if (!links.length) return;
+
+  let activeLink = null;
+  let stretchTimeout = null;
+
+  function moveTo(targetLink, isStretching = true) {
+    if (!targetLink) {
+      indicator.style.opacity = '0';
+      links.forEach(l => {
+        l.classList.remove('text-caramel-600', 'dark:text-[#D4A373]', 'font-bold');
+        l.classList.add('text-ink-soft');
+      });
+      return;
+    }
+
+    const navRect = nav.getBoundingClientRect();
+    const linkRect = targetLink.getBoundingClientRect();
+
+    const left = linkRect.left - navRect.left;
+    const width = linkRect.width;
+
+    // Efekt elastycznego rozciągania slime podczas przeskoku
+    if (isStretching) {
+      indicator.classList.add('is-stretching');
+      clearTimeout(stretchTimeout);
+      stretchTimeout = setTimeout(() => {
+        indicator.classList.remove('is-stretching');
+      }, 280);
+    }
+
+    indicator.style.left = `${left}px`;
+    indicator.style.width = `${width}px`;
+    indicator.style.opacity = '1';
+
+    // Wyróżnienie aktywnego napisu
+    links.forEach(l => {
+      if (l === targetLink) {
+        l.classList.add('text-caramel-600', 'dark:text-[#D4A373]', 'font-bold');
+        l.classList.remove('text-ink-soft');
+      } else {
+        l.classList.remove('text-caramel-600', 'dark:text-[#D4A373]', 'font-bold');
+        l.classList.add('text-ink-soft');
+      }
+    });
+  }
+
+  // Obsługa najechania myszką
+  links.forEach(link => {
+    link.addEventListener('mouseenter', () => {
+      moveTo(link, true);
+    });
+
+    link.addEventListener('click', () => {
+      activeLink = link;
+      moveTo(link, true);
+    });
+  });
+
+  nav.addEventListener('mouseleave', () => {
+    if (activeLink) {
+      moveTo(activeLink, true);
+    } else {
+      moveTo(null, false);
+    }
+  });
+
+  // Rejestracja sekcji do śledzenia scrolla (Scrollspy)
+  const tracked = Array.from(links).map(link => {
+    const id = link.getAttribute('href');
+    return {
+      link: link,
+      el: id && id !== '#' ? document.querySelector(id) : null
+    };
+  }).filter(item => item.el !== null);
+
+  function checkScroll() {
+    const mainHeader = document.getElementById('mainHeader');
+    const heroThreshold = Math.max(240, window.innerHeight * 0.55);
+
+    // Dynamiczne wsuwanie napisu pod logo poniżej sekcji Hero
+    if (mainHeader) {
+      if (window.scrollY > heroThreshold) {
+        mainHeader.classList.add('is-scrolled');
+      } else {
+        mainHeader.classList.remove('is-scrolled');
+      }
+    }
+
+    // Jeśli użytkownik jest na samej górze (Hero)
+    if (window.scrollY < 200) {
+      if (activeLink !== null) {
+        activeLink = null;
+        moveTo(null, false);
+      }
+      return;
+    }
+
+    let current = null;
+    const viewportThreshold = window.innerHeight * 0.38;
+
+    for (let i = tracked.length - 1; i >= 0; i--) {
+      const item = tracked[i];
+      const rect = item.el.getBoundingClientRect();
+      if (rect.top <= viewportThreshold && rect.bottom >= 120) {
+        current = item.link;
+        break;
+      }
+    }
+
+    if (current && current !== activeLink) {
+      activeLink = current;
+      moveTo(activeLink, true);
+    } else if (!current && activeLink) {
+      activeLink = null;
+      moveTo(null, false);
+    }
+  }
+
+  // Nasłuchiwanie przewijania (zarówno z Lenis jak i natywne)
+  window.addEventListener('scroll', checkScroll, { passive: true });
+  if (typeof lenis !== 'undefined' && lenis) {
+    lenis.on('scroll', checkScroll);
+  }
+
+  // Przeliczenie przy zmianie wielkości okna
+  window.addEventListener('resize', () => {
+    if (activeLink) moveTo(activeLink, false);
+  }, { passive: true });
+
+  // Inicjalne sprawdzenie pozycji
+  setTimeout(checkScroll, 250);
+}
+
+/* ==========================================================================
+   14. LIVE STREAM POWIADOMIEŃ REZERWACJI W HERO (Push Notification Feed)
+   ========================================================================== */
+function initHeroNotificationStream() {
+  const listEl = document.getElementById('heroNotificationList');
+  const mockupEl = document.getElementById('heroPhoneMockup');
+  const clockEl = document.getElementById('heroPhoneClock');
+  const bigClockEl = document.getElementById('heroPhoneBigClock');
+  const dateEl = document.getElementById('heroPhoneDate');
+  if (!listEl) return;
+
+  // Realna, aktualna godzina oraz data na ekranie telefonu
+  function updatePhoneClockAndDate() {
+    const now = new Date();
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    const timeStr = `${hours}:${minutes}`;
+
+    if (clockEl) clockEl.textContent = timeStr;
+    if (bigClockEl) bigClockEl.textContent = timeStr;
+
+    if (dateEl) {
+      const days = ['Niedziela', 'Poniedziałek', 'Wtorek', 'Środa', 'Czwartek', 'Piątek', 'Sobota'];
+      const months = ['stycznia', 'lutego', 'marca', 'kwietnia', 'maja', 'czerwca', 'lipca', 'sierpnia', 'września', 'października', 'listopada', 'grudnia'];
+      const dayName = days[now.getDay()];
+      const dayNum = now.getDate();
+      const monthName = months[now.getMonth()];
+      dateEl.textContent = `${dayName}, ${dayNum} ${monthName}`;
+    }
+  }
+  updatePhoneClockAndDate();
+  setInterval(updatePhoneClockAndDate, 10000);
+
+  const bookingsData = [
+    { icon: 'mail-check', type: 'Nowy zapis online', badge: 'przed chwilą', title: 'Katarzyna Z. • Manicure hybrydowy', detail: 'Jutro 14:00 • 140 zł • E-mail wysłany' },
+    { icon: 'calendar-check', type: 'Zapis w kalendarzu', badge: '2 min temu', title: 'Tomasz W. • Strzyżenie + Broda', detail: 'Piątek 16:30 • 90 zł • Zapis online' },
+    { icon: 'sparkles', type: 'Rezerwacja ze strony', badge: '4 min temu', title: 'Studio Lumina • Makijaż ślubny', detail: 'Sobota 11:00 • 250 zł • Zadatek opłacony' },
+    { icon: 'mail-check', type: 'Nowy klient WWW', badge: '6 min temu', title: 'Piotr B. • Fizjoterapia (1. wizyta)', detail: 'Środa 18:00 • 180 zł • E-mail do Ciebie' },
+    { icon: 'calendar-check', type: 'Automatyczny zapis', badge: '9 min temu', title: 'Anna M. • Sombre + modelowanie', detail: 'Czwartek 15:30 • 320 zł • Potwierdzono' },
+    { icon: 'check-circle-2', type: 'Potwierdzenie wizyty', badge: '12 min temu', title: 'Michał K. • Masaż Relaksacyjny', detail: 'Poniedziałek 17:00 • 160 zł • Rezerwacja 24/7' },
+    { icon: 'mail-check', type: 'Rezerwacja nocna 24/7', badge: '15 min temu', title: 'Karolina S. • Laminacja brwi', detail: 'Jutro 12:30 • 130 zł • E-mail wysłany' },
+    { icon: 'calendar-check', type: 'Zapis ze smartfona', badge: '19 min temu', title: 'Barber Shop • Fade + Broda', detail: 'Piątek 14:00 • 110 zł • Dawid L.' },
+    { icon: 'sparkles', type: 'Konsultacja online', badge: '24 min temu', title: 'Paulina D. • Konsultacja Beauty', detail: 'Wtorek 12:00 • 0 zł • Bezpłatna' },
+    { icon: 'mail-check', type: 'Zapis ze strony WWW', badge: '28 min temu', title: 'Magdalena W. • Przedłużanie rzęs', detail: 'Sobota 10:00 • 200 zł • E-mail do Ciebie' }
+  ];
+
+  let bookingIdx = 3;
+  let isPaused = false;
+  let isAnimating = false;
+
+  if (mockupEl) {
+    mockupEl.addEventListener('mouseenter', () => { isPaused = true; });
+    mockupEl.addEventListener('mouseleave', () => { isPaused = false; });
+  }
+
+  function createCardElement(data) {
+    const card = document.createElement('div');
+    card.className = 'notification-card rounded-2xl p-2.5 bg-white/90 dark:bg-[#2A201A]/90 backdrop-blur-md border border-caramel-500/20 dark:border-caramel-500/25 shadow-xs flex items-center gap-2.5 transition-all cursor-default';
+    card.innerHTML = `
+      <div class="w-8 h-8 rounded-xl bg-caramel-100/80 dark:bg-caramel-950/50 text-caramel-600 dark:text-[#D4A373] flex items-center justify-center shrink-0 border border-caramel-500/20">
+        <i data-lucide="${data.icon}" class="w-4 h-4"></i>
+      </div>
+      <div class="min-w-0 flex-1">
+        <div class="flex items-center justify-between gap-1 mb-0.5">
+          <span class="text-[8.5px] font-bold uppercase tracking-wider text-caramel-600 dark:text-[#D4A373]">${data.type}</span>
+          <span class="notification-badge-time text-[8.5px] font-bold text-emerald-600 dark:text-emerald-400">właśnie teraz</span>
+        </div>
+        <p class="text-[11px] font-bold text-ink truncate leading-tight">${data.title}</p>
+        <p class="text-[9.5px] text-ink-muted truncate">${data.detail}</p>
+      </div>
+    `;
+    return card;
+  }
+
+  function slideNext() {
+    if (isPaused || isAnimating || document.hidden) return;
+    if (listEl.children.length < 3) return;
+
+    isAnimating = true;
+
+    // Aktualizuj czasy powiadomień, które przesuwają się w górę
+    const cardMovingToMiddle = listEl.children[2]; // przechodzi z dołu do środka (2-3 min temu)
+    const cardMovingToTop = listEl.children[1];    // przechodzi ze środka na górę (6-9 min temu)
+
+    if (cardMovingToMiddle) {
+      const badge = cardMovingToMiddle.querySelector('.notification-badge-time');
+      if (badge) {
+        const mins = Math.random() > 0.5 ? 2 : 3;
+        badge.textContent = `${mins} min temu`;
+        badge.className = 'notification-badge-time text-[8.5px] font-semibold text-ink-muted';
+      }
+    }
+
+    if (cardMovingToTop) {
+      const badge = cardMovingToTop.querySelector('.notification-badge-time');
+      if (badge) {
+        const mins = Math.floor(Math.random() * 4) + 6; // 6, 7, 8 lub 9 min temu
+        badge.textContent = `${mins} min temu`;
+        badge.className = 'notification-badge-time text-[8.5px] font-semibold text-ink-muted';
+      }
+    }
+
+    const nextData = bookingsData[bookingIdx % bookingsData.length];
+    bookingIdx++;
+
+    // 1. Stwórz nowy element i dodaj na dół listy ze statusem "właśnie teraz"
+    const newCard = createCardElement(nextData);
+    newCard.classList.add('slide-in-down');
+    listEl.appendChild(newCard);
+
+    if (window.lucide) {
+      lucide.createIcons({ root: newCard });
+    }
+
+    // 2. Najwyższy element przesuwa się w górę i znika (pociągając pozostałe za sobą)
+    const topCard = listEl.children[0];
+    requestAnimationFrame(() => {
+      topCard.classList.add('slide-out-up');
+    });
+
+    // 3. Po zakończeniu płynnej animacji (650ms), usuń górny element z DOM
+    setTimeout(() => {
+      if (topCard.parentNode === listEl) {
+        listEl.removeChild(topCard);
+      }
+      newCard.classList.remove('slide-in-down');
+      isAnimating = false;
+    }, 660);
+  }
+
+  // Pętla powiadomień co 3.6 sekundy
+  setInterval(slideNext, 3600);
+}
+
 
