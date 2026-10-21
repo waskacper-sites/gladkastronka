@@ -1,0 +1,671 @@
+/* ==========================================================================
+   GładkaStronka - Styl & Ultranowoczesne Płynne Animacje
+   Estetyka: Ciepły, organiczny minimalizm, soft tech
+   ========================================================================== */
+
+/* Zabezpieczenie przed poziomym paskiem przewijania podczas wlotów z boków */
+html, body {
+  overflow-x: hidden;
+  max-width: 100vw;
+}
+
+/* ==========================================================================
+   LENIS SMOOTH SCROLL (Maślane, bezstopniowe przewijanie strony)
+   ========================================================================== */
+html.lenis, html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}
+
+/* --- Custom Scrollbar --- */
+::-webkit-scrollbar {
+  width: 9px;
+}
+::-webkit-scrollbar-track {
+  background: #FAF7EE;
+}
+::-webkit-scrollbar-thumb {
+  background: #EADBCE;
+  border-radius: 9999px;
+  border: 2px solid #FAF7EE;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #9E7A56;
+}
+
+/* --- Organic Grain Texture Overlay --- */
+.bg-grain {
+  background-image: radial-gradient(rgba(158, 122, 86, 0.07) 1px, transparent 0);
+  background-size: 24px 24px;
+}
+
+/* ==========================================================================
+   DYNAMIC AMBIENT LIVING GRADIENT MESH
+   Minimalistyczny, ale wyraźnie widoczny, nieustannie ewoluujący gradient w tle
+   ========================================================================== */
+.ambient-bg-container {
+  background-color: #FAF7EE;
+  overflow: hidden;
+}
+
+.mesh-blob {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  filter: blur(85px);
+  will-change: transform, opacity;
+  transform-style: preserve-3d;
+}
+
+/* Kula 1: Ciepły karmel / Bursztynowe toffee */
+.blob-caramel {
+  width: 660px;
+  height: 660px;
+  top: -120px;
+  left: -120px;
+  background: radial-gradient(circle, rgba(226, 168, 108, 0.65) 0%, rgba(205, 140, 78, 0.38) 45%, transparent 70%);
+  animation: blobMotion1 22s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite alternate;
+}
+
+/* Kula 2: Kojąca organiczna szałwia / Oliwkowy mech */
+.blob-sage {
+  width: 740px;
+  height: 740px;
+  top: 28%;
+  right: -150px;
+  background: radial-gradient(circle, rgba(182, 215, 170, 0.70) 0%, rgba(144, 185, 130, 0.38) 48%, transparent 72%);
+  animation: blobMotion2 28s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite alternate;
+}
+
+/* Kula 3: Ciepła brzoskwinia / Miód */
+.blob-peach {
+  width: 590px;
+  height: 590px;
+  bottom: 12%;
+  left: 6%;
+  background: radial-gradient(circle, rgba(246, 198, 150, 0.65) 0%, rgba(230, 165, 108, 0.35) 45%, transparent 70%);
+  animation: blobMotion3 20s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite alternate;
+}
+
+/* Kula 4: Złocisty karmel & ciepły cynamon */
+.blob-amber {
+  width: 640px;
+  height: 640px;
+  top: 60%;
+  right: 16%;
+  background: radial-gradient(circle, rgba(238, 185, 132, 0.62) 0%, rgba(210, 145, 88, 0.32) 48%, transparent 72%);
+  animation: blobMotion4 25s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite alternate;
+}
+
+/* Płynnie oddychająca i obracająca się aura gradientowa łącząca kolory */
+.ambient-aurora-sweep {
+  position: absolute;
+  inset: -40%;
+  width: 180%;
+  height: 180%;
+  background: radial-gradient(circle at 35% 30%, rgba(248, 226, 202, 0.55) 0%, transparent 50%),
+              radial-gradient(circle at 70% 70%, rgba(220, 238, 212, 0.48) 0%, transparent 50%),
+              radial-gradient(circle at 50% 85%, rgba(240, 210, 180, 0.42) 0%, transparent 55%);
+  animation: auroraSweepMotion 32s ease-in-out infinite alternate;
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+
+@keyframes blobMotion1 {
+  0% { transform: translate3d(0, 0, 0) scale(1) rotate(0deg); }
+  33% { transform: translate3d(160px, 90px, 0) scale(1.18) rotate(30deg); }
+  66% { transform: translate3d(80px, 180px, 0) scale(0.92) rotate(-25deg); }
+  100% { transform: translate3d(-40px, 100px, 0) scale(1.08) rotate(15deg); }
+}
+
+@keyframes blobMotion2 {
+  0% { transform: translate3d(0, 0, 0) scale(1.06) rotate(0deg); }
+  33% { transform: translate3d(-170px, -90px, 0) scale(0.92) rotate(-35deg); }
+  66% { transform: translate3d(-90px, 140px, 0) scale(1.22) rotate(25deg); }
+  100% { transform: translate3d(50px, -60px, 0) scale(0.97) rotate(-15deg); }
+}
+
+@keyframes blobMotion3 {
+  0% { transform: translate3d(0, 0, 0) scale(0.95) rotate(0deg); }
+  50% { transform: translate3d(180px, -120px, 0) scale(1.24) rotate(40deg); }
+  100% { transform: translate3d(90px, 80px, 0) scale(1.04) rotate(-20deg); }
+}
+
+@keyframes blobMotion4 {
+  0% { transform: translate3d(0, 0, 0) scale(1) rotate(0deg); }
+  50% { transform: translate3d(-150px, 100px, 0) scale(1.16) rotate(-30deg); }
+  100% { transform: translate3d(120px, -70px, 0) scale(0.92) rotate(25deg); }
+}
+
+@keyframes auroraSweepMotion {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
+    opacity: 0.8;
+  }
+  50% {
+    transform: translate3d(5%, 4%, 0) scale(1.08) rotate(6deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translate3d(-4%, 6%, 0) scale(1.04) rotate(-5deg);
+    opacity: 0.85;
+  }
+}
+
+
+/* ==========================================================================
+   CUSTOM CURSOR & AMBIENT AURA
+   Ukrywanie systemowego kursora i precyzyjny follower z uśmieszkiem
+   ========================================================================== */
+
+@media (hover: hover) and (pointer: fine) {
+  body.custom-cursor-active,
+  body.custom-cursor-active * {
+    cursor: none !important;
+  }
+}
+
+.custom-cursor-follower {
+  pointer-events: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  transform: translate(-38%, -24.5%);
+  transition: opacity 0.25s ease;
+  will-change: left, top, transform;
+}
+
+.cursor-aura {
+  pointer-events: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 500px;
+  height: 500px;
+  margin-left: -250px;
+  margin-top: -250px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(234, 219, 206, 0.4) 0%, rgba(226, 234, 217, 0.25) 45%, transparent 70%);
+  filter: blur(45px);
+  z-index: 1;
+  opacity: 0.85;
+  transition: opacity 0.4s ease;
+  will-change: transform;
+}
+
+/* ==========================================================================
+   DYNAMICZNE, SPRĘŻYSTE PRZYPŁYWANIE (SZYBKIE, PŁYNNE I ELASTYCZNE ~0.75s)
+   Wymuszone !important, aby żadna klasa narzędziowa nie skracała animacji
+   ========================================================================== */
+
+/* Stan wyjściowy: odsunięte na boki z lekkim miękkim rozmyciem */
+.slide-from-left {
+  opacity: 0 !important;
+  transform: translateX(-55px) !important;
+  filter: blur(3px) !important;
+  transition: opacity 0.75s cubic-bezier(0.2, 0.9, 0.3, 1),
+              transform 0.75s cubic-bezier(0.2, 0.9, 0.3, 1),
+              filter 0.75s cubic-bezier(0.2, 0.9, 0.3, 1) !important;
+  will-change: transform, opacity, filter;
+}
+
+.slide-from-right {
+  opacity: 0 !important;
+  transform: translateX(55px) !important;
+  filter: blur(3px) !important;
+  transition: opacity 0.75s cubic-bezier(0.2, 0.9, 0.3, 1),
+              transform 0.75s cubic-bezier(0.2, 0.9, 0.3, 1),
+              filter 0.75s cubic-bezier(0.2, 0.9, 0.3, 1) !important;
+  will-change: transform, opacity, filter;
+}
+
+/* Płynne, szybkie wyłonienie nagłówków z dołu */
+.reveal-fade-up {
+  opacity: 0 !important;
+  transform: translateY(30px) !important;
+  filter: blur(2px) !important;
+  transition: opacity 0.65s cubic-bezier(0.2, 0.9, 0.3, 1),
+              transform 0.65s cubic-bezier(0.2, 0.9, 0.3, 1),
+              filter 0.65s cubic-bezier(0.2, 0.9, 0.3, 1) !important;
+  will-change: transform, opacity, filter;
+}
+
+/* Na desktopie optymalny zasięg wlotu */
+@media (min-width: 768px) {
+  .slide-from-left {
+    transform: translateX(-75px) !important;
+  }
+  .slide-from-right {
+    transform: translateX(75px) !important;
+  }
+}
+
+/* Stan aktywny / przypłynięty do środka */
+.slide-from-left.is-visible,
+.slide-from-right.is-visible,
+.reveal-fade-up.is-visible {
+  opacity: 1 !important;
+  transform: translate(0, 0) !important;
+  filter: blur(0px) !important;
+}
+
+/* Kaskadowe opóźnienia - szybkie i zwinne */
+.delay-100 {
+  transition-delay: 0.08s !important;
+}
+.delay-200 {
+  transition-delay: 0.16s !important;
+}
+.delay-300 {
+  transition-delay: 0.24s !important;
+}
+
+/* Bezpieczny hover dla kart bez naruszania transformacji wlocie */
+.slide-from-left:hover,
+.slide-from-right:hover {
+  border-color: rgba(158, 122, 86, 0.45);
+}
+
+/* 3D Tilt w Hero */
+.mascot-tilt-container {
+  perspective: 1000px;
+  transform-style: preserve-3d;
+}
+.mascot-tilt-inner {
+  transition: transform 0.2s cubic-bezier(0.2, 0, 0.2, 1);
+  transform-style: preserve-3d;
+}
+
+/* ==========================================================================
+   MAŚLANA ANIMACJA FAQ
+   ========================================================================== */
+.faq-answer-wrapper {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  visibility: hidden;
+  transition: grid-template-rows 0.45s cubic-bezier(0.12, 0.9, 0.22, 1),
+              opacity 0.35s ease,
+              visibility 0.45s;
+}
+
+.faq-answer-wrapper > div {
+  overflow: hidden;
+  min-height: 0;
+}
+
+.faq-item.is-open .faq-answer-wrapper {
+  grid-template-rows: 1fr;
+  opacity: 1;
+  visibility: visible;
+}
+
+.faq-chevron-circle {
+  transition: transform 0.4s cubic-bezier(0.12, 0.9, 0.22, 1),
+              background-color 0.3s ease,
+              color 0.3s ease,
+              border-color 0.3s ease;
+}
+
+.faq-item.is-open .faq-chevron-circle {
+  transform: rotate(180deg);
+  background-color: #9E7A56;
+  color: #FFFFFF;
+  border-color: #9E7A56;
+}
+
+/* Efekt iskierek po kliknięciu */
+.click-sparkle {
+  position: fixed;
+  pointer-events: none;
+  z-index: 10000;
+  animation: sparklePop 0.75s forwards ease-out;
+}
+
+@keyframes sparklePop {
+  0% {
+    transform: scale(0.2) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.5) rotate(60deg) translateY(-20px);
+    opacity: 0;
+  }
+}
+
+/* ==========================================================================
+   COOKIE BANNER & PRIVACY MODAL
+   ========================================================================== */
+#cookieBanner.is-shown {
+  transform: translateY(0) !important;
+  opacity: 1 !important;
+  pointer-events: auto !important;
+}
+
+#privacyModal.is-open {
+  opacity: 1 !important;
+  pointer-events: auto !important;
+}
+
+#privacyModal.is-open .modal-card {
+  transform: scale(1) !important;
+}
+
+/* ==========================================================================
+   COZY ESPRESSO DARK MODE
+   Ciepły, nastrojowy tryb ciemny: głębokie espresso (#181310), aksamitna
+   czekolada (#241C18), ciepły karmel (#D4A373) i kremowy aksamit (#F5EFE6).
+   Zero chłodnej, męczącej czerni #000!
+   ========================================================================== */
+html.dark {
+  color-scheme: dark;
+}
+
+html.dark body {
+  background-color: #181310 !important;
+  color: #F5EFE6 !important;
+}
+
+/* Płynne przełączanie ikon słońca i księżyca */
+.theme-icon-sun {
+  display: none;
+}
+html.dark .theme-icon-moon {
+  display: none !important;
+}
+html.dark .theme-icon-sun {
+  display: block !important;
+}
+
+/* Customowy Scrollbar w ciemnym motywie */
+html.dark ::-webkit-scrollbar-track {
+  background: #181310 !important;
+}
+html.dark ::-webkit-scrollbar-thumb {
+  background: #362922 !important;
+  border-color: #181310 !important;
+}
+html.dark ::-webkit-scrollbar-thumb:hover {
+  background: #D4A373 !important;
+}
+
+/* ==========================================================================
+   DYNAMIC AMBIENT LIVING MESH W TRYBIE CIEMNYM (Głębokie, nastrojowe espresso)
+   Żadnych jaskrawych, mlecznych czy białych poświat!
+   ========================================================================== */
+html.dark .ambient-bg-container {
+  background-color: #140F0C !important;
+}
+
+html.dark .blob-caramel {
+  background: radial-gradient(circle, rgba(160, 95, 45, 0.16) 0%, rgba(100, 60, 30, 0.08) 45%, transparent 70%) !important;
+}
+
+html.dark .blob-sage {
+  background: radial-gradient(circle, rgba(60, 90, 50, 0.12) 0%, rgba(40, 60, 35, 0.06) 48%, transparent 72%) !important;
+}
+
+html.dark .blob-peach {
+  background: radial-gradient(circle, rgba(130, 70, 35, 0.12) 0%, rgba(80, 45, 25, 0.06) 45%, transparent 70%) !important;
+}
+
+html.dark .blob-amber {
+  background: radial-gradient(circle, rgba(140, 85, 40, 0.14) 0%, rgba(90, 50, 25, 0.06) 48%, transparent 72%) !important;
+}
+
+html.dark .ambient-aurora-sweep {
+  background: radial-gradient(circle at 50% 50%, rgba(140, 85, 45, 0.10) 0%, transparent 60%) !important;
+  opacity: 0.5 !important;
+}
+
+html.dark .bg-grain {
+  background-image: radial-gradient(rgba(212, 163, 115, 0.06) 1px, transparent 0) !important;
+}
+
+/* Poświaty w sekcjach - mocno przygaszone w Dark Mode */
+html.dark .hero-glow-blob,
+html.dark .section-glow-blob {
+  opacity: 0.12 !important;
+  background: radial-gradient(circle, rgba(212, 163, 115, 0.3) 0%, transparent 70%) !important;
+}
+
+/* ==========================================================================
+   RESET WSZYSTKICH JASNYCH GRADIENTÓW W TRYBIE CIEMNYM
+   Eliminuje białe plamy i pastelowe tła w Dark Mode
+   ========================================================================== */
+html.dark .bg-gradient-to-b,
+html.dark .bg-gradient-to-r,
+html.dark .bg-gradient-to-tr,
+html.dark .bg-gradient-to-br {
+  background-image: none !important;
+}
+
+/* Uniwersalne powierzchnie Dark Mode (cozy espresso & dark chocolate) */
+html.dark .bg-white,
+html.dark .bg-white\/95,
+html.dark .bg-white\/90,
+html.dark .bg-white\/85,
+html.dark .bg-white\/80,
+html.dark .bg-white\/70,
+html.dark .bg-white\/45,
+html.dark .bg-white\/40 {
+  background-color: rgba(34, 26, 22, 0.92) !important;
+  background-image: none !important;
+}
+
+html.dark .bg-cream-50,
+html.dark .bg-cream-50\/60,
+html.dark .bg-cream-50\/70,
+html.dark .bg-cream-50\/80,
+html.dark .bg-cream-50\/90,
+html.dark .bg-cream-100,
+html.dark .bg-cream-200,
+html.dark .bg-cream-200\/80,
+html.dark .bg-cream-300\/45 {
+  background-color: #241C18 !important;
+  background-image: none !important;
+}
+
+/* Typografia w Dark Mode - Zawsze czytelna i kontrastowa */
+html.dark .text-ink {
+  color: #FAF6F0 !important;
+}
+
+html.dark .text-ink-soft {
+  color: #E6DDD3 !important;
+}
+
+html.dark .text-ink-muted {
+  color: #B8ADA0 !important;
+}
+
+/* Pływająca Nawigacja i Menu Mobilne */
+html.dark header > div {
+  background-color: rgba(30, 23, 19, 0.94) !important;
+  border-color: rgba(212, 163, 115, 0.28) !important;
+}
+
+html.dark #mobileMenu {
+  background-color: rgba(28, 21, 18, 0.98) !important;
+  border-color: rgba(212, 163, 115, 0.3) !important;
+}
+
+/* Hero: Pigułki i dymek maskotki */
+html.dark .hero-badge-pill {
+  background-color: rgba(36, 28, 24, 0.9) !important;
+  border-color: rgba(212, 163, 115, 0.3) !important;
+  color: #D4A373 !important;
+}
+
+html.dark .hero-feature-pill {
+  background-color: rgba(36, 28, 24, 0.85) !important;
+  border-color: rgba(212, 163, 115, 0.22) !important;
+  color: #FAF6F0 !important;
+}
+
+html.dark #mascotCard {
+  background-color: rgba(34, 26, 22, 0.9) !important;
+  border-color: rgba(212, 163, 115, 0.25) !important;
+}
+
+html.dark #mascotSpeech {
+  background-color: #261D19 !important;
+  border-color: rgba(212, 163, 115, 0.28) !important;
+  color: #FAF6F0 !important;
+}
+
+/* Sekcja Oferta: Wyróżniona karta z eleganckim ciemnym gradientem */
+html.dark .card-featured-oferta {
+  background: linear-gradient(180deg, rgba(46, 35, 29, 0.95) 0%, rgba(32, 24, 20, 0.95) 100%) !important;
+  border-color: #9E7A56 !important;
+}
+
+/* Sekcja Portfolio: Przykładowe kafelki bez białych ramek */
+html.dark #portfolio {
+  background: linear-gradient(to bottom, rgba(32, 24, 20, 0.90), rgba(20, 15, 12, 0.95), rgba(32, 24, 20, 0.85)) !important;
+  border-color: rgba(212, 163, 115, 0.2) !important;
+}
+
+html.dark .counter-strip-container {
+  background-color: rgba(34, 26, 22, 0.9) !important;
+  border-color: rgba(212, 163, 115, 0.25) !important;
+}
+
+html.dark .counter-strip-item {
+  background-color: rgba(46, 35, 29, 0.7) !important;
+  border-color: rgba(212, 163, 115, 0.2) !important;
+}
+
+html.dark .portfolio-preview-box-1,
+html.dark .portfolio-preview-box-2,
+html.dark .portfolio-preview-box-3 {
+  background: linear-gradient(135deg, #2A201A 0%, #1A1310 100%) !important;
+  border: 1px solid rgba(212, 163, 115, 0.22) !important;
+}
+
+html.dark .portfolio-category-pill {
+  background-color: #221A15 !important;
+  color: #D4A373 !important;
+  border: 1px solid rgba(212, 163, 115, 0.3) !important;
+}
+
+html.dark .portfolio-inner-badge {
+  background-color: #1A1310 !important;
+  border: 1px solid rgba(212, 163, 115, 0.25) !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45) !important;
+}
+
+html.dark .portfolio-inner-badge span {
+  color: #FAF6F0 !important;
+}
+
+/* Sekcja Jak to działa: Ciemne karty kroków */
+html.dark .step-card {
+  background: linear-gradient(135deg, rgba(38, 29, 24, 0.95) 0%, rgba(28, 21, 18, 0.95) 100%) !important;
+  border-color: rgba(212, 163, 115, 0.22) !important;
+}
+
+/* Sekcja Cennik: Wyróżniony pakiet */
+html.dark .cennik-featured-card {
+  background: linear-gradient(180deg, rgba(46, 35, 29, 0.96) 0%, rgba(30, 23, 19, 0.96) 100%) !important;
+  border-color: #9E7A56 !important;
+}
+
+/* Sekcja Kontakt */
+html.dark #kontakt {
+  background: linear-gradient(to bottom, rgba(32, 24, 20, 0.85), rgba(18, 14, 11, 0.95), rgba(18, 14, 11, 0.98)) !important;
+}
+
+html.dark .contact-outer-card {
+  background: linear-gradient(135deg, rgba(38, 29, 24, 0.96) 0%, rgba(26, 20, 16, 0.96) 100%) !important;
+  border-color: rgba(212, 163, 115, 0.3) !important;
+}
+
+html.dark .contact-ig-card {
+  background: linear-gradient(135deg, rgba(46, 35, 29, 0.9), rgba(32, 24, 20, 0.9)) !important;
+  border-color: rgba(212, 163, 115, 0.3) !important;
+}
+
+html.dark .contact-form-box {
+  background-color: #1A1310 !important;
+  border-color: rgba(212, 163, 115, 0.25) !important;
+}
+
+/* Pola formularza w Dark Mode */
+html.dark input,
+html.dark select,
+html.dark textarea {
+  background-color: #140E0B !important;
+  color: #FAF6F0 !important;
+  border-color: rgba(212, 163, 115, 0.3) !important;
+}
+
+html.dark input::placeholder,
+html.dark textarea::placeholder {
+  color: #8C8074 !important;
+}
+
+html.dark input:focus,
+html.dark select:focus,
+html.dark textarea:focus {
+  border-color: #D4A373 !important;
+  box-shadow: 0 0 0 2px rgba(212, 163, 115, 0.3) !important;
+}
+
+/* Obwódki w Dark Mode */
+html.dark .border-caramel-500\/10,
+html.dark .border-caramel-500\/15,
+html.dark .border-caramel-500\/20,
+html.dark .border-caramel-500\/25,
+html.dark .border-caramel-500\/30,
+html.dark .border-caramel-500\/35,
+html.dark .border-stone-200,
+html.dark .border-white\/90 {
+  border-color: rgba(212, 163, 115, 0.22) !important;
+}
+
+/* FAQ w trybie ciemnym */
+html.dark .faq-chevron-circle {
+  background-color: #2D231E !important;
+  border-color: rgba(212, 163, 115, 0.3) !important;
+  color: #D4A373 !important;
+}
+
+html.dark .faq-item.is-open .faq-chevron-circle {
+  background-color: #9E7A56 !important;
+  color: #FFFFFF !important;
+}
+
+/* Footer & Modale w trybie ciemnym */
+html.dark footer {
+  background-color: rgba(18, 14, 11, 0.98) !important;
+  border-color: rgba(212, 163, 115, 0.2) !important;
+}
+
+html.dark #cookieBanner {
+  background-color: rgba(32, 24, 20, 0.98) !important;
+  border-color: rgba(212, 163, 115, 0.35) !important;
+}
+
+html.dark #privacyModal .modal-card {
+  background-color: rgba(30, 23, 19, 0.98) !important;
+  border-color: rgba(212, 163, 115, 0.35) !important;
+}
+
+html.dark .cursor-aura {
+  background: radial-gradient(circle, rgba(212, 163, 115, 0.12) 0%, rgba(100, 136, 85, 0.05) 45%, transparent 70%) !important;
+}
+
+

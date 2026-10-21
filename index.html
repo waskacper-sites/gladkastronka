@@ -1,0 +1,1060 @@
+<!DOCTYPE html>
+<html lang="pl" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GładkaStronka • Nowoczesne Strony WWW i Rezerwacje dla Lokalnych Firm</title>
+  <meta name="description" content="Szybkie strony internetowe i prosty system rezerwacji 24/7 dla lokalnych firm. Bez abonamentu, bez prowizji, gotowe w 7 dni.">
+  
+  <!-- Social Media & OpenGraph Meta Tags (Podgląd po wysłaniu linku) -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://gladkastronka.pl">
+  <meta property="og:title" content="GładkaStronka • Nowoczesne Strony WWW i Rezerwacje dla Lokalnych Firm">
+  <meta property="og:description" content="Szybkie strony internetowe i prosty system rezerwacji 24/7 dla lokalnych firm. Bez abonamentu, bez prowizji, gotowe w 7 dni. Sprawdź ofertę!">
+  <meta property="og:image" content="assets/logo.png">
+  <meta property="og:image:width" content="600">
+  <meta property="og:image:height" content="600">
+  <meta property="og:image:alt" content="Logo GładkaStronka">
+  <meta property="og:locale" content="pl_PL">
+
+  <!-- Twitter Meta Tags -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="GładkaStronka • Nowoczesne Strony WWW i Rezerwacje">
+  <meta name="twitter:description" content="Szybkie strony i prosty system rezerwacji 24/7 dla lokalnych firm. Zero abonamentu, gotowe w 7 dni.">
+  <meta name="twitter:image" content="assets/logo.png">
+
+  <!-- Theme Color dla przeglądarek mobilnych -->
+  <meta name="theme-color" content="#FAF7EE" id="metaThemeColor">
+  
+  <!-- Favicon using assets/kursor.png -->
+  <link rel="icon" type="image/png" href="assets/kursor.png">
+
+  <!-- Google Fonts: Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            cream: {
+              50: '#FDFBF7',
+              100: '#FAF7EE',
+              200: '#F4EFE6',
+              300: '#EAE1D2',
+            },
+            caramel: {
+              100: '#F6EFE7',
+              200: '#EADBCE',
+              300: '#D5BEA8',
+              500: '#9E7A56',
+              600: '#8C6A48',
+              700: '#755536',
+              800: '#5A4027',
+            },
+            sage: {
+              100: '#EEF3EA',
+              200: '#E2EAD9',
+              300: '#C7D6BC',
+              600: '#537046',
+            },
+            ink: {
+              DEFAULT: '#2D241E',
+              soft: '#4A3E36',
+              muted: '#72675E',
+              light: '#9E948B',
+            }
+          },
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+          },
+          boxShadow: {
+            'soft': '0 16px 36px -12px rgba(158, 122, 86, 0.08)',
+            'soft-lg': '0 24px 48px -16px rgba(158, 122, 86, 0.12)',
+            'caramel': '0 10px 24px -5px rgba(158, 122, 86, 0.35)',
+            'caramel-lg': '0 16px 32px -6px rgba(158, 122, 86, 0.42)',
+          },
+          animation: {
+            'float-slow': 'float 6s ease-in-out infinite',
+            'sparkle-twinkle': 'twinkle 3s ease-in-out infinite',
+          },
+          keyframes: {
+            float: {
+              '0%, 100%': { transform: 'translateY(0px)' },
+              '50%': { transform: 'translateY(-10px)' },
+            },
+            twinkle: {
+              '0%, 100%': { opacity: '0.3', transform: 'scale(0.8) rotate(0deg)' },
+              '50%': { opacity: '1', transform: 'scale(1.15) rotate(15deg)' },
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Lenis Smooth Scroll CDN -->
+  <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
+
+  <!-- External Custom Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-cream-100 text-ink font-sans antialiased selection:bg-caramel-200 selection:text-ink relative overflow-x-hidden min-h-screen">
+
+  <!-- Ambient Cursor Aura (soft glow) -->
+  <div id="cursorAura" class="cursor-aura hidden md:block"></div>
+
+  <!-- Custom Mascot Cursor Follower using assets/kursor.png -->
+  <div id="customCursor" class="custom-cursor-follower hidden md:flex items-center justify-center opacity-0">
+    <div id="cursorInner" class="relative transition-transform duration-150">
+      <img src="assets/kursor.png" alt="Kursor" class="w-10 h-10 drop-shadow-md select-none pointer-events-none" draggable="false">
+      <div class="absolute -top-1 -right-1 w-2.5 h-2.5 text-caramel-500 animate-ping">✦</div>
+    </div>
+  </div>
+
+  <!-- Dynamic Ambient Living Gradient Mesh (Wyraźny, stale zmieniający się gradient) -->
+  <div class="fixed inset-0 pointer-events-none overflow-hidden z-0 ambient-bg-container" aria-hidden="true">
+    <div class="mesh-blob blob-caramel"></div>
+    <div class="mesh-blob blob-sage"></div>
+    <div class="mesh-blob blob-peach"></div>
+    <div class="mesh-blob blob-amber"></div>
+    <div class="ambient-aurora-sweep"></div>
+    <div class="absolute inset-0 bg-grain opacity-60"></div>
+  </div>
+
+
+  <!-- ========================================== -->
+  <!-- NAWIGACJA (Przejrzysta, bez nachodzenia) -->
+  <!-- ========================================== -->
+  <header class="fixed top-4 inset-x-0 z-50 flex justify-center px-4">
+    <div class="w-full max-w-4xl bg-white/90 backdrop-blur-xl border border-caramel-500/20 rounded-full py-2.5 px-4 sm:px-6 shadow-soft flex items-center justify-between transition-all duration-300 hover:border-caramel-500/35">
+      
+      <!-- Logo po lewej z assets/logo.png -->
+      <a href="#" class="flex items-center gap-2.5 group shrink-0">
+        <div class="w-9 h-9 rounded-full bg-cream-50 border border-caramel-500/25 overflow-hidden flex items-center justify-center p-0.5 shadow-sm group-hover:scale-105 transition-transform">
+          <img src="assets/logo.png" alt="Logo GładkaStronka" class="w-full h-full object-cover rounded-full" draggable="false">
+        </div>
+        <span class="text-base sm:text-lg font-extrabold tracking-tight text-ink">Gładka<span class="text-caramel-500">Stronka</span></span>
+      </a>
+
+      <!-- Zakładki wyśrodkowane (Desktop) -->
+      <nav class="hidden md:flex items-center gap-7 text-sm font-semibold text-ink-soft">
+        <a href="#oferta" class="hover:text-caramel-600 transition-colors">Oferta</a>
+        <a href="#portfolio" class="hover:text-caramel-600 transition-colors">Portfolio</a>
+        <a href="#jak-to-dziala" class="hover:text-caramel-600 transition-colors">Jak to działa</a>
+        <a href="#cennik" class="hover:text-caramel-600 transition-colors">Cennik</a>
+      </nav>
+
+      <!-- Przycisk Instagram, Darkmode & CTA Napisz do mnie -->
+      <div class="flex items-center gap-1.5 sm:gap-2 shrink-0">
+        
+        <!-- Przełącznik Dark Mode (Subtelny, Cozy Espresso) -->
+        <button onclick="toggleTheme()" class="theme-toggle-btn w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-cream-50/90 dark:bg-[#2A201A] hover:bg-cream-200/90 dark:hover:bg-[#382B23] border border-caramel-500/25 flex items-center justify-center text-ink hover:text-caramel-600 transition-all shadow-xs cursor-pointer" aria-label="Przełącz tryb dzień/noc" title="Przełącz tryb dzień/noc">
+          <i data-lucide="moon" class="theme-icon-moon w-4 h-4 text-caramel-600"></i>
+          <i data-lucide="sun" class="theme-icon-sun w-4 h-4 text-amber-400"></i>
+        </button>
+
+        <!-- Przycisk Instagram (Wyraźne, oficjalne logo z gradientem) -->
+        <a href="https://www.instagram.com/gladka.stronka" target="_blank" rel="noopener" class="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-cream-50/90 dark:bg-[#2A201A] hover:bg-caramel-100/90 dark:hover:bg-[#382B23] border border-caramel-500/25 flex items-center justify-center transition-all shadow-xs group" aria-label="Profil Instagram @gladka.stronka" title="Odwiedź Instagram @gladka.stronka">
+          <svg class="w-4 h-4 sm:w-4.5 sm:h-4.5 transition-transform group-hover:scale-110" viewBox="0 0 24 24" fill="none">
+            <defs>
+              <linearGradient id="igGradNav" x1="0%" y1="100%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#f09433"/>
+                <stop offset="25%" stop-color="#e6683c"/>
+                <stop offset="50%" stop-color="#dc2743"/>
+                <stop offset="75%" stop-color="#cc2366"/>
+                <stop offset="100%" stop-color="#bc1888"/>
+              </linearGradient>
+            </defs>
+            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" fill="url(#igGradNav)"/>
+          </svg>
+        </a>
+
+        <!-- Przycisk CTA: Napisz do mnie -->
+        <a href="#kontakt" class="inline-flex items-center gap-2 px-3.5 sm:px-5 py-2 rounded-full bg-caramel-500 text-white text-xs sm:text-sm font-bold shadow-caramel hover:bg-caramel-600 hover:shadow-caramel-lg hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200">
+          <span class="w-2 h-2 rounded-full bg-emerald-300 animate-pulse hidden sm:inline-block"></span>
+          <span>Napisz do mnie</span>
+        </a>
+
+        <!-- Hamburger dla telefonów -->
+        <button id="mobileMenuToggle" class="md:hidden p-1.5 sm:p-2 rounded-full text-ink hover:bg-cream-200 transition-colors" aria-label="Otwórz menu">
+          <i data-lucide="menu" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+    </div>
+
+    <!-- Rozwijane menu mobilne -->
+    <div id="mobileMenu" class="hidden absolute top-16 inset-x-4 bg-white/95 backdrop-blur-xl border border-caramel-500/20 rounded-3xl p-5 shadow-soft-lg flex flex-col gap-2 md:hidden">
+      <a href="#oferta" class="px-4 py-2.5 rounded-xl font-bold text-ink hover:bg-cream-100">Oferta</a>
+      <a href="#portfolio" class="px-4 py-2.5 rounded-xl font-bold text-ink hover:bg-cream-100">Portfolio</a>
+      <a href="#jak-to-dziala" class="px-4 py-2.5 rounded-xl font-bold text-ink hover:bg-cream-100">Jak to działa</a>
+      <a href="#cennik" class="px-4 py-2.5 rounded-xl font-bold text-ink hover:bg-cream-100">Cennik</a>
+      
+      <div class="pt-2 border-t border-caramel-500/15 flex items-center justify-between px-2">
+        <a href="https://www.instagram.com/gladka.stronka" target="_blank" rel="noopener" class="flex items-center gap-2 text-xs font-bold text-caramel-700 dark:text-[#D4A373] hover:text-caramel-800">
+          <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none">
+            <defs>
+              <linearGradient id="igGradMob" x1="0%" y1="100%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#f09433"/>
+                <stop offset="25%" stop-color="#e6683c"/>
+                <stop offset="50%" stop-color="#dc2743"/>
+                <stop offset="75%" stop-color="#cc2366"/>
+                <stop offset="100%" stop-color="#bc1888"/>
+              </linearGradient>
+            </defs>
+            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" fill="url(#igGradMob)"/>
+          </svg>
+          <span>@gladka.stronka</span>
+        </a>
+        <button onclick="toggleTheme()" class="flex items-center gap-1.5 text-xs font-bold text-ink-muted px-3 py-1.5 rounded-full bg-cream-100 dark:bg-[#2A201A] border border-caramel-500/20">
+          <i data-lucide="moon" class="theme-icon-moon w-3.5 h-3.5 text-caramel-600"></i>
+          <i data-lucide="sun" class="theme-icon-sun w-3.5 h-3.5 text-amber-400"></i>
+          <span>Tryb nocny</span>
+        </button>
+      </div>
+
+      <a href="#kontakt" class="px-4 py-2.5 rounded-xl font-bold text-center text-white bg-caramel-500 mt-2 shadow-caramel">Napisz do mnie</a>
+    </div>
+  </header>
+
+  <!-- ========================================== -->
+  <!-- HERO SECTION (Krótko, konkretnie i zwięźle) -->
+  <!-- ========================================== -->
+  <section class="relative pt-32 pb-20 md:pt-40 md:pb-28 z-10">
+    <!-- Subtelna miękka poświata za Hero -->
+    <div class="hero-glow-blob absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[850px] h-[450px] bg-gradient-to-r from-caramel-200/40 via-cream-200/45 to-sage-200/30 blur-3xl rounded-full -z-10 pointer-events-none"></div>
+
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
+        
+        <!-- Lewa kolumna: Tekst i Konkrety (Powiększone i wyraziste) -->
+        <div class="lg:col-span-7 text-center lg:text-left">
+          
+          <div class="hero-badge-pill inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/90 border border-caramel-500/25 text-xs sm:text-sm font-bold text-caramel-700 mb-6 shadow-sm">
+            <span>✦ Strony WWW & Rezerwacje dla lokalnych firm</span>
+          </div>
+
+          <h1 class="text-4xl sm:text-5xl lg:text-[3.6rem] font-extrabold text-ink tracking-tight leading-[1.12] mb-6">
+            Strony, które działają <br class="hidden sm:inline">
+            <span class="text-caramel-600 relative inline-block">
+              tak gładko,
+              <svg class="absolute -bottom-2 sm:-bottom-3 left-0 w-full h-3 sm:h-3.5 text-caramel-300 -z-10" viewBox="0 0 250 14" fill="none">
+                <path d="M3 11 C60 3, 190 2, 247 11" stroke="currentColor" stroke-width="7" stroke-linecap="round"/>
+              </svg>
+            </span>
+            jak powinny.
+          </h1>
+
+          <p class="text-base sm:text-lg lg:text-xl text-ink-muted leading-relaxed mb-8 max-w-xl mx-auto lg:mx-0 font-medium">
+            Tworzę szybkie strony i intuicyjne systemy rezerwacji. Klienci sami umawiają wizyty ze smartfona, a Ty skupiasz się na pracy. <strong>Zero abonamentów i prowizji.</strong>
+          </p>
+
+          <!-- Przyciski akcji (Powiększone i wygodne) -->
+          <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 mb-9">
+            <a href="#kontakt" class="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-3.5 rounded-full bg-caramel-500 text-white font-extrabold text-sm sm:text-base shadow-caramel hover:bg-caramel-600 hover:shadow-caramel-lg transition-all duration-200">
+              <i data-lucide="sparkles" class="w-4 h-4 text-caramel-200"></i>
+              <span>Darmowa wycena w 24h</span>
+            </a>
+            <a href="#portfolio" class="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-7 py-3.5 rounded-full bg-white/90 border border-caramel-500/30 text-ink font-bold text-sm sm:text-base hover:bg-white hover:border-caramel-500/50 transition-all duration-200 shadow-sm">
+              <span>Zobacz realizacje</span>
+              <i data-lucide="arrow-down" class="w-4 h-4 text-caramel-500"></i>
+            </a>
+          </div>
+
+          <!-- 3 konkretne atuty w pigułce (Wyraźne, powiększone kafelki) -->
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-6 border-t border-caramel-500/20 text-sm sm:text-base font-bold text-ink">
+            <div class="hero-feature-pill flex items-center gap-2.5 justify-center lg:justify-start bg-white/70 backdrop-blur-sm border border-caramel-500/15 py-2.5 px-3.5 rounded-2xl shadow-xs">
+              <i data-lucide="check-circle-2" class="w-5 h-5 text-emerald-600 shrink-0 stroke-[2.5]"></i>
+              <span>Gotowe w 7 dni</span>
+            </div>
+            <div class="hero-feature-pill flex items-center gap-2.5 justify-center lg:justify-start bg-white/70 backdrop-blur-sm border border-caramel-500/15 py-2.5 px-3.5 rounded-2xl shadow-xs">
+              <i data-lucide="check-circle-2" class="w-5 h-5 text-emerald-600 shrink-0 stroke-[2.5]"></i>
+              <span>0 zł abonamentu</span>
+            </div>
+            <div class="hero-feature-pill flex items-center gap-2.5 justify-center lg:justify-start bg-white/70 backdrop-blur-sm border border-caramel-500/15 py-2.5 px-3.5 rounded-2xl shadow-xs">
+              <i data-lucide="check-circle-2" class="w-5 h-5 text-emerald-600 shrink-0 stroke-[2.5]"></i>
+              <span>100% na telefon</span>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Prawa kolumna: Maskotka 3D z logo -->
+        <div class="lg:col-span-5 flex justify-center">
+          <div class="mascot-tilt-container relative w-full max-w-[360px]">
+            
+            <div class="absolute -top-4 -right-2 text-caramel-500 text-2xl animate-sparkle-twinkle">✦</div>
+            <div class="absolute -bottom-2 -left-3 text-caramel-400 text-xl animate-sparkle-twinkle" style="animation-delay: 1.5s;">✦</div>
+
+            <div id="mascotCard" class="mascot-tilt-inner relative bg-white/80 backdrop-blur-xl border border-white/90 p-7 sm:p-9 rounded-3xl shadow-soft-lg flex flex-col items-center justify-center cursor-pointer group select-none">
+              
+              <div class="mb-3 px-3.5 py-0.5 rounded-full bg-cream-50 border border-caramel-500/20 text-[11px] font-bold text-caramel-700 flex items-center gap-1.5">
+                <span class="w-1.5 h-1.5 rounded-full bg-caramel-500"></span>
+                <span>Kliknij mnie!</span>
+              </div>
+
+              <div class="relative w-52 h-52 sm:w-60 sm:h-60 flex items-center justify-center animate-float-slow">
+                <img id="heroMascotImg" src="assets/logo.png" alt="Logo Maskotka" class="w-full h-full object-contain drop-shadow-lg transition-transform duration-300 group-hover:scale-105" draggable="false">
+                
+                <div id="mascotSpeech" class="absolute -top-2 right-0 bg-white border border-caramel-500/20 text-ink text-xs font-bold py-1 px-2.5 rounded-xl shadow-sm rotate-2">
+                  Działa od ręki! ✨
+                </div>
+              </div>
+
+              <p class="text-xs sm:text-sm text-ink-muted text-center mt-3 font-semibold">
+                Dedykowane rozwiązanie dla Twojego biznesu
+              </p>
+
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Linia oddzielająca sekcje -->
+  <div class="w-full max-w-5xl mx-auto px-4 sm:px-6 relative z-10">
+    <div class="h-px w-full bg-gradient-to-r from-transparent via-caramel-500/30 to-transparent"></div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- 1. ZAKŁADKA: OFERTA (Lekko przezroczysta, bez gradientu) -->
+  <!-- ========================================== -->
+  <section id="oferta" class="py-20 md:py-24 relative z-10 bg-white/40 backdrop-blur-md">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6">
+      
+      <div class="text-center max-w-xl mx-auto mb-12 reveal-fade-up">
+        <span class="text-xs font-bold text-caramel-600 uppercase tracking-wider block mb-1">Oferta</span>
+        <h2 class="text-2xl sm:text-4xl font-extrabold text-ink tracking-tight">
+          Wszystko, czego potrzebuje lokalna firma
+        </h2>
+        <p class="text-sm text-ink-muted mt-2">
+          Bez skomplikowanego żargonu. Jasne funkcje, które przynoszą nowych klientów.
+        </p>
+      </div>
+
+      <!-- 3 Karty z naprzemienną animacją wlotu z lewej i prawej -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        
+        <!-- Karta 1 (Z lewej) -->
+        <div class="slide-from-left bg-white/80 backdrop-blur-md border border-caramel-500/15 rounded-3xl p-6 shadow-soft flex flex-col justify-between hover:border-caramel-500/35">
+          <div>
+            <div class="w-12 h-12 rounded-2xl bg-cream-50 border border-caramel-500/20 flex items-center justify-center text-caramel-600 mb-4">
+              <i data-lucide="layout" class="w-6 h-6"></i>
+            </div>
+            <h3 class="text-lg font-bold text-ink mb-2">Strona WWW dla Firmy</h3>
+            <p class="text-xs sm:text-sm text-ink-muted leading-relaxed mb-4">
+              Nowoczesna wizytówka, która błyskawicznie otwiera się na telefonie. Pokazuje Twoje usługi, czytelny cennik, opinie i mapę dojazdu.
+            </p>
+          </div>
+          <div class="pt-3 border-t border-caramel-500/10 text-xs font-semibold text-caramel-700 flex items-center gap-1.5">
+            <i data-lucide="check" class="w-3.5 h-3.5 text-emerald-600"></i>
+            <span>Ładowanie poniżej 1 sekundy</span>
+          </div>
+        </div>
+
+        <!-- Karta 2 (Z prawej - Wyróżniona) -->
+        <div class="card-featured-oferta slide-from-right delay-100 bg-gradient-to-b from-white via-cream-50/90 to-caramel-100/50 border-2 border-caramel-500/50 rounded-3xl p-6 shadow-soft-lg flex flex-col justify-between relative hover:border-caramel-500">
+          <div class="absolute -top-3 right-6 px-3 py-0.5 rounded-full bg-caramel-500 text-white text-[10px] font-extrabold uppercase tracking-wide">
+            Automatyzacja 24/7
+          </div>
+          <div>
+            <div class="w-12 h-12 rounded-2xl bg-caramel-100 border border-caramel-500/30 flex items-center justify-center text-caramel-700 mb-4">
+              <i data-lucide="calendar" class="w-6 h-6"></i>
+            </div>
+            <h3 class="text-lg font-bold text-ink mb-2">System Rezerwacji 24/7</h3>
+            <p class="text-xs sm:text-sm text-ink-muted leading-relaxed mb-4">
+              Klienci sami rezerwują wizyty o każdej porze bez dzwonienia. Terminy wpadają wprost do Twojego kalendarza z powiadomieniem SMS.
+            </p>
+          </div>
+          <div class="pt-3 border-t border-caramel-500/10 text-xs font-semibold text-caramel-700 flex items-center gap-1.5">
+            <i data-lucide="check" class="w-3.5 h-3.5 text-emerald-600"></i>
+            <span>Zero prowizji od wizyt</span>
+          </div>
+        </div>
+
+        <!-- Karta 3 (Z lewej) -->
+        <div class="slide-from-left delay-200 bg-white/80 backdrop-blur-md border border-caramel-500/15 rounded-3xl p-6 shadow-soft flex flex-col justify-between hover:border-caramel-500/35">
+          <div>
+            <div class="w-12 h-12 rounded-2xl bg-cream-50 border border-caramel-500/20 flex items-center justify-center text-caramel-600 mb-4">
+              <i data-lucide="map-pin" class="w-6 h-6"></i>
+            </div>
+            <h3 class="text-lg font-bold text-ink mb-2">Google Maps & Widoczność</h3>
+            <p class="text-xs sm:text-sm text-ink-muted leading-relaxed mb-4">
+              Optymalizacja wizytówki na mapach Google, aby osoby z Twojej dzielnicy i miasta bez trudu znalazły Twój numer i adres.
+            </p>
+          </div>
+          <div class="pt-3 border-t border-caramel-500/10 text-xs font-semibold text-caramel-700 flex items-center gap-1.5">
+            <i data-lucide="check" class="w-3.5 h-3.5 text-emerald-600"></i>
+            <span>Więcej zapytań z okolicy</span>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Linia oddzielająca sekcje -->
+  <div class="w-full max-w-5xl mx-auto px-4 sm:px-6 relative z-10">
+    <div class="h-px w-full bg-gradient-to-r from-transparent via-caramel-500/35 to-transparent"></div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- 2. ZAKŁADKA: PORTFOLIO (Realizacje - Ciemniejszy odcień z gradientem) -->
+  <!-- ========================================== -->
+  <section id="portfolio" class="py-20 md:py-28 relative z-10 bg-gradient-to-b from-caramel-100/75 via-cream-300/45 to-caramel-100/70 border-y border-caramel-500/20 backdrop-blur-md overflow-hidden">
+    <!-- Subtelne rozświetlenia wewnątrz sekcji Portfolio -->
+    <div class="section-glow-blob absolute -top-24 -right-24 w-96 h-96 bg-caramel-300/30 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="section-glow-blob absolute -bottom-24 -left-24 w-96 h-96 bg-sage-200/35 rounded-full blur-3xl pointer-events-none"></div>
+
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 relative z-10">
+      
+      <div class="text-center max-w-xl mx-auto mb-12 reveal-fade-up">
+        <span class="text-xs font-bold text-caramel-700 uppercase tracking-wider block mb-1">Portfolio</span>
+        <h2 class="text-2xl sm:text-4xl font-extrabold text-ink tracking-tight">
+          Przykładowe realizacje
+        </h2>
+        <p class="text-sm text-ink-muted mt-2">
+          Strony zaprojektowane prosto i czytelnie – tak, aby klient od razu podjął kontakt.
+        </p>
+      </div>
+
+      <!-- Subtelny pasek kluczowych liczb (Kompaktowy, bez powiększania strony) -->
+      <div class="counter-strip-container max-w-4xl mx-auto mb-10 p-3 sm:p-4 rounded-3xl bg-white/70 backdrop-blur-md border border-caramel-500/20 shadow-soft grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 text-center reveal-fade-up">
+        <div class="counter-strip-item p-2 sm:p-3 rounded-2xl bg-cream-50/60 border border-caramel-500/10">
+          <div class="text-2xl sm:text-3xl font-extrabold text-ink tracking-tight flex items-center justify-center">
+            <span class="counter-number" data-target="100">0</span><span class="text-caramel-600 font-extrabold">%</span>
+          </div>
+          <div class="text-[11px] sm:text-xs text-ink-muted font-bold mt-0.5">Własności strony</div>
+        </div>
+        <div class="counter-strip-item p-2 sm:p-3 rounded-2xl bg-cream-50/60 border border-caramel-500/10">
+          <div class="text-2xl sm:text-3xl font-extrabold text-ink tracking-tight flex items-center justify-center">
+            <span class="counter-number" data-target="7">0</span><span class="text-base sm:text-lg ml-1 font-bold text-caramel-600">dni</span>
+          </div>
+          <div class="text-[11px] sm:text-xs text-ink-muted font-bold mt-0.5">Średni czas wdrożenia</div>
+        </div>
+        <div class="counter-strip-item p-2 sm:p-3 rounded-2xl bg-cream-50/60 border border-caramel-500/10">
+          <div class="text-2xl sm:text-3xl font-extrabold text-ink tracking-tight flex items-center justify-center">
+            <span class="text-caramel-600 font-bold mr-0.5">&lt;</span><span class="counter-number" data-target="1">0</span><span class="text-base sm:text-lg ml-1 font-bold text-caramel-600">s</span>
+          </div>
+          <div class="text-[11px] sm:text-xs text-ink-muted font-bold mt-0.5">Czas otwierania</div>
+        </div>
+        <div class="counter-strip-item p-2 sm:p-3 rounded-2xl bg-cream-50/60 border border-caramel-500/10">
+          <div class="text-2xl sm:text-3xl font-extrabold text-ink tracking-tight flex items-center justify-center">
+            <span class="counter-number" data-target="0">0</span><span class="text-base sm:text-lg ml-1 font-bold text-caramel-600">zł</span>
+          </div>
+          <div class="text-[11px] sm:text-xs text-ink-muted font-bold mt-0.5">Prowizji od wizyt</div>
+        </div>
+      </div>
+
+      <!-- Projekty naprzemiennie z lewej i prawej -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        
+        <!-- Projekt 1 (Z lewej) -->
+        <div class="slide-from-left bg-white/90 backdrop-blur-lg border border-caramel-500/20 rounded-3xl p-5 shadow-soft hover:shadow-soft-lg hover:border-caramel-500/45">
+          <div class="portfolio-preview-box-1 h-40 rounded-2xl bg-gradient-to-tr from-cream-200 via-caramel-100 to-cream-100 p-4 flex flex-col justify-between mb-4">
+            <span class="portfolio-category-pill text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-white/90 text-caramel-800 self-start shadow-sm">
+              Salon Kosmetyczny
+            </span>
+            <div class="portfolio-inner-badge bg-white rounded-xl p-3 shadow-sm text-center">
+              <span class="text-xs font-bold text-ink">Kalendarz zabiegów online</span>
+            </div>
+          </div>
+          <h3 class="font-bold text-ink text-base mb-1">Lumina Skin Clinic</h3>
+          <p class="text-xs text-ink-muted mb-3">Wizytówka + intuicyjny moduł wyboru zabiegu i wolnego terminu.</p>
+          <div class="text-xs font-bold text-emerald-700 flex items-center gap-1">
+            <i data-lucide="trending-up" class="w-3.5 h-3.5"></i>
+            <span>+48% więcej rezerwacji bez dzwonienia</span>
+          </div>
+        </div>
+
+        <!-- Projekt 2 (Z prawej) -->
+        <div class="slide-from-right delay-100 bg-white/90 backdrop-blur-lg border border-caramel-500/20 rounded-3xl p-5 shadow-soft hover:shadow-soft-lg hover:border-caramel-500/45">
+          <div class="portfolio-preview-box-2 h-40 rounded-2xl bg-gradient-to-tr from-caramel-100 via-cream-200 to-caramel-200/50 p-4 flex flex-col justify-between mb-4">
+            <span class="portfolio-category-pill text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-white/90 text-caramel-800 self-start shadow-sm">
+              Gastronomia & Kawiarnia
+            </span>
+            <div class="portfolio-inner-badge bg-white rounded-xl p-3 shadow-sm text-center">
+              <span class="text-xs font-bold text-ink">Menu na telefon + Rezerwacja stolika</span>
+            </div>
+          </div>
+          <h3 class="font-bold text-ink text-base mb-1">Bistro Ziarno & Chleb</h3>
+          <p class="text-xs text-ink-muted mb-3">Szybkie menu ze zdjęciami otwierane kodem QR oraz formularz stolików.</p>
+          <div class="text-xs font-bold text-emerald-700 flex items-center gap-1">
+            <i data-lucide="clock" class="w-3.5 h-3.5"></i>
+            <span>Błyskawiczne ładowanie w 0.5 sekundy</span>
+          </div>
+        </div>
+
+        <!-- Projekt 3 (Z lewej) -->
+        <div class="slide-from-left delay-200 bg-white/90 backdrop-blur-lg border border-caramel-500/20 rounded-3xl p-5 shadow-soft hover:shadow-soft-lg hover:border-caramel-500/45">
+          <div class="portfolio-preview-box-3 h-40 rounded-2xl bg-gradient-to-tr from-sage-100 via-cream-200 to-sage-200/50 p-4 flex flex-col justify-between mb-4">
+            <span class="portfolio-category-pill text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-white/90 text-caramel-800 self-start shadow-sm">
+              Fizjoterapia & Zdrowie
+            </span>
+            <div class="portfolio-inner-badge bg-white rounded-xl p-3 shadow-sm text-center">
+              <span class="text-xs font-bold text-ink">Grafik wizyt z SMS</span>
+            </div>
+          </div>
+          <h3 class="font-bold text-ink text-base mb-1">Gabinet FizjoMedica</h3>
+          <p class="text-xs text-ink-muted mb-3">Terminarz dla 3 specjalistów z automatycznym przypomnieniem SMS.</p>
+          <div class="text-xs font-bold text-emerald-700 flex items-center gap-1">
+            <i data-lucide="check-circle" class="w-3.5 h-3.5"></i>
+            <span>Koniec z nieobecnościami na wizytach</span>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Linia oddzielająca sekcje -->
+  <div class="w-full max-w-5xl mx-auto px-4 sm:px-6 relative z-10">
+    <div class="h-px w-full bg-gradient-to-r from-transparent via-caramel-500/35 to-transparent"></div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- 3. ZAKŁADKA: JAK TO DZIAŁA (Bez gradientu, czysta forma) -->
+  <!-- ========================================== -->
+  <section id="jak-to-dziala" class="py-20 md:py-24 relative z-10">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6">
+      
+      <div class="text-center max-w-xl mx-auto mb-12 reveal-fade-up">
+        <span class="text-xs font-bold text-caramel-600 uppercase tracking-wider block mb-1">Współpraca</span>
+        <h2 class="text-2xl sm:text-4xl font-extrabold text-ink tracking-tight">
+          Jak to działa? Prosto, w 3 krokach
+        </h2>
+        <p class="text-sm text-ink-muted mt-2">
+          Nie musisz znać się na technologii. Wszystkim zajmuję się ja.
+        </p>
+      </div>
+
+      <!-- Krok 1 (Z lewej) -->
+      <div class="step-card slide-from-left bg-gradient-to-r from-white/90 via-white/80 to-cream-50/70 backdrop-blur-md border border-caramel-500/15 rounded-3xl p-6 sm:p-7 shadow-soft mb-4 flex items-start gap-4 sm:gap-6 hover:border-caramel-500/35 transition-colors">
+        <div class="w-12 h-12 rounded-2xl bg-cream-100 text-caramel-700 font-extrabold text-lg flex items-center justify-center shrink-0 border border-caramel-500/20">
+          01
+        </div>
+        <div>
+          <h3 class="text-base sm:text-lg font-bold text-ink mb-1">Krótka rozmowa (telefon, Instagram lub SMS)</h3>
+          <p class="text-xs sm:text-sm text-ink-muted leading-relaxed">
+            Ustalamy, czym zajmuje się Twoja firma, jakie usługi oferujesz i co ma znaleźć się na stronie. Żadnych formularzy z żargonem.
+          </p>
+        </div>
+      </div>
+
+      <!-- Krok 2 (Z prawej) -->
+      <div class="step-card slide-from-right delay-100 bg-gradient-to-r from-white/95 via-caramel-50/70 to-cream-50/80 backdrop-blur-md border border-caramel-500/25 rounded-3xl p-6 sm:p-7 shadow-soft mb-4 flex items-start gap-4 sm:gap-6 hover:border-caramel-500/45 transition-colors">
+        <div class="w-12 h-12 rounded-2xl bg-caramel-500 text-white font-extrabold text-lg flex items-center justify-center shrink-0 shadow-caramel">
+          02
+        </div>
+        <div>
+          <h3 class="text-base sm:text-lg font-bold text-ink mb-1">Projekt i podgląd na telefonie</h3>
+          <p class="text-xs sm:text-sm text-ink-muted leading-relaxed">
+            W kilka dni przygotowuję działającą stronę. Wchodzisz w link na swoim smartfonie, sprawdzasz jak działa i zgłaszasz ewentualne poprawki.
+          </p>
+        </div>
+      </div>
+
+      <!-- Krok 3 (Z lewej) -->
+      <div class="step-card slide-from-left delay-200 bg-gradient-to-r from-white/90 via-white/80 to-cream-50/70 backdrop-blur-md border border-caramel-500/15 rounded-3xl p-6 sm:p-7 shadow-soft flex items-start gap-4 sm:gap-6 hover:border-caramel-500/35 transition-colors">
+        <div class="w-12 h-12 rounded-2xl bg-sage-100 text-sage-600 font-extrabold text-lg flex items-center justify-center shrink-0 border border-sage-600/20">
+          03
+        </div>
+        <div>
+          <h3 class="text-base sm:text-lg font-bold text-ink mb-1">Publikacja i nowi klienci</h3>
+          <p class="text-xs sm:text-sm text-ink-muted leading-relaxed">
+            Podpinamy Twoją domenę i uruchamiamy stronę. Pokazuję Ci w 10 minut, jak przeglądać zapisy. Strona jest gotowa do działania.
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Linia oddzielająca sekcje -->
+  <div class="w-full max-w-5xl mx-auto px-4 sm:px-6 relative z-10">
+    <div class="h-px w-full bg-gradient-to-r from-transparent via-caramel-500/35 to-transparent"></div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- 4. ZAKŁADKA: CENNIK (Lekko przezroczysta tafla, bez gradientu) -->
+  <!-- ========================================== -->
+  <section id="cennik" class="py-20 md:py-28 relative z-10 bg-white/45 backdrop-blur-md">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6">
+      
+      <div class="text-center max-w-xl mx-auto mb-12 reveal-fade-up">
+        <span class="text-xs font-bold text-caramel-600 uppercase tracking-wider block mb-1">Cennik</span>
+        <h2 class="text-2xl sm:text-4xl font-extrabold text-ink tracking-tight">
+          Przejrzyste pakiety bez abonamentu
+        </h2>
+        <p class="text-sm text-ink-muted mt-2">
+          Płacisz raz. Strona jest w 100% Twoją własnością.
+        </p>
+      </div>
+
+      <!-- 2 Główne Pakiety (Z lewej i prawej) -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 items-stretch">
+        
+        <!-- Pakiet 1: Strona Wizytówka (Z lewej) -->
+        <div class="slide-from-left bg-white/85 backdrop-blur-md border border-caramel-500/20 rounded-3xl p-7 shadow-soft flex flex-col justify-between hover:bg-white/95 hover:border-caramel-500/40 transition-colors">
+          <div>
+            <div class="flex justify-between items-center mb-3">
+              <span class="text-xs font-bold text-ink-soft uppercase tracking-wider">Dla większości firm</span>
+              <span class="text-xs text-ink-muted">Czas: 5-7 dni</span>
+            </div>
+            <h3 class="text-xl font-extrabold text-ink mb-2">Strona Wizytówkowa</h3>
+            <p class="text-xs text-ink-muted mb-6">Kompletna, szybka strona pokazująca Twoją ofertę, cennik i kontakt.</p>
+            
+            <div class="mb-6">
+              <span class="text-3xl font-extrabold text-ink">od 500 zł</span>
+              <span class="text-xs text-ink-muted block mt-0.5">jednorazowo, bez ukrytych opłat</span>
+            </div>
+
+            <ul class="space-y-3 text-xs sm:text-sm text-ink-soft mb-8">
+              <li class="flex items-center gap-2">
+                <i data-lucide="check" class="w-4 h-4 text-emerald-600 shrink-0"></i>
+                <span>Projekt dopasowany do Twojej branży</span>
+              </li>
+              <li class="flex items-center gap-2">
+                <i data-lucide="check" class="w-4 h-4 text-emerald-600 shrink-0"></i>
+                <span>Ekspresowe ładowanie na smartfonach</span>
+              </li>
+              <li class="flex items-center gap-2">
+                <i data-lucide="check" class="w-4 h-4 text-emerald-600 shrink-0"></i>
+                <span>Podstawowe SEO i mapa dojazdu</span>
+              </li>
+              <li class="flex items-center gap-2">
+                <i data-lucide="check" class="w-4 h-4 text-emerald-600 shrink-0"></i>
+                <span>Wsparcie techniczne po wdrożeniu</span>
+              </li>
+            </ul>
+          </div>
+
+          <button onclick="selectPackage('Strona Wizytówkowa (od 500 zł)')" class="w-full py-3 rounded-full bg-cream-200 hover:bg-cream-300 text-ink font-bold text-xs sm:text-sm transition-colors text-center cursor-pointer">
+            Wybieram ten pakiet
+          </button>
+        </div>
+
+        <!-- Pakiet 2: Strona z Rezerwacjami (Z prawej - Wyróżniony) -->
+        <div class="cennik-featured-card slide-from-right delay-100 bg-gradient-to-b from-white via-cream-50/95 to-caramel-100/60 border-2 border-caramel-500 rounded-3xl p-7 shadow-caramel-lg flex flex-col justify-between relative">
+          <div class="absolute -top-3 left-8 px-3.5 py-0.5 rounded-full bg-caramel-500 text-white text-[11px] font-extrabold tracking-wide uppercase shadow-sm">
+            Polecane dla usług
+          </div>
+
+          <div>
+            <div class="flex justify-between items-center mb-3">
+              <span class="text-xs font-bold text-caramel-700 uppercase tracking-wider">Pełna automatyzacja</span>
+              <span class="text-xs text-ink-muted">Czas: 7-10 dni</span>
+            </div>
+            <h3 class="text-xl font-extrabold text-ink mb-2">Strona + System Rezerwacji</h3>
+            <p class="text-xs text-ink-muted mb-6">Wizytówka firmy połączona z kalendarzem online do samodzielnych zapisów.</p>
+            
+            <div class="mb-6">
+              <span class="text-3xl font-extrabold text-ink">od 800 zł</span>
+              <span class="text-xs text-caramel-700 font-semibold block mt-0.5">jednorazowo • 0 zł prowizji od wizyt</span>
+            </div>
+
+            <ul class="space-y-3 text-xs sm:text-sm text-ink-soft mb-8">
+              <li class="flex items-center gap-2 font-semibold text-ink">
+                <i data-lucide="check-circle" class="w-4 h-4 text-emerald-600 shrink-0"></i>
+                <span>Wszystko z pakietu Wizytówka</span>
+              </li>
+              <li class="flex items-center gap-2 font-semibold text-ink">
+                <i data-lucide="check-circle" class="w-4 h-4 text-emerald-600 shrink-0"></i>
+                <span>Moduł rezerwacji 24/7 na Twojej stronie</span>
+              </li>
+              <li class="flex items-center gap-2">
+                <i data-lucide="check" class="w-4 h-4 text-emerald-600 shrink-0"></i>
+                <span>Powiadomienia SMS i e-mail dla klientów</span>
+              </li>
+              <li class="flex items-center gap-2">
+                <i data-lucide="check" class="w-4 h-4 text-emerald-600 shrink-0"></i>
+                <span>Synchronizacja z Kalendarzem Google</span>
+              </li>
+            </ul>
+          </div>
+
+          <button onclick="selectPackage('Strona + Rezerwacje (od 800 zł)')" class="w-full py-3 rounded-full bg-caramel-500 hover:bg-caramel-600 text-white font-bold text-xs sm:text-sm shadow-caramel transition-all text-center cursor-pointer">
+            Wybieram ten pakiet
+          </button>
+        </div>
+
+      </div>
+
+      <!-- Informacja o darmowej indywidualnej wycenie -->
+      <div class="mt-8 text-center reveal-fade-up">
+        <div class="inline-flex flex-col sm:flex-row items-center gap-2 sm:gap-3 px-5 py-3 rounded-2xl bg-white/80 dark:bg-[#241C18] border border-caramel-500/25 shadow-soft text-xs sm:text-sm text-ink">
+          <span class="inline-flex items-center gap-1.5 font-bold text-caramel-600 dark:text-[#D4A373]">
+            <i data-lucide="sparkles" class="w-4 h-4 text-caramel-500"></i>
+            Nietypowy projekt?
+          </span>
+          <span class="text-ink-muted">Każda indywidualna wycena jest zawsze <strong>w 100% darmowa</strong> i niezobowiązująca.</span>
+          <a href="#kontakt" class="font-extrabold text-caramel-700 dark:text-[#D4A373] underline underline-offset-4 hover:text-caramel-800 transition-colors">
+            Napisz do mnie →
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Linia oddzielająca sekcje -->
+  <div class="w-full max-w-5xl mx-auto px-4 sm:px-6 relative z-10">
+    <div class="h-px w-full bg-gradient-to-r from-transparent via-caramel-500/35 to-transparent"></div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- CZĘSTE PYTANIA (FAQ - Bez gradientu, czysta forma) -->
+  <!-- ========================================== -->
+  <section class="py-20 md:py-24 relative z-10">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6">
+      
+      <div class="text-center max-w-xl mx-auto mb-10 reveal-fade-up">
+        <span class="text-xs font-bold text-caramel-600 uppercase tracking-wider block mb-1">Pytania</span>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-ink tracking-tight">
+          Częste pytania
+        </h2>
+      </div>
+
+      <div class="space-y-4">
+        
+        <!-- Pytanie 1 (Z lewej) -->
+        <div class="slide-from-left faq-item bg-white/85 backdrop-blur-md border border-caramel-500/20 rounded-3xl overflow-hidden shadow-soft hover:border-caramel-500/40 group">
+          <button type="button" onclick="toggleFaq(this)" class="w-full py-5 px-6 sm:px-8 text-left flex items-center justify-between transition-colors">
+            <span class="text-base sm:text-xl font-extrabold text-ink group-hover:text-caramel-700 transition-colors pr-3">
+              Czy naprawdę nie ma żadnych miesięcznych abonamentów?
+            </span>
+            <div class="faq-chevron-circle w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-cream-100 border border-caramel-500/25 flex items-center justify-center text-caramel-700 shrink-0 shadow-sm">
+              <i data-lucide="chevron-down" class="w-4 h-4 sm:w-5 sm:h-5"></i>
+            </div>
+          </button>
+          <div class="faq-answer-wrapper">
+            <div class="min-h-0 overflow-hidden">
+              <div class="px-6 sm:px-8 pb-6 pt-2 text-xs sm:text-sm text-ink-muted leading-relaxed border-t border-caramel-500/10">
+                Tak! Nie płacisz co miesiąc za utrzymanie platformy ani prowizji od zapisanych klientów. Strona jest w 100% Twoją własnością. Jedynym standardowym kosztem jest roczne odnowienie domeny (ok. 50-70 zł/rok) i prostego serwera.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pytanie 2 (Z prawej) -->
+        <div class="slide-from-right delay-100 faq-item bg-white/85 backdrop-blur-md border border-caramel-500/20 rounded-3xl overflow-hidden shadow-soft hover:border-caramel-500/40 group">
+          <button type="button" onclick="toggleFaq(this)" class="w-full py-5 px-6 sm:px-8 text-left flex items-center justify-between transition-colors">
+            <span class="text-base sm:text-xl font-extrabold text-ink group-hover:text-caramel-700 transition-colors pr-3">
+              Co jeśli nie mam własnych tekstów ani profesjonalnych zdjęć?
+            </span>
+            <div class="faq-chevron-circle w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-cream-100 border border-caramel-500/25 flex items-center justify-center text-caramel-700 shrink-0 shadow-sm">
+              <i data-lucide="chevron-down" class="w-4 h-4 sm:w-5 sm:h-5"></i>
+            </div>
+          </button>
+          <div class="faq-answer-wrapper">
+            <div class="min-h-0 overflow-hidden">
+              <div class="px-6 sm:px-8 pb-6 pt-2 text-xs sm:text-sm text-ink-muted leading-relaxed border-t border-caramel-500/10">
+                Nie potrzebujesz ich przed startem. Na podstawie krótkiej rozmowy o Twojej firmie sam napiszę proste, skuteczne teksty i dobiorę estetyczne grafiki lub wykorzystamy zdjęcia z Twojego telefonu.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pytanie 3 (Z lewej) -->
+        <div class="slide-from-left delay-200 faq-item bg-white/85 backdrop-blur-md border border-caramel-500/20 rounded-3xl overflow-hidden shadow-soft hover:border-caramel-500/40 group">
+          <button type="button" onclick="toggleFaq(this)" class="w-full py-5 px-6 sm:px-8 text-left flex items-center justify-between transition-colors">
+            <span class="text-base sm:text-xl font-extrabold text-ink group-hover:text-caramel-700 transition-colors pr-3">
+              Czy poradzę sobie ze zmianą cennika lub godzin otwarcia?
+            </span>
+            <div class="faq-chevron-circle w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-cream-100 border border-caramel-500/25 flex items-center justify-center text-caramel-700 shrink-0 shadow-sm">
+              <i data-lucide="chevron-down" class="w-4 h-4 sm:w-5 sm:h-5"></i>
+            </div>
+          </button>
+          <div class="faq-answer-wrapper">
+            <div class="min-h-0 overflow-hidden">
+              <div class="px-6 sm:px-8 pb-6 pt-2 text-xs sm:text-sm text-ink-muted leading-relaxed border-t border-caramel-500/10">
+                Tak. Zmiana cen lub godzin jest banalnie prosta i zajmuje mniej niż minutę. Ponadto po wdrożeniu masz moje bezpośrednie wsparcie – wystarczy krótka wiadomość na Instagramie lub SMS, a zmiany wprowadzam od ręki.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pytanie 4 (Z prawej) -->
+        <div class="slide-from-right delay-300 faq-item bg-white/85 backdrop-blur-md border border-caramel-500/20 rounded-3xl overflow-hidden shadow-soft hover:border-caramel-500/40 group">
+          <button type="button" onclick="toggleFaq(this)" class="w-full py-5 px-6 sm:px-8 text-left flex items-center justify-between transition-colors">
+            <span class="text-base sm:text-xl font-extrabold text-ink group-hover:text-caramel-700 transition-colors pr-3">
+              Czy system rezerwacji pobiera procent od wykonanej usługi?
+            </span>
+            <div class="faq-chevron-circle w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-cream-100 border border-caramel-500/25 flex items-center justify-center text-caramel-700 shrink-0 shadow-sm">
+              <i data-lucide="chevron-down" class="w-4 h-4 sm:w-5 sm:h-5"></i>
+            </div>
+          </button>
+          <div class="faq-answer-wrapper">
+            <div class="min-h-0 overflow-hidden">
+              <div class="px-6 sm:px-8 pb-6 pt-2 text-xs sm:text-sm text-ink-muted leading-relaxed border-t border-caramel-500/10">
+                Zero prowizji. Wszystkie pieniądze zostają u Ciebie. Klienci rezerwują wizyty bezpośrednio na Twojej stronie, dzięki czemu budujesz własną markę i bezpośrednią relację z klientami.
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Linia oddzielająca sekcje -->
+  <div class="w-full max-w-5xl mx-auto px-4 sm:px-6 relative z-10">
+    <div class="h-px w-full bg-gradient-to-r from-transparent via-caramel-500/35 to-transparent"></div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- 5. SEKCJA: KONTAKT (Ciemniejszy, przytulny odcień & szklana karta) -->
+  <!-- ========================================== -->
+  <section id="kontakt" class="py-20 md:py-28 relative z-10 bg-gradient-to-b from-caramel-100/60 via-cream-300/45 to-cream-200/90 border-t border-caramel-500/20 backdrop-blur-md overflow-hidden">
+    <!-- Subtelne rozświetlenie w tle kontaktu -->
+    <div class="section-glow-blob absolute top-1/2 left-1/4 -translate-y-1/2 w-[650px] h-[400px] bg-caramel-300/25 rounded-full blur-3xl pointer-events-none"></div>
+
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 relative z-10">
+      
+      <div class="contact-outer-card bg-gradient-to-br from-white/95 via-cream-50/95 to-caramel-100/75 border border-caramel-500/30 rounded-3xl p-6 sm:p-10 shadow-caramel-lg backdrop-blur-xl relative overflow-hidden">
+        <!-- Akcent świetlny w rogu karty -->
+        <div class="absolute -top-24 -right-24 w-64 h-64 bg-caramel-300/30 rounded-full blur-2xl pointer-events-none"></div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center relative z-10">
+          
+          <!-- Lewa kolumna (Z lewej) -->
+          <div class="md:col-span-5 slide-from-left">
+            <span class="text-xs font-bold text-caramel-600 uppercase tracking-wider block mb-1">Kontakt</span>
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-ink tracking-tight mb-3">
+              Porozmawiajmy o Twojej stronie
+            </h2>
+            <p class="text-xs sm:text-sm text-ink-muted leading-relaxed mb-6">
+              Napisz lub zadzwoń. Odpowiadam w ciągu 24h z konkretną propozycją dla Twojej branży.
+            </p>
+
+            <div class="space-y-3 text-xs sm:text-sm font-medium">
+              <a href="https://www.instagram.com/gladka.stronka" target="_blank" rel="noopener" class="contact-ig-card flex items-center gap-3 p-3.5 rounded-2xl bg-gradient-to-r from-rose-50/70 via-cream-50/90 to-caramel-100/50 text-ink border border-caramel-500/25 hover:border-caramel-500 hover:shadow-soft transition-all group">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-amber-500 via-rose-500 to-purple-600 text-white flex items-center justify-center shrink-0 shadow-xs group-hover:scale-105 transition-transform">
+                  <svg class="w-5 h-5" viewBox="0 0 24 24" fill="white">
+                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                  </svg>
+                </div>
+                <div>
+                  <span class="text-[10px] uppercase font-extrabold tracking-wider block text-caramel-700">Napisz na Instagramie (Direct):</span>
+                  <span class="font-bold text-sm text-ink group-hover:text-caramel-600 transition-colors">@gladka.stronka</span>
+                </div>
+              </a>
+
+              <a href="tel:+48734812077" class="flex items-center gap-3 p-3.5 rounded-2xl bg-cream-50 text-ink border border-caramel-500/20 hover:bg-cream-100 hover:border-caramel-500/35 transition-all group">
+                <div class="w-10 h-10 rounded-xl bg-caramel-100 border border-caramel-500/30 text-caramel-700 flex items-center justify-center shrink-0 shadow-xs group-hover:scale-105 transition-transform">
+                  <i data-lucide="phone" class="w-5 h-5"></i>
+                </div>
+                <div>
+                  <span class="text-[10px] text-ink-muted block font-bold">Zadzwoń lub wyślij SMS:</span>
+                  <span class="font-bold text-sm text-ink group-hover:text-caramel-600 transition-colors">734 812 077</span>
+                </div>
+              </a>
+            </div>
+          </div>
+
+          <!-- Prawa kolumna: Formularz (Z prawej) -->
+          <div class="contact-form-box md:col-span-7 slide-from-right delay-100 bg-white rounded-2xl border border-caramel-500/15 p-5 sm:p-6 shadow-sm">
+            
+            <form id="contactForm" onsubmit="handleFormSubmit(event)" class="space-y-3.5">
+              
+              <div>
+                <label class="block text-xs font-bold text-ink mb-1" for="name">Twoje imię lub nazwa firmy *</label>
+                <input type="text" id="name" required placeholder="np. Ania (Studio Lumina)" class="w-full px-3.5 py-2 rounded-xl border border-stone-200 text-xs sm:text-sm focus:outline-none focus:border-caramel-500 focus:ring-2 focus:ring-caramel-100">
+              </div>
+
+              <div>
+                <label class="block text-xs font-bold text-ink mb-1" for="phone">Telefon lub E-mail *</label>
+                <input type="text" id="phone" required placeholder="np. 500 000 000 lub mail@..." class="w-full px-3.5 py-2 rounded-xl border border-stone-200 text-xs sm:text-sm focus:outline-none focus:border-caramel-500 focus:ring-2 focus:ring-caramel-100">
+              </div>
+
+              <div>
+                <label class="block text-xs font-bold text-ink mb-1" for="serviceSelect">Interesujący pakiet</label>
+                <select id="serviceSelect" class="w-full px-3.5 py-2 rounded-xl border border-stone-200 text-xs sm:text-sm focus:outline-none focus:border-caramel-500 focus:ring-2 focus:ring-caramel-100 bg-white">
+                  <option value="Strona Wizytówkowa (od 500 zł)">Strona Wizytówkowa (od 500 zł)</option>
+                  <option value="Strona + Rezerwacje (od 800 zł)">Strona + System Rezerwacji 24/7 (od 800 zł)</option>
+                  <option value="Indywidualna wycena (Darmowa)">Indywidualna wycena (Darmowa)</option>
+                </select>
+              </div>
+
+              <div>
+                <label class="block text-xs font-bold text-ink mb-1" for="message">Krótka wiadomość (opcjonalnie)</label>
+                <textarea id="message" rows="2" placeholder="W czym mogę pomóc? Czym zajmuje się Twoja firma?" class="w-full px-3.5 py-2 rounded-xl border border-stone-200 text-xs sm:text-sm focus:outline-none focus:border-caramel-500 focus:ring-2 focus:ring-caramel-100 resize-none"></textarea>
+              </div>
+
+              <button type="submit" class="w-full py-3 rounded-full bg-caramel-500 hover:bg-caramel-600 text-white font-bold text-xs sm:text-sm shadow-caramel transition-all flex items-center justify-center gap-2">
+                <i data-lucide="send" class="w-4 h-4"></i>
+                <span>Wyślij zapytanie o darmową wycenę</span>
+              </button>
+
+            </form>
+
+            <!-- Ekran sukcesu -->
+            <div id="formSuccessModal" class="hidden text-center py-6">
+              <div class="w-12 h-12 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto mb-3">
+                <i data-lucide="check" class="w-6 h-6 stroke-[3]"></i>
+              </div>
+              <h3 class="text-base font-extrabold text-ink mb-1">Dziękuję za wiadomość! ✨</h3>
+              <p class="text-xs text-ink-muted mb-4">
+                Odezwę się do Ciebie w ciągu 24 godzin z gotową propozycją.
+              </p>
+              <button onclick="resetContactForm()" class="px-4 py-1.5 rounded-full border border-caramel-500 text-caramel-700 text-xs font-bold hover:bg-caramel-50">
+                Wyślij kolejną
+              </button>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Linia oddzielająca sekcje -->
+  <div class="w-full max-w-5xl mx-auto px-4 sm:px-6 relative z-10">
+    <div class="h-px w-full bg-gradient-to-r from-transparent via-caramel-500/35 to-transparent"></div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- FOOTER -->
+  <!-- ========================================== -->
+  <footer class="py-12 bg-cream-200/80 backdrop-blur-lg relative z-10 border-t border-caramel-500/15">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-5 text-xs text-ink-muted">
+      
+      <div class="flex items-center gap-2.5">
+        <div class="w-7 h-7 rounded-full overflow-hidden border border-caramel-500/20 shadow-sm flex items-center justify-center p-0.5 bg-cream-50 shrink-0">
+          <img src="assets/logo.png" alt="Logo" class="w-full h-full object-cover rounded-full">
+        </div>
+        <span class="font-extrabold text-ink">Gładka<span class="text-caramel-500">Stronka</span></span>
+        <span>• Nowoczesne strony i rezerwacje</span>
+      </div>
+
+      <!-- Linki prawne i przełączniki w stopce -->
+      <div class="flex flex-wrap items-center justify-center gap-4">
+        <!-- Przycisk Regulamin i Prywatność -->
+        <button onclick="openPrivacyModal()" class="text-ink-soft hover:text-caramel-600 underline underline-offset-4 decoration-caramel-500/40 transition-colors font-semibold cursor-pointer">
+          Regulamin i Prywatność
+        </button>
+
+        <span class="text-caramel-500/40 hidden sm:inline">•</span>
+
+        <!-- Przełącznik kursora -->
+        <button onclick="toggleCustomCursor()" class="hidden md:flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-caramel-500/20 text-[11px] font-semibold text-ink-soft hover:border-caramel-500/40 cursor-pointer">
+          <span id="cursorToggleDot" class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+          <span id="cursorToggleLabel">Kursor: WŁ.</span>
+        </button>
+      </div>
+
+      <p>© 2026 GładkaStronka. Wszelkie prawa zastrzeżone.</p>
+
+    </div>
+  </footer>
+
+  <!-- ========================================== -->
+  <!-- SUBTELNY BANER COOKIES (Zgodność z RODO) -->
+  <!-- ========================================== -->
+  <div id="cookieBanner" class="fixed bottom-4 inset-x-4 sm:inset-x-auto sm:right-6 z-50 max-w-md bg-white/95 backdrop-blur-xl border border-caramel-500/30 rounded-3xl p-4 sm:p-5 shadow-caramel-lg transition-all duration-300 transform translate-y-36 opacity-0 pointer-events-none">
+    <div class="flex items-start gap-3.5">
+      <div class="w-9 h-9 rounded-2xl bg-cream-100 border border-caramel-500/20 text-caramel-600 flex items-center justify-center shrink-0">
+        <i data-lucide="cookie" class="w-5 h-5"></i>
+      </div>
+      <div class="flex-1">
+        <p class="text-xs font-bold text-ink mb-1">Ciasteczka na stronie 🍪</p>
+        <p class="text-[11px] text-ink-muted leading-relaxed mb-3">
+          Strona korzysta z ciasteczek do zapamiętania trybu ciemnego oraz sprawnego działania systemu. Bez natrętnych reklam.
+        </p>
+        <div class="flex items-center gap-2">
+          <button onclick="acceptCookies()" class="px-4 py-1.5 rounded-full bg-caramel-500 hover:bg-caramel-600 text-white text-xs font-extrabold shadow-caramel transition-all cursor-pointer">
+            Akceptuję
+          </button>
+          <button onclick="openPrivacyModal()" class="px-3 py-1.5 rounded-full border border-caramel-500/25 hover:bg-cream-100 text-ink text-xs font-semibold transition-all cursor-pointer">
+            Regulamin
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- MODAL: REGULAMIN I POLITYKA PRYWATNOŚCI -->
+  <!-- ========================================== -->
+  <div id="privacyModal" class="fixed inset-0 z-50 bg-black/55 backdrop-blur-sm flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-300">
+    <div class="relative w-full max-w-2xl bg-white/95 backdrop-blur-2xl border border-caramel-500/30 rounded-3xl p-6 sm:p-8 shadow-caramel-lg max-h-[85vh] flex flex-col transform scale-95 transition-transform duration-300 modal-card">
+      
+      <!-- Nagłówek modala -->
+      <div class="flex items-center justify-between pb-4 border-b border-caramel-500/20 shrink-0">
+        <div class="flex items-center gap-2.5">
+          <div class="w-8 h-8 rounded-full bg-cream-50 border border-caramel-500/20 flex items-center justify-center text-caramel-600">
+            <i data-lucide="shield-check" class="w-4 h-4"></i>
+          </div>
+          <div>
+            <h3 class="text-base sm:text-lg font-extrabold text-ink">Regulamin i Polityka Prywatności</h3>
+            <p class="text-[11px] text-ink-muted">GładkaStronka • Obowiązuje od 2026 roku</p>
+          </div>
+        </div>
+        <button onclick="closePrivacyModal()" class="w-8 h-8 rounded-full bg-cream-100 hover:bg-cream-200 border border-caramel-500/20 text-ink flex items-center justify-center transition-colors cursor-pointer" aria-label="Zamknij okno">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+      </div>
+
+      <!-- Treść regulaminu ze scrollem -->
+      <div class="overflow-y-auto py-5 pr-2 space-y-4 text-xs sm:text-sm text-ink-muted leading-relaxed" data-lenis-prevent>
+        <section>
+          <h4 class="font-extrabold text-ink text-sm mb-1">§ 1. Postanowienia ogólne i kontakt</h4>
+          <p>1. Serwis internetowy <strong>GładkaStronka</strong> prowadzony jest w celach prezentacji oferty tworzenia stron internetowych oraz systemów rezerwacji dla lokalnych firm.</p>
+          <p>2. Kontakt z administratorem strony możliwy jest poprzez profil Instagram: <a href="https://www.instagram.com/gladka.stronka" target="_blank" rel="noopener" class="text-caramel-600 font-bold underline">@gladka.stronka</a> lub telefonicznie: <a href="tel:+48734812077" class="text-caramel-600 font-bold underline">734 812 077</a>.</p>
+        </section>
+
+        <section>
+          <h4 class="font-extrabold text-ink text-sm mb-1">§ 2. Zasady realizacji usług</h4>
+          <p>1. Każda strona WWW oraz system rezerwacji przygotowywany jest w oparciu o indywidualne ustalenia z klientem bez narzucania comiesięcznych abonamentów.</p>
+          <p>2. Rozliczenie za wykonanie usługi jest jednorazowe. GładkaStronka nie pobiera żadnych prowizji od transakcji ani rezerwacji dokonanych przez klientów na wdrożonej stronie.</p>
+          <p>3. Po uregulowaniu płatności prawa do projektu, kod źródłowy oraz wszelkie dostępy przechodzą w 100% na zamawiającego.</p>
+        </section>
+
+        <section>
+          <h4 class="font-extrabold text-ink text-sm mb-1">§ 3. Ochrona danych osobowych (RODO)</h4>
+          <p>1. Dane przesyłane w formularzu kontaktowym (imię, numer telefonu lub e-mail) wykorzystywane są jedynie do sporządzenia bezpłatnej wyceny i bezpośredniej odpowiedzi na zapytanie ofertowe.</p>
+          <p>2. Dane nie są profilowane, nie podlegają sprzedaży ani nie są przekazywane zewnętrznym firmom marketingowym.</p>
+          <p>3. Masz pełne prawo żądać wglądu, modyfikacji lub natychmiastowego usunięcia swoich danych kontaktowych.</p>
+        </section>
+
+        <section>
+          <h4 class="font-extrabold text-ink text-sm mb-1">§ 4. Pliki cookies i pamięć lokalna</h4>
+          <p>1. Witryna korzysta z mechanizmu pamięci przeglądarki (localStorage) w celu zapisania Twoich preferencji wyglądu (np. automatyczny lub manualny tryb ciemny Cozy Espresso) oraz potwierdzenia zamknięcia paska cookies.</p>
+          <p>2. Użytkownik może w każdej chwili wyczyścić dane witryny w ustawieniach swojej przeglądarki internetowej.</p>
+        </section>
+      </div>
+
+      <!-- Stopka modala -->
+      <div class="pt-4 border-t border-caramel-500/20 flex justify-end shrink-0">
+        <button onclick="closePrivacyModal()" class="px-6 py-2 rounded-full bg-caramel-500 hover:bg-caramel-600 text-white font-bold text-xs sm:text-sm shadow-caramel transition-all cursor-pointer">
+          Rozumiem i zamykam
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- External Script -->
+  <script src="script.js"></script>
+</body>
+</html>
