@@ -712,23 +712,74 @@ html.dark #navSlimeIndicator {
 }
 
 /* ==========================================================================
-   DYNAMIC NAVBAR BRAND TEXT & SUBTELNY CIEŃ (Oddzielenie od tła przy scrollu)
+   DYNAMIC NAVBAR (80% przezroczyste na górze + delikatna ramka, płynny fade-in)
    ========================================================================== */
 #mainNavbar {
-  transition: all 0.44s cubic-bezier(0.34, 1.48, 0.64, 1);
+  background-color: rgba(255, 255, 255, 0.20);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(158, 122, 86, 0.16);
+  box-shadow: 0 4px 16px -4px rgba(45, 36, 30, 0.04);
+  transition: background-color 0.38s cubic-bezier(0.16, 1, 0.3, 1),
+              backdrop-filter 0.38s cubic-bezier(0.16, 1, 0.3, 1),
+              -webkit-backdrop-filter 0.38s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.38s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.38s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Stan na samej górze w trybie ciemnym */
+html.dark #mainNavbar {
+  background-color: rgba(30, 23, 19, 0.25);
+  border-color: rgba(212, 163, 115, 0.16);
+  box-shadow: 0 4px 16px -4px rgba(0, 0, 0, 0.25);
+}
+
+/* Tekst i linki w pasku na samej górze: 30% przezroczystsze (opacity: 0.70) dla subtelnego wtopienia w tło (logo GładkaStronka pozostaje w 100% wyraziste) */
+#mainHeader:not(.has-scrolled):not(.menu-open) #desktopNav .nav-link,
+#mainHeader:not(.has-scrolled):not(.menu-open) a[href^="tel:"] {
+  opacity: 0.70;
+}
+
+#mainHeader:not(.has-scrolled):not(.menu-open) #desktopNav .nav-link:hover,
+#mainHeader:not(.has-scrolled):not(.menu-open) a[href^="tel:"]:hover {
+  opacity: 1;
+}
+
+#desktopNav .nav-link,
+a[href^="tel:"] {
+  transition: opacity 0.35s ease, color 0.2s ease, background-color 0.2s ease;
+}
+
+/* Po przescrollowaniu chociaż o 1mm w dół (> 10px) lub otwarciu menu: pełniejsze, bardziej kryjące tło */
+#mainHeader.has-scrolled #mainNavbar,
+#mainHeader.menu-open #mainNavbar {
+  background-color: rgba(255, 255, 255, 0.95);
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  border-color: rgba(158, 122, 86, 0.22);
   box-shadow: 0 4px 20px -2px rgba(45, 36, 30, 0.06), 0 1px 3px rgba(45, 36, 30, 0.04);
 }
 
-/* Po zjechaniu poniżej Hero: delikatny, plastyczny cień odcinający nawigację od treści */
+#mainHeader.has-scrolled #mainNavbar:hover {
+  border-color: rgba(158, 122, 86, 0.35);
+}
+
+html.dark #mainHeader.has-scrolled #mainNavbar,
+html.dark #mainHeader.menu-open #mainNavbar {
+  background-color: rgba(30, 23, 19, 0.95);
+  border-color: rgba(212, 163, 115, 0.22);
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.45), 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+html.dark #mainHeader.has-scrolled #mainNavbar:hover {
+  border-color: rgba(212, 163, 115, 0.35);
+}
+
+/* Po zjechaniu poniżej Hero: głębszy, plastyczny cień odcinający nawigację od treści */
 #mainHeader.is-scrolled #mainNavbar {
   box-shadow: 0 10px 28px -4px rgba(45, 36, 30, 0.12),
               0 4px 10px -2px rgba(45, 36, 30, 0.05),
               0 0 0 1px rgba(158, 122, 86, 0.18);
-}
-
-/* Cienie w trybie ciemnym */
-html.dark #mainNavbar {
-  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.45), 0 1px 3px rgba(0, 0, 0, 0.3);
 }
 
 html.dark #mainHeader.is-scrolled #mainNavbar {
@@ -773,8 +824,20 @@ html.dark #mainHeader.is-scrolled #mainNavbar {
    LIVE STREAM POWIADOMIEŃ W HERO (Mockup telefonu i strumień rezerwacji)
    ========================================================================== */
 #heroPhoneMockup {
+  width: 280px !important;
+  min-width: 280px !important;
+  max-width: 280px !important;
+  box-sizing: border-box !important;
   box-shadow: 0 24px 50px -15px rgba(158, 122, 86, 0.18), 0 0 0 1px rgba(158, 122, 86, 0.12);
   transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.4s ease;
+}
+
+@media (min-width: 640px) {
+  #heroPhoneMockup {
+    width: 292px !important;
+    min-width: 292px !important;
+    max-width: 292px !important;
+  }
 }
 
 #heroPhoneMockup:hover {
@@ -791,6 +854,9 @@ html.dark #heroPhoneMockup:hover {
 }
 
 .notification-card {
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
   height: 78px;
   box-sizing: border-box;
   flex-shrink: 0;
@@ -806,6 +872,29 @@ html.dark #heroPhoneMockup:hover {
 html.dark .notification-card:hover {
   border-color: rgba(212, 163, 115, 0.45);
   box-shadow: 0 4px 14px -2px rgba(0, 0, 0, 0.4);
+}
+
+/* Kwadracik z ikonką powiadomienia */
+.notification-icon-box {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 0.75rem;
+  background-color: rgba(246, 239, 231, 0.85);
+  border: 1px solid rgba(158, 122, 86, 0.2);
+  color: #8C6A48;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.25s ease;
+}
+
+/* W trybie ciemnym: tło kwadracika ciemniejsze niż tło powiadomienia (#140E0B vs #2A201A), a ikonka w środku jaśniejsza (#E8C5A0) */
+html.dark .notification-icon-box {
+  background-color: #140E0B !important;
+  border-color: rgba(212, 163, 115, 0.22) !important;
+  color: #E8C5A0 !important;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.45);
 }
 
 /* Animacja wysunięcia górnego powiadomienia w górę ze zniknięciem */
@@ -833,6 +922,30 @@ html.dark .notification-card:hover {
     opacity: 1;
     transform: translateY(0px) scale(1);
   }
+}
+
+/* Przełączanie ikonek w telefonie w zależności od motywu (mail-check w jasnym, mail-open w ciemnym) */
+html.dark .phone-icon-light {
+  display: none !important;
+}
+html:not(.dark) .phone-icon-dark {
+  display: none !important;
+}
+html.dark .phone-icon-dark {
+  display: inline-block !important;
+}
+html:not(.dark) .phone-icon-light {
+  display: inline-block !important;
+}
+
+/* Zegar na ekranie blokady telefonu: powiększony, wysmuklony i wyższy (x1.5) */
+#heroPhoneBigClock {
+  display: inline-block;
+  transform: scaleY(1.48);
+  transform-origin: center;
+  font-feature-settings: "tnum";
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.025em;
 }
 
 

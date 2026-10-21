@@ -312,15 +312,24 @@ function toggleFaq(btn) {
 function initMobileMenu() {
   const toggleBtn = document.getElementById('mobileMenuToggle');
   const mobileMenu = document.getElementById('mobileMenu');
+  const mainHeader = document.getElementById('mainHeader');
 
   if (toggleBtn && mobileMenu) {
     toggleBtn.addEventListener('click', () => {
-      mobileMenu.classList.toggle('hidden');
+      const isHidden = mobileMenu.classList.toggle('hidden');
+      if (mainHeader) {
+        if (!isHidden) {
+          mainHeader.classList.add('menu-open');
+        } else {
+          mainHeader.classList.remove('menu-open');
+        }
+      }
     });
 
     mobileMenu.querySelectorAll('a').forEach(link => {
       link.addEventListener('click', () => {
         mobileMenu.classList.add('hidden');
+        if (mainHeader) mainHeader.classList.remove('menu-open');
       });
     });
   }
@@ -654,10 +663,18 @@ function initNavSlimeIndicator() {
   function checkScroll() {
     const mainHeader = document.getElementById('mainHeader');
     const heroThreshold = Math.max(240, window.innerHeight * 0.55);
+    const scrollPos = window.scrollY || window.pageYOffset || 0;
 
-    // Dynamiczne wsuwanie napisu pod logo poniżej sekcji Hero
     if (mainHeader) {
-      if (window.scrollY > heroThreshold) {
+      // 100% przezroczyste na samej górze, po przescrollowaniu > 10px (~1mm) płynny fade-in tła
+      if (scrollPos > 10) {
+        mainHeader.classList.add('has-scrolled');
+      } else {
+        mainHeader.classList.remove('has-scrolled');
+      }
+
+      // Dynamiczne wsuwanie napisu pod logo poniżej sekcji Hero
+      if (scrollPos > heroThreshold) {
         mainHeader.classList.add('is-scrolled');
       } else {
         mainHeader.classList.remove('is-scrolled');
@@ -705,7 +722,9 @@ function initNavSlimeIndicator() {
     if (activeLink) moveTo(activeLink, false);
   }, { passive: true });
 
-  // Inicjalne sprawdzenie pozycji
+  // Inicjalne sprawdzenie pozycji natychmiast oraz po załadowaniu zasobów
+  checkScroll();
+  setTimeout(checkScroll, 100);
   setTimeout(checkScroll, 250);
 }
 
@@ -731,7 +750,7 @@ function initHeroNotificationStream() {
     if (bigClockEl) bigClockEl.textContent = timeStr;
 
     if (dateEl) {
-      const days = ['Niedziela', 'Poniedziałek', 'Wtorek', 'Środa', 'Czwartek', 'Piątek', 'Sobota'];
+      const days = ['Ndz.', 'Pon.', 'Wt.', 'Śr.', 'Czw.', 'Pt.', 'Sob.'];
       const months = ['stycznia', 'lutego', 'marca', 'kwietnia', 'maja', 'czerwca', 'lipca', 'sierpnia', 'września', 'października', 'listopada', 'grudnia'];
       const dayName = days[now.getDay()];
       const dayNum = now.getDate();
@@ -767,9 +786,14 @@ function initHeroNotificationStream() {
   function createCardElement(data) {
     const card = document.createElement('div');
     card.className = 'notification-card rounded-2xl p-2.5 bg-white/90 dark:bg-[#2A201A]/90 backdrop-blur-md border border-caramel-500/20 dark:border-caramel-500/25 shadow-xs flex items-center gap-2.5 transition-all cursor-default';
+    
+    const iconHtml = data.icon === 'mail-check'
+      ? `<i data-lucide="mail-check" class="phone-icon-light w-4 h-4"></i><i data-lucide="mail-open" class="phone-icon-dark w-4 h-4"></i>`
+      : `<i data-lucide="${data.icon}" class="w-4 h-4"></i>`;
+
     card.innerHTML = `
-      <div class="w-8 h-8 rounded-xl bg-caramel-100/80 dark:bg-caramel-950/50 text-caramel-600 dark:text-[#D4A373] flex items-center justify-center shrink-0 border border-caramel-500/20">
-        <i data-lucide="${data.icon}" class="w-4 h-4"></i>
+      <div class="notification-icon-box">
+        ${iconHtml}
       </div>
       <div class="min-w-0 flex-1">
         <div class="flex items-center justify-between gap-1 mb-0.5">

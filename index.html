@@ -137,7 +137,7 @@
   <!-- NAWIGACJA (Przejrzysta, bez nachodzenia) -->
   <!-- ========================================== -->
   <header id="mainHeader" class="fixed top-4 inset-x-0 z-50 flex justify-center px-4">
-    <div id="mainNavbar" class="w-full max-w-5xl bg-white/95 dark:bg-[#1E1713]/95 backdrop-blur-xl border border-caramel-500/20 rounded-full py-2.5 sm:py-3 px-4 sm:px-7 shadow-soft flex items-center justify-between transition-all duration-300 hover:border-caramel-500/35">
+    <div id="mainNavbar" class="w-full max-w-5xl rounded-full py-2.5 sm:py-3 px-4 sm:px-7 flex items-center justify-between">
       
       <!-- Logo po lewej z assets/logo.png -->
       <a href="#" class="flex items-center gap-2.5 group shrink-0 relative" id="navBrandLink">
@@ -305,28 +305,28 @@
 
         </div>
 
-        <!-- Prawa kolumna: Jeszcze wyższa, smukła symulacja telefonu zbliżona do środka -->
-        <div class="w-full lg:w-auto flex flex-col items-center justify-center shrink-0">
-          <div id="heroPhoneMockup" class="w-full max-w-[280px] sm:max-w-[292px] min-h-[530px] sm:min-h-[550px] flex flex-col justify-between rounded-[2.8rem] bg-gradient-to-b from-white/95 via-cream-50/90 to-caramel-50/70 dark:from-[#241C18]/95 dark:via-[#1E1713]/90 dark:to-[#17110E]/95 backdrop-blur-2xl border-2 border-caramel-500/25 dark:border-caramel-500/30 p-3.5 sm:p-4 shadow-caramel-lg relative overflow-hidden select-none">
+        <!-- Prawa kolumna: Zablokowana na sztywno, smukła symulacja telefonu zbliżona do środka -->
+        <div class="w-[280px] sm:w-[292px] flex flex-col items-center justify-center shrink-0">
+          <div id="heroPhoneMockup" class="w-[280px] sm:w-[292px] min-w-[280px] sm:min-w-[292px] max-w-[280px] sm:max-w-[292px] min-h-[530px] sm:min-h-[550px] flex flex-col justify-between rounded-[2.8rem] bg-gradient-to-b from-white/95 via-cream-50/90 to-caramel-50/70 dark:from-[#241C18]/95 dark:via-[#1E1713]/90 dark:to-[#17110E]/95 backdrop-blur-2xl border-2 border-caramel-500/25 dark:border-caramel-500/30 p-3.5 sm:p-4 shadow-caramel-lg relative overflow-hidden select-none shrink-0">
             
             <!-- Górna część telefonu: pasek statusu + powiększony zegar lock-screen -->
             <div>
               <!-- Pasek statusu telefonu (dokładny zegar, dynamiczna wyspa, stan baterii) -->
               <div class="flex items-center justify-between text-[11px] font-bold text-ink-muted/80 px-1 pb-2.5 mb-2 border-b border-caramel-500/15">
                 <span id="heroPhoneClock" class="tracking-tight font-bold text-ink-soft">--:--</span>
-                <div class="w-16 h-3.5 bg-ink/15 dark:bg-white/15 rounded-full flex items-center justify-end pr-1.5">
-                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-500/70"></span>
-                </div>
+                <div class="w-16 h-3.5 bg-ink/15 dark:bg-white/15 rounded-full"></div>
                 <div class="flex items-center gap-1.5 text-ink-muted">
                   <i data-lucide="wifi" class="w-3 h-3"></i>
                   <i data-lucide="battery-charging" class="w-3.5 h-3.5 text-emerald-500"></i>
                 </div>
               </div>
 
-              <!-- Elegancki zegar i data ekranu blokady smartfona (powiększona godzina) -->
-              <div class="text-center pt-1.5 pb-2">
-                <p id="heroPhoneDate" class="text-[11px] font-semibold text-ink-muted">Czwartek, 22 października</p>
-                <p id="heroPhoneBigClock" class="text-4xl sm:text-[3.25rem] font-black text-ink tracking-tight my-1 leading-none">--:--</p>
+              <!-- Elegancki zegar i data ekranu blokady smartfona (większy odstęp od góry i od daty) -->
+              <div class="text-center pt-3 sm:pt-3.5 pb-2">
+                <p id="heroPhoneDate" class="text-[11px] font-semibold text-ink-muted">Czw., 22 października</p>
+                <div class="pt-2 sm:pt-2.5 pb-1">
+                  <span id="heroPhoneBigClock" class="text-[3.35rem] sm:text-[3.85rem] font-black text-ink tracking-tight leading-none">--:--</span>
+                </div>
               </div>
             </div>
 
@@ -335,8 +335,9 @@
               <div id="heroNotificationList" class="flex flex-col gap-2.5 will-change-transform">
                 <!-- Karta 1 (najstarsza, przechodząca wyżej - np. 7 min temu) -->
                 <div class="notification-card rounded-2xl p-2.5 bg-white/90 dark:bg-[#2A201A]/90 backdrop-blur-md border border-caramel-500/20 dark:border-caramel-500/25 shadow-xs flex items-center gap-2.5 transition-all cursor-default">
-                  <div class="w-8 h-8 rounded-xl bg-caramel-100/80 dark:bg-caramel-950/50 text-caramel-600 dark:text-[#D4A373] flex items-center justify-center shrink-0 border border-caramel-500/20">
-                    <i data-lucide="mail-check" class="w-4 h-4"></i>
+                  <div class="notification-icon-box">
+                    <i data-lucide="mail-check" class="phone-icon-light w-4 h-4"></i>
+                    <i data-lucide="mail-open" class="phone-icon-dark w-4 h-4"></i>
                   </div>
                   <div class="min-w-0 flex-1">
                     <div class="flex items-center justify-between gap-1 mb-0.5">
@@ -350,7 +351,7 @@
 
                 <!-- Karta 2 (środkowa - 2 min temu) -->
                 <div class="notification-card rounded-2xl p-2.5 bg-white/90 dark:bg-[#2A201A]/90 backdrop-blur-md border border-caramel-500/20 dark:border-caramel-500/25 shadow-xs flex items-center gap-2.5 transition-all cursor-default">
-                  <div class="w-8 h-8 rounded-xl bg-caramel-100/80 dark:bg-caramel-950/50 text-caramel-600 dark:text-[#D4A373] flex items-center justify-center shrink-0 border border-caramel-500/20">
+                  <div class="notification-icon-box">
                     <i data-lucide="calendar-check" class="w-4 h-4"></i>
                   </div>
                   <div class="min-w-0 flex-1">
@@ -365,7 +366,7 @@
 
                 <!-- Karta 3 (najnowsza na dole - właśnie teraz) -->
                 <div class="notification-card rounded-2xl p-2.5 bg-white/90 dark:bg-[#2A201A]/90 backdrop-blur-md border border-caramel-500/20 dark:border-caramel-500/25 shadow-xs flex items-center gap-2.5 transition-all cursor-default">
-                  <div class="w-8 h-8 rounded-xl bg-caramel-100/80 dark:bg-caramel-950/50 text-caramel-600 dark:text-[#D4A373] flex items-center justify-center shrink-0 border border-caramel-500/20">
+                  <div class="notification-icon-box">
                     <i data-lucide="sparkles" class="w-4 h-4"></i>
                   </div>
                   <div class="min-w-0 flex-1">
@@ -380,20 +381,18 @@
               </div>
             </div>
 
-            <!-- Dolna część: Stopka telefonu (powiadomienia e-mail bez 0 zł prowizji) + pasek Home -->
+            <!-- Dolna część: Stopka telefonu (tylko automatyczny email do ciebie) + pasek Home -->
             <div>
-              <div class="pt-2.5 border-t border-caramel-500/15 flex flex-col items-center justify-center text-center gap-1 px-1">
+              <div class="pt-2.5 border-t border-caramel-500/15 flex items-center justify-center text-center px-1">
                 <div class="inline-flex items-center justify-center gap-1.5 font-bold text-xs text-ink-soft">
-                  <i data-lucide="mail-check" class="w-4 h-4 text-emerald-500 shrink-0"></i>
+                  <i data-lucide="mail-check" class="phone-icon-light w-4 h-4 text-emerald-500 shrink-0"></i>
+                  <i data-lucide="mail-open" class="phone-icon-dark w-4 h-4 text-emerald-400 shrink-0"></i>
                   <span>Automatyczny e-mail do Ciebie</span>
                 </div>
-                <p class="text-[10px] text-ink-muted leading-tight">
-                  Każda nowa rezerwacja klienta trafia od razu na Twoją skrzynkę
-                </p>
               </div>
 
               <!-- Dolny pasek Home telefonu -->
-              <div class="w-24 h-1 bg-ink/20 dark:bg-white/20 rounded-full mx-auto mt-3"></div>
+              <div class="w-24 h-1 bg-ink/20 dark:bg-white/20 rounded-full mx-auto mt-2.5"></div>
             </div>
 
           </div>
