@@ -23,6 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initScrollAnimations();
   initMobileMenu();
   initCounters();
+  initPortfolioSlider();
   initCookieConsent();
   initModalListeners();
   initNavSlimeIndicator();
@@ -680,6 +681,77 @@ function animateAllCounters(counterEls) {
 
   requestAnimationFrame(update);
 }
+
+/* ==========================================================================
+   10b. PORTFOLIO SLIDER (Mobilna karuzela z kropkami i płynnym snapem)
+   ========================================================================== */
+function initPortfolioSlider() {
+  const slider = document.getElementById('portfolioSlider');
+  const dots = document.querySelectorAll('#portfolioDots .portfolio-dot');
+  if (!slider || !dots.length) return;
+
+  const updateDots = () => {
+    const cards = slider.querySelectorAll('.portfolio-card');
+    if (!cards.length) return;
+
+    const sliderCenter = slider.scrollLeft + slider.clientWidth / 2;
+    let closestIndex = 0;
+    let minDiff = Infinity;
+
+    cards.forEach((card, idx) => {
+      const cardCenter = card.offsetLeft + card.offsetWidth / 2;
+      const diff = Math.abs(sliderCenter - cardCenter);
+      if (diff < minDiff) {
+        minDiff = diff;
+        closestIndex = idx;
+      }
+    });
+
+    dots.forEach((dot, idx) => {
+      if (idx === closestIndex) {
+        dot.className = 'portfolio-dot w-6 h-2 rounded-full bg-caramel-500 transition-all duration-300';
+      } else {
+        dot.className = 'portfolio-dot w-2 h-2 rounded-full bg-caramel-500/30 dark:bg-caramel-500/20 transition-all duration-300';
+      }
+    });
+  };
+
+  slider.addEventListener('scroll', updateDots, { passive: true });
+}
+
+window.scrollToProject = function(index) {
+  const slider = document.getElementById('portfolioSlider');
+  if (!slider) return;
+  const cards = slider.querySelectorAll('.portfolio-card');
+  if (cards[index]) {
+    const card = cards[index];
+    const targetScroll = card.offsetLeft - (slider.clientWidth - card.offsetWidth) / 2;
+    slider.scrollTo({ left: targetScroll, behavior: 'smooth' });
+  }
+};
+
+window.slidePortfolio = function(direction) {
+  const slider = document.getElementById('portfolioSlider');
+  if (!slider) return;
+  const cards = slider.querySelectorAll('.portfolio-card');
+  if (!cards.length) return;
+
+  const sliderCenter = slider.scrollLeft + slider.clientWidth / 2;
+  let currentIndex = 0;
+  let minDiff = Infinity;
+
+  cards.forEach((card, idx) => {
+    const cardCenter = card.offsetLeft + card.offsetWidth / 2;
+    const diff = Math.abs(sliderCenter - cardCenter);
+    if (diff < minDiff) {
+      minDiff = diff;
+      currentIndex = idx;
+    }
+  });
+
+  const nextIndex = Math.max(0, Math.min(cards.length - 1, currentIndex + direction));
+  scrollToProject(nextIndex);
+};
 
 /* ==========================================================================
    11. COOKIE CONSENT & BANER (Zgodność z RODO)

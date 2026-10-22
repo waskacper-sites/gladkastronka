@@ -279,6 +279,30 @@ html.lenis, html.lenis body {
   border-color: rgba(158, 122, 86, 0.45);
 }
 
+/* Ukrywanie scrollbara w poziomej karuzeli na telefonach */
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+
+/* Karuzela Portfolio na telefonach */
+@media (max-width: 767px) {
+  .portfolio-slider {
+    scroll-padding-left: calc(50vw - 162.5px);
+    scroll-padding-right: calc(50vw - 162.5px);
+    -webkit-overflow-scrolling: touch;
+  }
+  .portfolio-slider .slide-from-left,
+  .portfolio-slider .slide-from-right {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
 /* 3D Tilt w Hero */
 .mascot-tilt-container {
   perspective: 1000px;

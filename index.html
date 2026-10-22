@@ -203,23 +203,17 @@
         <div id="navSlimeIndicator" class="opacity-0"></div>
       </nav>
 
-      <!-- Prawa strona: Numer tel, Instagram, Darkmode & CTA Napisz do mnie -->
+      <!-- Prawa strona: Darkmode, Instagram & CTA Napisz do mnie -->
       <div class="flex items-center gap-2 sm:gap-2.5 shrink-0">
         
-        <!-- Szybki telefon (Desktop) -->
-        <a href="tel:+48734812077" class="hidden xl:inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cream-50/90 dark:bg-[#2A201A] hover:bg-cream-200/90 dark:hover:bg-[#382B23] border border-caramel-500/25 text-xs font-bold text-ink hover:text-caramel-600 transition-all shadow-xs" title="Zadzwoń do mnie: 734 812 077">
-          <i data-lucide="phone" class="w-3.5 h-3.5 text-caramel-600"></i>
-          <span>734 812 077</span>
-        </a>
-
-        <!-- Przełącznik Dark Mode (Subtelny, Cozy Espresso) -->
-        <button onclick="toggleTheme()" class="theme-toggle-btn w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-cream-50/90 dark:bg-[#2A201A] hover:bg-cream-200/90 dark:hover:bg-[#382B23] border border-caramel-500/25 flex items-center justify-center text-ink hover:text-caramel-600 transition-all shadow-xs cursor-pointer" aria-label="Przełącz tryb dzień/noc" title="Przełącz tryb dzień/noc">
+        <!-- Przełącznik Dark Mode (Desktop) -->
+        <button onclick="toggleTheme()" class="theme-toggle-btn hidden md:flex w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-cream-50/90 dark:bg-[#2A201A] hover:bg-cream-200/90 dark:hover:bg-[#382B23] border border-caramel-500/25 items-center justify-center text-ink hover:text-caramel-600 transition-all shadow-xs cursor-pointer" aria-label="Przełącz tryb dzień/noc" title="Przełącz tryb dzień/noc">
           <i data-lucide="moon" class="theme-icon-moon w-4 h-4 text-caramel-600"></i>
           <i data-lucide="sun" class="theme-icon-sun w-4 h-4 text-amber-400"></i>
         </button>
 
-        <!-- Przycisk Instagram (Wyraźne, oficjalne logo z gradientem) -->
-        <a href="https://www.instagram.com/gladka.stronka" target="_blank" rel="noopener" class="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-cream-50/90 dark:bg-[#2A201A] hover:bg-caramel-100/90 dark:hover:bg-[#382B23] border border-caramel-500/25 flex items-center justify-center transition-all shadow-xs group" aria-label="Profil Instagram @gladka.stronka" title="Odwiedź Instagram @gladka.stronka">
+        <!-- Przycisk Instagram (Desktop) -->
+        <a href="https://www.instagram.com/gladka.stronka" target="_blank" rel="noopener" class="hidden md:flex w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-cream-50/90 dark:bg-[#2A201A] hover:bg-caramel-100/90 dark:hover:bg-[#382B23] border border-caramel-500/25 items-center justify-center transition-all shadow-xs group" aria-label="Profil Instagram @gladka.stronka" title="Odwiedź Instagram @gladka.stronka">
           <svg class="w-4 h-4 sm:w-4.5 sm:h-4.5 transition-transform group-hover:scale-110" viewBox="0 0 24 24" fill="none">
             <defs>
               <linearGradient id="igGradNav" x1="0%" y1="100%" x2="100%" y2="0%">
@@ -234,51 +228,54 @@
           </svg>
         </a>
 
-        <!-- Przycisk CTA: Napisz do mnie -->
-        <a href="#kontakt" class="inline-flex items-center gap-2 px-4 sm:px-6 py-2.5 rounded-full bg-caramel-500 text-white text-xs sm:text-sm font-extrabold shadow-caramel hover:bg-caramel-600 hover:shadow-caramel-lg hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200">
-          <span class="w-2 h-2 rounded-full bg-emerald-300 animate-pulse hidden sm:inline-block"></span>
-          <span>Napisz do mnie</span>
+        <!-- Przycisk CTA: Napisz (Kompaktowy i czytelny na telefonie) -->
+        <a href="#kontakt" class="inline-flex items-center gap-1.5 px-3.5 sm:px-6 py-2 sm:py-2.5 rounded-full bg-caramel-500 text-white text-xs sm:text-sm font-extrabold shadow-caramel hover:bg-caramel-600 hover:shadow-caramel-lg transition-all duration-200">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-300 animate-pulse hidden sm:inline-block"></span>
+          <span>Napisz<span class="hidden sm:inline"> do mnie</span></span>
         </a>
 
         <!-- Hamburger dla telefonów -->
-        <button id="mobileMenuToggle" class="md:hidden p-1.5 sm:p-2 rounded-full text-ink hover:bg-cream-200 transition-colors" aria-label="Otwórz menu">
+        <button id="mobileMenuToggle" class="md:hidden p-1.5 sm:p-2 rounded-full text-ink hover:bg-cream-200 dark:hover:bg-[#2A201A] transition-colors" aria-label="Otwórz menu">
           <i data-lucide="menu" class="w-5 h-5"></i>
         </button>
       </div>
 
     </div>
 
-    <!-- Rozwijane menu mobilne -->
+    <!-- Rozwijane menu mobilne ze wszystkimi dodatkowymi opcjami -->
     <div id="mobileMenu" class="hidden absolute top-16 inset-x-4 bg-white/98 dark:bg-[#1E1713]/98 border border-caramel-500/20 rounded-3xl p-5 shadow-soft-lg flex flex-col gap-2 md:hidden">
-      <a href="#oferta" class="px-4 py-2.5 rounded-xl font-bold text-ink hover:bg-cream-100">Oferta</a>
-      <a href="#portfolio" class="px-4 py-2.5 rounded-xl font-bold text-ink hover:bg-cream-100">Portfolio</a>
-      <a href="#jak-to-dziala" class="px-4 py-2.5 rounded-xl font-bold text-ink hover:bg-cream-100">Jak to działa</a>
-      <a href="#cennik" class="px-4 py-2.5 rounded-xl font-bold text-ink hover:bg-cream-100">Cennik</a>
+      <a href="#oferta" class="px-4 py-2.5 rounded-xl font-bold text-ink hover:bg-cream-100 dark:hover:bg-[#2A201A]">Oferta</a>
+      <a href="#portfolio" class="px-4 py-2.5 rounded-xl font-bold text-ink hover:bg-cream-100 dark:hover:bg-[#2A201A]">Portfolio</a>
+      <a href="#jak-to-dziala" class="px-4 py-2.5 rounded-xl font-bold text-ink hover:bg-cream-100 dark:hover:bg-[#2A201A]">Jak to działa</a>
+      <a href="#cennik" class="px-4 py-2.5 rounded-xl font-bold text-ink hover:bg-cream-100 dark:hover:bg-[#2A201A]">Cennik</a>
       
-      <div class="pt-2 border-t border-caramel-500/15 flex items-center justify-between px-2">
-        <a href="https://www.instagram.com/gladka.stronka" target="_blank" rel="noopener" class="flex items-center gap-2 text-xs font-bold text-caramel-700 dark:text-[#D4A373] hover:text-caramel-800">
-          <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none">
-            <defs>
-              <linearGradient id="igGradMob" x1="0%" y1="100%" x2="100%" y2="0%">
-                <stop offset="0%" stop-color="#f09433"/>
-                <stop offset="25%" stop-color="#e6683c"/>
-                <stop offset="50%" stop-color="#dc2743"/>
-                <stop offset="75%" stop-color="#cc2366"/>
-                <stop offset="100%" stop-color="#bc1888"/>
-              </linearGradient>
-            </defs>
-            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" fill="url(#igGradMob)"/>
-          </svg>
-          <span>@gladka.stronka</span>
+      <!-- Opcje przeniesione z paska nawigacji dla zachowania czystości -->
+      <div class="pt-3 pb-1 border-t border-caramel-500/15 flex flex-col gap-2">
+        <a href="tel:+48734812077" class="flex items-center justify-between px-3.5 py-2.5 rounded-2xl bg-cream-50/80 dark:bg-[#2A201A] border border-caramel-500/20 text-xs font-bold text-ink">
+          <span class="flex items-center gap-2">
+            <i data-lucide="phone" class="w-4 h-4 text-caramel-600"></i>
+            <span>Zadzwoń do mnie</span>
+          </span>
+          <span class="text-caramel-700 dark:text-[#D4A373]">734 812 077</span>
         </a>
-        <button onclick="toggleTheme()" class="flex items-center gap-1.5 text-xs font-bold text-ink-muted px-3 py-1.5 rounded-full bg-cream-100 dark:bg-[#2A201A] border border-caramel-500/20">
-          <i data-lucide="moon" class="theme-icon-moon w-3.5 h-3.5 text-caramel-600"></i>
-          <i data-lucide="sun" class="theme-icon-sun w-3.5 h-3.5 text-amber-400"></i>
-          <span>Tryb nocny</span>
-        </button>
+
+        <div class="flex items-center justify-between gap-2">
+          <a href="https://www.instagram.com/gladka.stronka" target="_blank" rel="noopener" class="flex-1 flex items-center justify-center gap-2 py-2 px-3 rounded-2xl bg-cream-50/80 dark:bg-[#2A201A] border border-caramel-500/20 text-xs font-bold text-caramel-700 dark:text-[#D4A373]">
+            <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none">
+              <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" fill="url(#igGradNav)"/>
+            </svg>
+            <span>Instagram</span>
+          </a>
+
+          <button onclick="toggleTheme()" class="flex-1 flex items-center justify-center gap-1.5 py-2 px-3 rounded-2xl bg-cream-50/80 dark:bg-[#2A201A] border border-caramel-500/20 text-xs font-bold text-ink">
+            <i data-lucide="moon" class="theme-icon-moon w-3.5 h-3.5 text-caramel-600"></i>
+            <i data-lucide="sun" class="theme-icon-sun w-3.5 h-3.5 text-amber-400"></i>
+            <span>Motyw</span>
+          </button>
+        </div>
       </div>
 
-      <a href="#kontakt" class="px-4 py-2.5 rounded-xl font-bold text-center text-white bg-caramel-500 mt-2 shadow-caramel">Napisz do mnie</a>
+      <a href="#kontakt" class="px-4 py-3 rounded-2xl font-bold text-center text-white bg-caramel-500 mt-1 shadow-caramel">Darmowa wycena w 24h</a>
     </div>
   </header>
 
@@ -321,14 +318,14 @@
       </div>
     </div>
 
-    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 w-full my-auto relative z-10 py-6 lg:py-4">
-      <div class="flex flex-col lg:flex-row items-center justify-center gap-8 lg:gap-10 xl:gap-12">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 w-full my-auto relative z-10 py-3 sm:py-6 lg:py-4">
+      <div class="flex flex-col lg:flex-row items-center justify-center gap-6 sm:gap-8 lg:gap-10 xl:gap-12">
         
         <!-- Lewa kolumna: Wyśrodkowany nagłówek i CTA przybliżone do środka -->
         <div class="w-full lg:max-w-[540px] flex flex-col items-center text-center">
           
           <!-- Pigułka z hasłem (z dopracowaną wektorową grafiką dyni zamiast emotki) -->
-          <div class="hero-badge-pill inline-flex items-center gap-2 px-4 sm:px-5 py-2 rounded-full bg-white/90 border border-caramel-500/25 text-xs sm:text-sm font-bold text-caramel-700 mb-6 shadow-xs">
+          <div class="hero-badge-pill inline-flex items-center gap-2 px-3.5 sm:px-5 py-1.5 sm:py-2 rounded-full bg-white/90 border border-caramel-500/25 text-xs sm:text-sm font-bold text-caramel-700 mb-3 sm:mb-6 shadow-xs">
             <span class="halloween-item-inline w-4 h-4 shrink-0 drop-shadow-2xs">
               <svg viewBox="0 0 32 32" fill="none" class="w-full h-full">
                 <path d="M15 8 C15 4, 18 2, 21 3" stroke="#4D7C0F" stroke-width="2.2" stroke-linecap="round"/>
@@ -344,13 +341,13 @@
           </div>
 
           <!-- Wyśrodkowany, reprezentacyjny nagłówek podzielony na dokładnie 2 linijki -->
-          <h1 class="text-2xl sm:text-4xl lg:text-[2.65rem] xl:text-[3.1rem] font-extrabold text-ink tracking-tight leading-[1.26] sm:leading-[1.3] lg:leading-[1.32] mb-6 w-full text-center">
+          <h1 class="text-2xl sm:text-4xl lg:text-[2.65rem] xl:text-[3.1rem] font-extrabold text-ink tracking-tight leading-[1.24] sm:leading-[1.3] lg:leading-[1.32] mb-3.5 sm:mb-6 w-full text-center">
             <span class="inline-block whitespace-nowrap">Strony, które działają</span>
             <br>
             <span class="inline-block whitespace-nowrap">
               <span class="text-caramel-600 relative inline-block">
                 tak gładko,
-                <svg class="absolute -bottom-1.5 sm:-bottom-2.5 left-0 w-full h-3 sm:h-3.5 text-caramel-300 -z-10" viewBox="0 0 250 14" fill="none">
+                <svg class="absolute -bottom-1 sm:-bottom-2.5 left-0 w-full h-2.5 sm:h-3.5 text-caramel-300 -z-10" viewBox="0 0 250 14" fill="none">
                   <path d="M3 11 C60 3, 190 2, 247 11" stroke="currentColor" stroke-width="7" stroke-linecap="round"/>
                 </svg>
               </span>
@@ -359,34 +356,34 @@
           </h1>
 
           <!-- Czytelny, wyśrodkowany opis -->
-          <p class="text-base sm:text-lg lg:text-xl text-ink-muted leading-relaxed mb-8 max-w-lg font-medium text-center">
+          <p class="text-sm sm:text-lg lg:text-xl text-ink-muted leading-relaxed mb-4 sm:mb-8 max-w-lg font-medium text-center">
             Tworzę szybkie strony i intuicyjne systemy rezerwacji. Klienci sami umawiają wizyty ze smartfona, a Ty skupiasz się na pracy. <strong>Zero abonamentów i prowizji.</strong>
           </p>
 
           <!-- Przyciski akcji (Wyśrodkowane) -->
-          <div class="flex flex-col sm:flex-row items-center justify-center gap-3.5 sm:gap-4 mb-8 w-full sm:w-auto">
-            <a href="#kontakt" class="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-3.5 rounded-full bg-caramel-500 text-white font-extrabold text-xs sm:text-sm shadow-caramel hover:bg-caramel-600 hover:shadow-caramel-lg transition-all duration-200 hover:-translate-y-0.5">
+          <div class="flex flex-col sm:flex-row items-center justify-center gap-2.5 sm:gap-4 mb-5 sm:mb-8 w-full sm:w-auto">
+            <a href="#kontakt" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3 sm:py-3.5 rounded-full bg-caramel-500 text-white font-extrabold text-xs sm:text-sm shadow-caramel hover:bg-caramel-600 hover:shadow-caramel-lg transition-all duration-200 hover:-translate-y-0.5">
               <i data-lucide="sparkles" class="w-4 h-4 text-caramel-200"></i>
               <span>Darmowa wycena w 24h</span>
             </a>
-            <a href="#portfolio" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full bg-white/90 border border-caramel-500/30 text-ink font-bold text-xs sm:text-sm hover:bg-white hover:border-caramel-500/50 transition-all duration-200 shadow-xs hover:-translate-y-0.5">
+            <a href="#portfolio" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 sm:px-7 py-2.5 sm:py-3.5 rounded-full bg-white/90 border border-caramel-500/30 text-ink font-bold text-xs sm:text-sm hover:bg-white hover:border-caramel-500/50 transition-all duration-200 shadow-xs hover:-translate-y-0.5">
               <span>Zobacz realizacje</span>
               <i data-lucide="arrow-down" class="w-3.5 h-3.5 text-caramel-500"></i>
             </a>
           </div>
 
-          <!-- 3 konkretne atuty w pigułce (Zawsze w jednej linijce każdy) -->
-          <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-2.5 pt-6 border-t border-caramel-500/20 text-xs sm:text-[11.5px] font-bold text-ink w-full max-w-lg sm:max-w-[530px]">
-            <div class="hero-feature-pill flex items-center gap-1.5 sm:gap-2 justify-center bg-white/95 dark:bg-[#241C18]/95 border border-caramel-500/15 py-2 px-2.5 rounded-2xl shadow-xs whitespace-nowrap">
-              <i data-lucide="check-circle-2" class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-600 shrink-0 stroke-[2.5]"></i>
+          <!-- 3 konkretne atuty w pigułce (Kompaktowe na telefonie) -->
+          <div class="flex flex-wrap sm:grid sm:grid-cols-3 justify-center gap-1.5 sm:gap-2.5 pt-3.5 sm:pt-6 border-t border-caramel-500/20 text-[11px] sm:text-[11.5px] font-bold text-ink w-full max-w-lg sm:max-w-[530px]">
+            <div class="hero-feature-pill flex items-center gap-1.5 justify-center bg-white/95 dark:bg-[#241C18]/95 border border-caramel-500/15 py-1.5 px-3 rounded-full sm:rounded-2xl shadow-xs whitespace-nowrap">
+              <i data-lucide="check-circle-2" class="w-3.5 h-3.5 text-emerald-600 shrink-0 stroke-[2.5]"></i>
               <span class="whitespace-nowrap">Gotowe w &lt; 7 dni</span>
             </div>
-            <div class="hero-feature-pill flex items-center gap-1.5 sm:gap-2 justify-center bg-white/95 dark:bg-[#241C18]/95 border border-caramel-500/15 py-2 px-2.5 rounded-2xl shadow-xs whitespace-nowrap">
-              <i data-lucide="check-circle-2" class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-600 shrink-0 stroke-[2.5]"></i>
+            <div class="hero-feature-pill flex items-center gap-1.5 justify-center bg-white/95 dark:bg-[#241C18]/95 border border-caramel-500/15 py-1.5 px-3 rounded-full sm:rounded-2xl shadow-xs whitespace-nowrap">
+              <i data-lucide="check-circle-2" class="w-3.5 h-3.5 text-emerald-600 shrink-0 stroke-[2.5]"></i>
               <span class="whitespace-nowrap">0 zł abonamentu</span>
             </div>
-            <div class="hero-feature-pill flex items-center gap-1.5 sm:gap-2 justify-center bg-white/95 dark:bg-[#241C18]/95 border border-caramel-500/15 py-2 px-2.5 rounded-2xl shadow-xs whitespace-nowrap">
-              <i data-lucide="check-circle-2" class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-600 shrink-0 stroke-[2.5]"></i>
+            <div class="hero-feature-pill flex items-center gap-1.5 justify-center bg-white/95 dark:bg-[#241C18]/95 border border-caramel-500/15 py-1.5 px-3 rounded-full sm:rounded-2xl shadow-xs whitespace-nowrap">
+              <i data-lucide="check-circle-2" class="w-3.5 h-3.5 text-emerald-600 shrink-0 stroke-[2.5]"></i>
               <span class="whitespace-nowrap">100% na telefon</span>
             </div>
           </div>
@@ -394,32 +391,32 @@
         </div>
 
         <!-- Prawa kolumna: Zablokowana na sztywno, smukła symulacja telefonu zbliżona do środka -->
-        <div class="w-[280px] sm:w-[292px] flex flex-col items-center justify-center shrink-0 relative">
-          <div id="heroPhoneMockup" class="w-[280px] sm:w-[292px] min-w-[280px] sm:min-w-[292px] max-w-[280px] sm:max-w-[292px] min-h-[530px] sm:min-h-[550px] flex flex-col justify-between rounded-[2.8rem] bg-gradient-to-b from-white/98 via-cream-50/95 to-caramel-50/85 dark:from-[#241C18] dark:via-[#1E1713] dark:to-[#17110E] border-2 border-caramel-500/25 dark:border-caramel-500/30 p-3.5 sm:p-4 shadow-caramel-lg relative overflow-hidden select-none shrink-0">
+        <div class="w-[280px] sm:w-[292px] flex flex-col items-center justify-center shrink-0 relative mt-2 sm:mt-0">
+          <div id="heroPhoneMockup" class="w-[280px] sm:w-[292px] min-w-[280px] sm:min-w-[292px] max-w-[280px] sm:max-w-[292px] min-h-[460px] sm:min-h-[550px] flex flex-col justify-between rounded-[2.4rem] sm:rounded-[2.8rem] bg-gradient-to-b from-white/98 via-cream-50/95 to-caramel-50/85 dark:from-[#241C18] dark:via-[#1E1713] dark:to-[#17110E] border-2 border-caramel-500/25 dark:border-caramel-500/30 p-3 sm:p-4 shadow-caramel-lg relative overflow-hidden select-none shrink-0">
             
             <!-- Górna część telefonu: pasek statusu + powiększony zegar lock-screen -->
             <div>
               <!-- Pasek statusu telefonu (dokładny zegar, dynamiczna wyspa, stan baterii) -->
-              <div class="flex items-center justify-between text-[11px] font-bold text-ink-muted/80 px-1 pb-2.5 mb-2 border-b border-caramel-500/15">
+              <div class="flex items-center justify-between text-[10px] sm:text-[11px] font-bold text-ink-muted/80 px-1 pb-2 sm:pb-2.5 mb-1.5 sm:mb-2 border-b border-caramel-500/15">
                 <span id="heroPhoneClock" class="tracking-tight font-bold text-ink-soft">--:--</span>
-                <div class="w-16 h-3.5 bg-ink/15 dark:bg-white/15 rounded-full"></div>
+                <div class="w-14 sm:w-16 h-3 sm:h-3.5 bg-ink/15 dark:bg-white/15 rounded-full"></div>
                 <div class="flex items-center gap-1.5 text-ink-muted">
                   <i data-lucide="wifi" class="w-3 h-3"></i>
                   <i data-lucide="battery-charging" class="w-3.5 h-3.5 text-emerald-500"></i>
                 </div>
               </div>
 
-              <!-- Elegancki zegar i data ekranu blokady smartfona (większy odstęp od góry i od daty) -->
-              <div class="text-center pt-3 sm:pt-3.5 pb-2">
-                <p id="heroPhoneDate" class="text-[11px] font-semibold text-ink-muted">Czw., 22 października</p>
-                <div class="pt-2 sm:pt-2.5 pb-1">
-                  <span id="heroPhoneBigClock" class="text-[3.35rem] sm:text-[3.85rem] font-black text-ink tracking-tight leading-none">--:--</span>
+              <!-- Elegancki zegar i data ekranu blokady smartfona -->
+              <div class="text-center pt-1.5 sm:pt-3.5 pb-1 sm:pb-2">
+                <p id="heroPhoneDate" class="text-[10px] sm:text-[11px] font-semibold text-ink-muted">Czw., 22 października</p>
+                <div class="pt-1 sm:pt-2.5 pb-0.5 sm:pb-1">
+                  <span id="heroPhoneBigClock" class="text-[2.75rem] sm:text-[3.85rem] font-black text-ink tracking-tight leading-none">--:--</span>
                 </div>
               </div>
             </div>
 
             <!-- Środkowa część: Okno na dokładnie 3 powiadomienia (wysokość 254px) -->
-            <div id="heroNotificationWindow" class="relative overflow-hidden h-[254px] w-full my-1">
+            <div id="heroNotificationWindow" class="relative overflow-hidden h-[230px] sm:h-[254px] w-full my-1">
               <div id="heroNotificationList" class="flex flex-col gap-2.5 will-change-transform">
                 <!-- Karta 1 (Addict Tattoo - 7 min temu) -->
                 <div class="notification-card rounded-2xl p-2.5 bg-white/95 dark:bg-[#2A201A]/95 border border-caramel-500/20 dark:border-caramel-500/25 shadow-xs flex items-center gap-2.5 transition-all cursor-default">
@@ -532,7 +529,7 @@
   <!-- ========================================== -->
   <!-- 1. ZAKŁADKA: OFERTA (Lekko przezroczysta, bez gradientu) -->
   <!-- ========================================== -->
-  <section id="oferta" class="py-20 md:py-24 relative z-10 bg-white/70 overflow-hidden">
+  <section id="oferta" class="py-12 sm:py-20 md:py-24 relative z-10 bg-white/70 overflow-hidden">
     <!-- Subtelna pajęczyna w lewym górnym rogu sekcji Oferta (Halloween) -->
     <div class="halloween-item absolute top-0 left-0 w-32 sm:w-44 h-32 sm:h-44 pointer-events-none z-0" aria-hidden="true">
       <svg viewBox="0 0 200 200" class="w-full h-full text-caramel-600/25 dark:text-[#D4A373]/25 transform scale-x-[-1]" fill="none" stroke="currentColor" stroke-linecap="round">
@@ -551,68 +548,68 @@
 
     <div class="max-w-5xl mx-auto px-4 sm:px-6">
       
-      <div class="text-center max-w-xl mx-auto mb-12 reveal-fade-up">
+      <div class="text-center max-w-xl mx-auto mb-8 sm:mb-12 reveal-fade-up">
         <span class="text-xs font-bold text-caramel-600 uppercase tracking-wider block mb-1">Oferta</span>
         <h2 class="text-2xl sm:text-4xl font-extrabold text-ink tracking-tight">
           Wszystko, czego potrzebuje lokalna firma
         </h2>
-        <p class="text-sm text-ink-muted mt-2">
-          Bez skomplikowanego żargonu. Jasne funkcje, które przynoszą nowych klientów.
+        <p class="text-xs sm:text-sm text-ink-muted mt-2">
+          Jasne, sprawdzone funkcje, które przynoszą nowych klientów.
         </p>
       </div>
 
-      <!-- 3 Karty z naprzemienną animacją wlotu z lewej i prawej -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <!-- 3 Karty: Kompaktowe i czytelne na telefonie -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
         
         <!-- Karta 1 (Z lewej) -->
-        <div class="slide-from-left bg-white/95 border border-caramel-500/15 rounded-3xl p-6 shadow-soft flex flex-col justify-between hover:border-caramel-500/35">
+        <div class="slide-from-left bg-white/95 border border-caramel-500/15 rounded-2xl sm:rounded-3xl p-4.5 sm:p-6 shadow-soft flex flex-col justify-between hover:border-caramel-500/35">
           <div>
-            <div class="w-12 h-12 rounded-2xl bg-cream-50 border border-caramel-500/20 flex items-center justify-center text-caramel-600 mb-4">
-              <i data-lucide="layout" class="w-6 h-6"></i>
+            <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-cream-50 border border-caramel-500/20 flex items-center justify-center text-caramel-600 mb-3 sm:mb-4">
+              <i data-lucide="layout" class="w-5 h-5 sm:w-6 sm:h-6"></i>
             </div>
-            <h3 class="text-lg font-bold text-ink mb-2">Strona WWW dla Firmy</h3>
-            <p class="text-xs sm:text-sm text-ink-muted leading-relaxed mb-4">
-              Nowoczesna wizytówka, która błyskawicznie otwiera się na telefonie. Pokazuje Twoje usługi, czytelny cennik, opinie i mapę dojazdu.
+            <h3 class="text-base sm:text-lg font-bold text-ink mb-1.5 sm:mb-2">Strona WWW dla Firmy</h3>
+            <p class="text-xs sm:text-sm text-ink-muted leading-relaxed mb-3 sm:mb-4">
+              Szybka wizytówka na smartfony. Pokazuje Twoje usługi, cennik, opinie i trasę dojazdu.
             </p>
           </div>
-          <div class="pt-3 border-t border-caramel-500/10 text-xs font-semibold text-caramel-700 flex items-center gap-1.5">
+          <div class="pt-2.5 sm:pt-3 border-t border-caramel-500/10 text-xs font-semibold text-caramel-700 flex items-center gap-1.5">
             <i data-lucide="check" class="w-3.5 h-3.5 text-emerald-600"></i>
             <span>Ładowanie poniżej 1 sekundy</span>
           </div>
         </div>
 
         <!-- Karta 2 (Z prawej - Wyróżniona) -->
-        <div class="card-featured-oferta slide-from-right delay-100 bg-gradient-to-b from-white via-cream-50/90 to-caramel-100/50 border-2 border-caramel-500/50 rounded-3xl p-6 shadow-soft-lg flex flex-col justify-between relative hover:border-caramel-500">
+        <div class="card-featured-oferta slide-from-right delay-100 bg-gradient-to-b from-white via-cream-50/90 to-caramel-100/50 border-2 border-caramel-500/50 rounded-2xl sm:rounded-3xl p-4.5 sm:p-6 shadow-soft-lg flex flex-col justify-between relative hover:border-caramel-500">
           <div class="absolute -top-3 right-6 px-3 py-0.5 rounded-full bg-caramel-500 text-white text-[10px] font-extrabold uppercase tracking-wide">
             Automatyzacja 24/7
           </div>
           <div>
-            <div class="w-12 h-12 rounded-2xl bg-caramel-100 border border-caramel-500/30 flex items-center justify-center text-caramel-700 mb-4">
-              <i data-lucide="calendar" class="w-6 h-6"></i>
+            <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-caramel-100 border border-caramel-500/30 flex items-center justify-center text-caramel-700 mb-3 sm:mb-4">
+              <i data-lucide="calendar" class="w-5 h-5 sm:w-6 sm:h-6"></i>
             </div>
-            <h3 class="text-lg font-bold text-ink mb-2">System Rezerwacji 24/7</h3>
-            <p class="text-xs sm:text-sm text-ink-muted leading-relaxed mb-4">
-              Klienci sami rezerwują wizyty o każdej porze bez dzwonienia. Terminy wpadają wprost do Twojego kalendarza z automatycznym powiadomieniem e-mail.
+            <h3 class="text-base sm:text-lg font-bold text-ink mb-1.5 sm:mb-2">System Rezerwacji 24/7</h3>
+            <p class="text-xs sm:text-sm text-ink-muted leading-relaxed mb-3 sm:mb-4">
+              Samodzielne zapisy 24/7. Terminy wpadają wprost do Twojego kalendarza z powiadomieniem e-mail.
             </p>
           </div>
-          <div class="pt-3 border-t border-caramel-500/10 text-xs font-semibold text-caramel-700 flex items-center gap-1.5">
+          <div class="pt-2.5 sm:pt-3 border-t border-caramel-500/10 text-xs font-semibold text-caramel-700 flex items-center gap-1.5">
             <i data-lucide="check" class="w-3.5 h-3.5 text-emerald-600"></i>
             <span>Zero prowizji od wizyt</span>
           </div>
         </div>
 
         <!-- Karta 3 (Z lewej) -->
-        <div class="slide-from-left delay-200 bg-white/95 border border-caramel-500/15 rounded-3xl p-6 shadow-soft flex flex-col justify-between hover:border-caramel-500/35">
+        <div class="slide-from-left delay-200 bg-white/95 border border-caramel-500/15 rounded-2xl sm:rounded-3xl p-4.5 sm:p-6 shadow-soft flex flex-col justify-between hover:border-caramel-500/35">
           <div>
-            <div class="w-12 h-12 rounded-2xl bg-cream-50 border border-caramel-500/20 flex items-center justify-center text-caramel-600 mb-4">
-              <i data-lucide="map-pin" class="w-6 h-6"></i>
+            <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-cream-50 border border-caramel-500/20 flex items-center justify-center text-caramel-600 mb-3 sm:mb-4">
+              <i data-lucide="map-pin" class="w-5 h-5 sm:w-6 sm:h-6"></i>
             </div>
-            <h3 class="text-lg font-bold text-ink mb-2">Google Maps & Widoczność</h3>
-            <p class="text-xs sm:text-sm text-ink-muted leading-relaxed mb-4">
-              Optymalizacja wizytówki na mapach Google, aby osoby z Twojej dzielnicy i miasta bez trudu znalazły Twój numer i adres.
+            <h3 class="text-base sm:text-lg font-bold text-ink mb-1.5 sm:mb-2">Google Maps & Widoczność</h3>
+            <p class="text-xs sm:text-sm text-ink-muted leading-relaxed mb-3 sm:mb-4">
+              Optymalizacja profilu na mapach Google, aby lokalni klienci łatwo znaleźli Twój numer i adres.
             </p>
           </div>
-          <div class="pt-3 border-t border-caramel-500/10 text-xs font-semibold text-caramel-700 flex items-center gap-1.5">
+          <div class="pt-2.5 sm:pt-3 border-t border-caramel-500/10 text-xs font-semibold text-caramel-700 flex items-center gap-1.5">
             <i data-lucide="check" class="w-3.5 h-3.5 text-emerald-600"></i>
             <span>Więcej zapytań z okolicy</span>
           </div>
@@ -697,11 +694,11 @@
         </div>
       </div>
 
-      <!-- Projekty naprzemiennie z lewej i prawej -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <!-- Projekty: Na telefonie pozioma karuzela (scroll-snap) z wyśrodkowanym projektem i widocznymi sąsiednimi po bokach, na desktopie pełna siatka 3 kolumn -->
+      <div id="portfolioSlider" class="portfolio-slider flex md:grid md:grid-cols-3 gap-4 md:gap-6 overflow-x-auto md:overflow-visible snap-x snap-mandatory scroll-smooth pb-3 pt-1 px-4 sm:px-0 -mx-4 sm:mx-0 scrollbar-none items-stretch">
         
-        <!-- Projekt 1 (Z lewej - Addict Tattoo) -->
-        <div class="slide-from-left bg-white/95 border border-caramel-500/20 rounded-3xl p-5 shadow-soft hover:shadow-soft-lg hover:border-caramel-500/45 flex flex-col justify-between">
+        <!-- Projekt 1 (Addict Tattoo) -->
+        <div class="portfolio-card w-[84vw] max-w-[325px] md:w-auto shrink-0 md:shrink snap-center slide-from-left bg-white/95 border border-caramel-500/20 rounded-3xl p-5 shadow-soft hover:shadow-soft-lg hover:border-caramel-500/45 flex flex-col justify-between">
           <div>
             <a href="https://waskacper-sites.github.io/addict-tattoo/" target="_blank" rel="noopener noreferrer" class="portfolio-preview-box-1 h-40 rounded-2xl overflow-hidden relative border border-caramel-500/20 bg-cream-100 flex flex-col mb-4 group shadow-xs block cursor-pointer" title="Otwórz stronę na żywo: waskacper-sites.github.io/addict-tattoo">
               <div class="portfolio-browser-bar px-3 py-1.5 flex items-center justify-between shrink-0">
@@ -733,8 +730,8 @@
           </div>
         </div>
 
-        <!-- Projekt 2 (Środek - Me Dead Art Tattoo) -->
-        <div class="slide-from-right delay-100 bg-white/95 border border-caramel-500/20 rounded-3xl p-5 shadow-soft hover:shadow-soft-lg hover:border-caramel-500/45 flex flex-col justify-between">
+        <!-- Projekt 2 (Me Dead Art Tattoo) -->
+        <div class="portfolio-card w-[84vw] max-w-[325px] md:w-auto shrink-0 md:shrink snap-center slide-from-right delay-100 bg-white/95 border border-caramel-500/20 rounded-3xl p-5 shadow-soft hover:shadow-soft-lg hover:border-caramel-500/45 flex flex-col justify-between">
           <div>
             <a href="https://waskacper-sites.github.io/medeadart" target="_blank" rel="noopener noreferrer" class="portfolio-preview-box-2 h-40 rounded-2xl overflow-hidden relative border border-caramel-500/20 bg-cream-100 flex flex-col mb-4 group shadow-xs block cursor-pointer" title="Otwórz stronę na żywo: waskacper-sites.github.io/medeadart">
               <div class="portfolio-browser-bar px-3 py-1.5 flex items-center justify-between shrink-0">
@@ -766,8 +763,8 @@
           </div>
         </div>
 
-        <!-- Projekt 3 (Po prawej - Ceguaink Tattoo Studio) -->
-        <div class="slide-from-left delay-200 bg-white/95 border border-caramel-500/20 rounded-3xl p-5 shadow-soft hover:shadow-soft-lg hover:border-caramel-500/45 flex flex-col justify-between">
+        <!-- Projekt 3 (Ceguaink Tattoo Studio) -->
+        <div class="portfolio-card w-[84vw] max-w-[325px] md:w-auto shrink-0 md:shrink snap-center slide-from-left delay-200 bg-white/95 border border-caramel-500/20 rounded-3xl p-5 shadow-soft hover:shadow-soft-lg hover:border-caramel-500/45 flex flex-col justify-between">
           <div>
             <a href="https://waskacper-sites.github.io/ceguaink/" target="_blank" rel="noopener noreferrer" class="portfolio-preview-box-3 h-40 rounded-2xl overflow-hidden relative border border-caramel-500/20 bg-cream-100 flex flex-col mb-4 group shadow-xs block cursor-pointer" title="Otwórz stronę na żywo: waskacper-sites.github.io/ceguaink">
               <div class="portfolio-browser-bar px-3 py-1.5 flex items-center justify-between shrink-0">
@@ -801,6 +798,27 @@
 
       </div>
 
+      <!-- Wskaźniki i nawigacja dla telefonu (Ukryte na desktopie) -->
+      <div class="flex md:hidden items-center justify-between pt-3 px-2">
+        <button onclick="slidePortfolio(-1)" class="w-8 h-8 rounded-full bg-white/90 dark:bg-[#2A201A] border border-caramel-500/25 flex items-center justify-center text-ink shadow-xs active:scale-95 transition-all cursor-pointer" aria-label="Poprzedni projekt">
+          <i data-lucide="chevron-left" class="w-4 h-4 text-caramel-600 dark:text-[#D4A373]"></i>
+        </button>
+
+        <div class="flex items-center gap-1.5" id="portfolioDots">
+          <button onclick="scrollToProject(0)" class="portfolio-dot w-6 h-2 rounded-full bg-caramel-500 transition-all duration-300" aria-label="Projekt 1"></button>
+          <button onclick="scrollToProject(1)" class="portfolio-dot w-2 h-2 rounded-full bg-caramel-500/30 dark:bg-caramel-500/20 transition-all duration-300" aria-label="Projekt 2"></button>
+          <button onclick="scrollToProject(2)" class="portfolio-dot w-2 h-2 rounded-full bg-caramel-500/30 dark:bg-caramel-500/20 transition-all duration-300" aria-label="Projekt 3"></button>
+        </div>
+
+        <button onclick="slidePortfolio(1)" class="w-8 h-8 rounded-full bg-white/90 dark:bg-[#2A201A] border border-caramel-500/25 flex items-center justify-center text-ink shadow-xs active:scale-95 transition-all cursor-pointer" aria-label="Następny projekt">
+          <i data-lucide="chevron-right" class="w-4 h-4 text-caramel-600 dark:text-[#D4A373]"></i>
+        </button>
+      </div>
+
+      <div class="flex md:hidden items-center justify-center gap-1 text-[11px] font-bold text-caramel-600/80 dark:text-[#D4A373]/80 pt-1.5">
+        <span>← Przesuń palcem realizacje →</span>
+      </div>
+
     </div>
   </section>
 
@@ -812,26 +830,26 @@
   <!-- ========================================== -->
   <!-- 3. ZAKŁADKA: JAK TO DZIAŁA (Bez gradientu, czysta forma) -->
   <!-- ========================================== -->
-  <section id="jak-to-dziala" class="py-20 md:py-24 relative z-10">
+  <section id="jak-to-dziala" class="py-12 sm:py-20 md:py-24 relative z-10">
     <div class="max-w-4xl mx-auto px-4 sm:px-6">
       
-      <div class="text-center max-w-xl mx-auto mb-12 reveal-fade-up">
+      <div class="text-center max-w-xl mx-auto mb-8 sm:mb-12 reveal-fade-up">
         <span class="text-xs font-bold text-caramel-600 uppercase tracking-wider block mb-1">Współpraca</span>
         <h2 class="text-2xl sm:text-4xl font-extrabold text-ink tracking-tight">
           Jak to działa? Prosto, w 3 krokach
         </h2>
-        <p class="text-sm text-ink-muted mt-2">
+        <p class="text-xs sm:text-sm text-ink-muted mt-2">
           Nie musisz znać się na technologii. Wszystkim zajmuję się ja.
         </p>
       </div>
 
       <!-- Krok 1 (Z lewej) -->
-      <div class="step-card slide-from-left bg-gradient-to-r from-white/95 via-white/90 to-cream-50/85 border border-caramel-500/15 rounded-3xl p-6 sm:p-7 shadow-soft mb-4 flex items-start gap-4 sm:gap-6 hover:border-caramel-500/35 transition-colors">
-        <div class="w-12 h-12 rounded-2xl bg-cream-100 text-caramel-700 font-extrabold text-lg flex items-center justify-center shrink-0 border border-caramel-500/20">
+      <div class="step-card slide-from-left bg-gradient-to-r from-white/95 via-white/90 to-cream-50/85 border border-caramel-500/15 rounded-2xl sm:rounded-3xl p-4.5 sm:p-7 shadow-soft mb-3 sm:mb-4 flex items-start gap-3.5 sm:gap-6 hover:border-caramel-500/35 transition-colors">
+        <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-cream-100 text-caramel-700 font-extrabold text-base sm:text-lg flex items-center justify-center shrink-0 border border-caramel-500/20">
           01
         </div>
         <div>
-          <h3 class="text-base sm:text-lg font-bold text-ink mb-1">Krótka rozmowa (telefon, Instagram lub SMS)</h3>
+          <h3 class="text-sm sm:text-lg font-bold text-ink mb-1">Krótka rozmowa (telefon, Instagram lub SMS)</h3>
           <p class="text-xs sm:text-sm text-ink-muted leading-relaxed">
             Ustalamy, czym zajmuje się Twoja firma, jakie usługi oferujesz i co ma znaleźć się na stronie. Żadnych formularzy z żargonem.
           </p>
@@ -839,12 +857,12 @@
       </div>
 
       <!-- Krok 2 (Z prawej) -->
-      <div class="step-card slide-from-right delay-100 bg-gradient-to-r from-white/95 via-caramel-50/80 to-cream-50/90 border border-caramel-500/25 rounded-3xl p-6 sm:p-7 shadow-soft mb-4 flex items-start gap-4 sm:gap-6 hover:border-caramel-500/45 transition-colors">
-        <div class="w-12 h-12 rounded-2xl bg-caramel-500 text-white font-extrabold text-lg flex items-center justify-center shrink-0 shadow-caramel">
+      <div class="step-card slide-from-right delay-100 bg-gradient-to-r from-white/95 via-caramel-50/80 to-cream-50/90 border border-caramel-500/25 rounded-2xl sm:rounded-3xl p-4.5 sm:p-7 shadow-soft mb-3 sm:mb-4 flex items-start gap-3.5 sm:gap-6 hover:border-caramel-500/45 transition-colors">
+        <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-caramel-500 text-white font-extrabold text-base sm:text-lg flex items-center justify-center shrink-0 shadow-caramel">
           02
         </div>
         <div>
-          <h3 class="text-base sm:text-lg font-bold text-ink mb-1">Projekt i podgląd na telefonie</h3>
+          <h3 class="text-sm sm:text-lg font-bold text-ink mb-1">Projekt i podgląd na telefonie</h3>
           <p class="text-xs sm:text-sm text-ink-muted leading-relaxed">
             W mniej niż 7 dni (&lt; 7 dni) przygotowuję działającą stronę. Wchodzisz w link na swoim smartfonie, sprawdzasz jak działa i zgłaszasz ewentualne poprawki.
           </p>
@@ -852,7 +870,7 @@
       </div>
 
       <!-- Krok 3 (Z lewej) -->
-      <div class="step-card slide-from-left delay-200 bg-gradient-to-r from-white/95 via-white/90 to-cream-50/85 border border-caramel-500/15 rounded-3xl p-6 sm:p-7 shadow-soft flex items-start gap-4 sm:gap-6 hover:border-caramel-500/35 transition-colors relative overflow-hidden">
+      <div class="step-card slide-from-left delay-200 bg-gradient-to-r from-white/95 via-white/90 to-cream-50/85 border border-caramel-500/15 rounded-2xl sm:rounded-3xl p-4.5 sm:p-7 shadow-soft flex items-start gap-3.5 sm:gap-6 hover:border-caramel-500/35 transition-colors relative overflow-hidden">
         <!-- Mały wektorowy akcent dyni w rogu karty -->
         <div class="halloween-item absolute -bottom-1 -right-1 w-9 h-9 pointer-events-none select-none opacity-45 dark:opacity-35 drop-shadow-2xs transform rotate-12" aria-hidden="true">
           <svg viewBox="0 0 32 32" fill="none" class="w-full h-full">
@@ -863,11 +881,11 @@
             <path d="M12 21 C14 23.5, 18 23.5, 20 21" stroke="#78350F" stroke-width="1.2" stroke-linecap="round"/>
           </svg>
         </div>
-        <div class="w-12 h-12 rounded-2xl bg-sage-100 text-sage-600 font-extrabold text-lg flex items-center justify-center shrink-0 border border-sage-600/20">
+        <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-sage-100 text-sage-600 font-extrabold text-base sm:text-lg flex items-center justify-center shrink-0 border border-sage-600/20">
           03
         </div>
         <div>
-          <h3 class="text-base sm:text-lg font-bold text-ink mb-1">Publikacja i nowi klienci</h3>
+          <h3 class="text-sm sm:text-lg font-bold text-ink mb-1">Publikacja i nowi klienci</h3>
           <p class="text-xs sm:text-sm text-ink-muted leading-relaxed">
             Podpinamy Twoją domenę i uruchamiamy stronę. Pokazuję Ci w 10 minut, jak przeglądać zapisy. Strona jest gotowa do działania.
           </p>
@@ -885,38 +903,38 @@
   <!-- ========================================== -->
   <!-- 4. ZAKŁADKA: CENNIK (Lekko przezroczysta tafla, bez gradientu) -->
   <!-- ========================================== -->
-  <section id="cennik" class="py-20 md:py-28 relative z-10 bg-white/70">
+  <section id="cennik" class="py-12 sm:py-20 md:py-28 relative z-10 bg-white/70">
     <div class="max-w-4xl mx-auto px-4 sm:px-6">
       
-      <div class="text-center max-w-xl mx-auto mb-12 reveal-fade-up">
+      <div class="text-center max-w-xl mx-auto mb-8 sm:mb-12 reveal-fade-up">
         <span class="text-xs font-bold text-caramel-600 uppercase tracking-wider block mb-1">Cennik</span>
         <h2 class="text-2xl sm:text-4xl font-extrabold text-ink tracking-tight">
           Przejrzyste pakiety bez abonamentu
         </h2>
-        <p class="text-sm text-ink-muted mt-2">
+        <p class="text-xs sm:text-sm text-ink-muted mt-2">
           Płacisz raz. Strona jest w 100% Twoją własnością.
         </p>
       </div>
 
       <!-- 2 Główne Pakiety (Z lewej i prawej) -->
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 items-stretch">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-8 items-stretch">
         
         <!-- Pakiet 1: Strona Wizytówka (Z lewej) -->
-        <div class="slide-from-left bg-white/95 border border-caramel-500/20 rounded-3xl p-7 shadow-soft flex flex-col justify-between hover:bg-white hover:border-caramel-500/40 transition-colors">
+        <div class="slide-from-left bg-white/95 border border-caramel-500/20 rounded-2xl sm:rounded-3xl p-5 sm:p-7 shadow-soft flex flex-col justify-between hover:bg-white hover:border-caramel-500/40 transition-colors">
           <div>
-            <div class="flex justify-between items-center mb-3">
+            <div class="flex justify-between items-center mb-2 sm:mb-3">
               <span class="text-xs font-bold text-ink-soft uppercase tracking-wider">Dla większości firm</span>
               <span class="text-xs text-ink-muted">Czas: &lt; 7 dni</span>
             </div>
-            <h3 class="text-xl font-extrabold text-ink mb-2">Strona Wizytówkowa</h3>
-            <p class="text-xs text-ink-muted mb-6">Kompletna, szybka strona pokazująca Twoją ofertę, cennik i kontakt.</p>
+            <h3 class="text-lg sm:text-xl font-extrabold text-ink mb-1.5 sm:mb-2">Strona Wizytówkowa</h3>
+            <p class="text-xs text-ink-muted mb-4 sm:mb-6">Kompletna, szybka strona pokazująca Twoją ofertę, cennik i kontakt.</p>
             
-            <div class="mb-6">
-              <span class="text-3xl font-extrabold text-ink">od 500 zł</span>
+            <div class="mb-5 sm:mb-6">
+              <span class="text-2xl sm:text-3xl font-extrabold text-ink">od 500 zł</span>
               <span class="text-xs text-ink-muted block mt-0.5">jednorazowo, bez ukrytych opłat</span>
             </div>
 
-            <ul class="space-y-3 text-xs sm:text-sm text-ink-soft mb-8">
+            <ul class="space-y-2.5 sm:space-y-3 text-xs sm:text-sm text-ink-soft mb-6 sm:mb-8">
               <li class="flex items-center gap-2">
                 <i data-lucide="check" class="w-4 h-4 text-emerald-600 shrink-0"></i>
                 <span>Projekt dopasowany do Twojej branży</span>
@@ -936,18 +954,18 @@
             </ul>
           </div>
 
-          <button onclick="selectPackage('Strona Wizytówkowa (od 500 zł)')" class="w-full py-3 rounded-full bg-cream-200 hover:bg-cream-300 text-ink font-bold text-xs sm:text-sm transition-colors text-center cursor-pointer">
+          <button onclick="selectPackage('Strona Wizytówkowa (od 500 zł)')" class="w-full py-2.5 sm:py-3 rounded-full bg-cream-200 hover:bg-cream-300 text-ink font-bold text-xs sm:text-sm transition-colors text-center cursor-pointer">
             Wybieram ten pakiet
           </button>
         </div>
 
         <!-- Pakiet 2: Strona z Rezerwacjami (Z prawej - Wyróżniony) -->
-        <div class="cennik-featured-card slide-from-right delay-100 bg-gradient-to-b from-white via-cream-50/95 to-caramel-100/60 border-2 border-caramel-500 rounded-3xl p-7 shadow-caramel-lg flex flex-col justify-between relative">
-          <div class="absolute -top-3 left-8 px-3.5 py-0.5 rounded-full bg-caramel-500 text-white text-[11px] font-extrabold tracking-wide uppercase shadow-sm">
+        <div class="cennik-featured-card slide-from-right delay-100 bg-gradient-to-b from-white via-cream-50/95 to-caramel-100/60 border-2 border-caramel-500 rounded-2xl sm:rounded-3xl p-5 sm:p-7 shadow-caramel-lg flex flex-col justify-between relative">
+          <div class="absolute -top-3 left-6 sm:left-8 px-3 sm:px-3.5 py-0.5 rounded-full bg-caramel-500 text-white text-[10px] sm:text-[11px] font-extrabold tracking-wide uppercase shadow-sm">
             Polecane dla usług
           </div>
           <!-- Dopracowana grafika dyni z ciepłym blaskiem na karcie cennika -->
-          <div class="halloween-item absolute -top-5 sm:-top-6 -right-2 sm:-right-3 w-11 h-11 sm:w-12 sm:h-12 select-none pointer-events-none drop-shadow-md transform rotate-6 hover:rotate-12 transition-transform">
+          <div class="halloween-item absolute -top-5 sm:-top-6 -right-2 sm:-right-3 w-10 h-10 sm:w-12 sm:h-12 select-none pointer-events-none drop-shadow-md transform rotate-6 hover:rotate-12 transition-transform">
             <svg viewBox="0 0 64 64" fill="none" class="w-full h-full">
               <!-- Ogon / łodyga -->
               <path d="M30 18 C30 10, 36 6, 42 7 C40 10, 37 13, 34 19 Z" fill="#4D7C0F"/>
@@ -967,19 +985,19 @@
           </div>
 
           <div>
-            <div class="flex justify-between items-center mb-3">
+            <div class="flex justify-between items-center mb-2 sm:mb-3">
               <span class="text-xs font-bold text-caramel-700 uppercase tracking-wider">Pełna automatyzacja</span>
               <span class="text-xs text-ink-muted">Czas: &lt; 7 dni</span>
             </div>
-            <h3 class="text-xl font-extrabold text-ink mb-2">Strona + System Rezerwacji</h3>
-            <p class="text-xs text-ink-muted mb-6">Wizytówka firmy połączona z kalendarzem online do samodzielnych zapisów.</p>
+            <h3 class="text-lg sm:text-xl font-extrabold text-ink mb-1.5 sm:mb-2">Strona + System Rezerwacji</h3>
+            <p class="text-xs text-ink-muted mb-4 sm:mb-6">Wizytówka firmy połączona z kalendarzem online do samodzielnych zapisów.</p>
             
-            <div class="mb-6">
-              <span class="text-3xl font-extrabold text-ink">od 800 zł</span>
+            <div class="mb-5 sm:mb-6">
+              <span class="text-2xl sm:text-3xl font-extrabold text-ink">od 800 zł</span>
               <span class="text-xs text-caramel-700 font-semibold block mt-0.5">jednorazowo • 0 zł prowizji od wizyt</span>
             </div>
 
-            <ul class="space-y-3 text-xs sm:text-sm text-ink-soft mb-8">
+            <ul class="space-y-2.5 sm:space-y-3 text-xs sm:text-sm text-ink-soft mb-6 sm:mb-8">
               <li class="flex items-center gap-2 font-semibold text-ink">
                 <i data-lucide="check-circle" class="w-4 h-4 text-emerald-600 shrink-0"></i>
                 <span>Wszystko z pakietu Wizytówka</span>
@@ -999,7 +1017,7 @@
             </ul>
           </div>
 
-          <button onclick="selectPackage('Strona + Rezerwacje (od 800 zł)')" class="w-full py-3 rounded-full bg-caramel-500 hover:bg-caramel-600 text-white font-bold text-xs sm:text-sm shadow-caramel transition-all text-center cursor-pointer">
+          <button onclick="selectPackage('Strona + Rezerwacje (od 800 zł)')" class="w-full py-2.5 sm:py-3 rounded-full bg-caramel-500 hover:bg-caramel-600 text-white font-bold text-xs sm:text-sm shadow-caramel transition-all text-center cursor-pointer">
             Wybieram ten pakiet
           </button>
         </div>
