@@ -5,8 +5,9 @@
 // Globalna instancja płynnego scrolla (Lenis)
 let lenis = null;
 
-// Wczesna inicjalizacja motywu aby uniknąć mignięcia ekranu
+// Wczesna inicjalizacja motywu oraz klimatu sezonowego
 initTheme();
+initHalloweenSeason();
 
 document.addEventListener('DOMContentLoaded', () => {
   // Inicjalizacja ikon Lucide
@@ -15,6 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // Inicjalizacja modułów
+  initHalloweenSeason();
   initSmoothScroll();
   initCustomCursor();
   initHeroMascot();
@@ -33,11 +35,33 @@ document.addEventListener('DOMContentLoaded', () => {
    ========================================================================== */
 function initSmoothScroll() {
   if (typeof Lenis !== 'undefined') {
+    // Sprawdzamy czy użytkownik korzysta z urządzenia dotykowego (smartfon/tablet)
+    const isTouch = window.matchMedia('(pointer: coarse)').matches || ('ontouchstart' in window);
+
+    // Na telefonach: 100% natywne, sprzętowe przewijanie 60/120Hz bez sztucznego opóźnienia JS
+    if (isTouch) {
+      // Płynne przewijanie do kotwic w menu za pomocą natywnego scrollIntoView
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+          const targetId = this.getAttribute('href');
+          if (targetId && targetId !== '#') {
+            const targetEl = document.querySelector(targetId);
+            if (targetEl) {
+              e.preventDefault();
+              targetEl.scrollIntoView({ behavior: 'smooth' });
+            }
+          }
+        });
+      });
+      return;
+    }
+
+    // Na komputerze: zminimalizowany, ultra-zwinny smooth scroll (0.65s zamiast 1.35s)
     lenis = new Lenis({
-      duration: 1.35,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      duration: 0.65,
+      easing: (t) => 1 - Math.pow(1 - t, 3), // szybki start, miękkie wygaszenie cubic ease-out
       smoothWheel: true,
-      touchMultiplier: 1.4,
+      syncTouch: false,
     });
 
     function raf(time) {
@@ -54,7 +78,7 @@ function initSmoothScroll() {
           const targetEl = document.querySelector(targetId);
           if (targetEl) {
             e.preventDefault();
-            lenis.scrollTo(targetEl, { offset: -70, duration: 1.4 });
+            lenis.scrollTo(targetEl, { offset: -70, duration: 0.75 });
           }
         }
       });
@@ -70,14 +94,12 @@ let cursorEnabled = true;
 function initCustomCursor() {
   const customCursor = document.getElementById('customCursor');
   const cursorInner = document.getElementById('cursorInner');
-  const cursorAura = document.getElementById('cursorAura');
   const body = document.body;
 
   // Sprawdzamy czy to urządzenie ze wskaźnikiem myszy (nie dotyk)
   const isFinePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
   if (!isFinePointer) {
     if (customCursor) customCursor.style.display = 'none';
-    if (cursorAura) cursorAura.style.display = 'none';
     return;
   }
 
@@ -88,9 +110,41 @@ function initCustomCursor() {
   let mouseY = window.innerHeight / 2;
   let cursorX = mouseX;
   let cursorY = mouseY;
-  let auraX = mouseX;
-  let auraY = mouseY;
   let isMouseInside = false;
+  let isLoopRunning = false;
+
+  function renderCursor() {
+    if (!cursorEnabled || !isMouseInside) {
+      isLoopRunning = false;
+      return;
+    }
+
+    const dx = mouseX - cursorX;
+    const dy = mouseY - cursorY;
+
+    // Szybka, bezpośrednia interpolacja (0.85)
+    cursorX += dx * 0.85;
+    cursorY += dy * 0.85;
+
+    if (customCursor) {
+      customCursor.style.transform = `translate3d(${cursorX}px, ${cursorY}px, 0) translate(-38%, -24.5%)`;
+    }
+
+    // Pętla rAF działa tylko gdy kursor dogania myszkę (różnica > 0.25px).
+    // Gdy mysz stoi w miejscu, pętla natychmiast się wyłącza (0% CPU / 0% GPU w spoczynku).
+    if (Math.abs(dx) > 0.25 || Math.abs(dy) > 0.25) {
+      requestAnimationFrame(renderCursor);
+    } else {
+      isLoopRunning = false;
+    }
+  }
+
+  function wakeCursor() {
+    if (!isLoopRunning && isMouseInside && cursorEnabled) {
+      isLoopRunning = true;
+      requestAnimationFrame(renderCursor);
+    }
+  }
 
   window.addEventListener('mousemove', (e) => {
     mouseX = e.clientX;
@@ -99,44 +153,22 @@ function initCustomCursor() {
     if (!isMouseInside) {
       isMouseInside = true;
       if (customCursor && cursorEnabled) customCursor.style.opacity = '1';
-      if (cursorAura) cursorAura.style.opacity = '0.85';
     }
-  });
+    wakeCursor();
+  }, { passive: true });
 
   document.addEventListener('mouseleave', () => {
     isMouseInside = false;
     if (customCursor) customCursor.style.opacity = '0';
-    if (cursorAura) cursorAura.style.opacity = '0';
   });
 
   document.addEventListener('mouseenter', () => {
     if (cursorEnabled) {
       isMouseInside = true;
       if (customCursor) customCursor.style.opacity = '1';
-      if (cursorAura) cursorAura.style.opacity = '0.85';
+      wakeCursor();
     }
   });
-
-  // Pętla renderowania z interpolacją i akceleracją sprzętową translate3d (zero Reflow)
-  function renderCursor() {
-    if (cursorEnabled && isMouseInside) {
-      cursorX += (mouseX - cursorX) * 0.85;
-      cursorY += (mouseY - cursorY) * 0.85;
-
-      if (customCursor) {
-        customCursor.style.transform = `translate3d(${cursorX}px, ${cursorY}px, 0) translate(-38%, -24.5%)`;
-      }
-    }
-
-    auraX += (mouseX - auraX) * 0.08;
-    auraY += (mouseY - auraY) * 0.08;
-    if (cursorAura) {
-      cursorAura.style.transform = `translate3d(${auraX - 180}px, ${auraY - 180}px, 0)`;
-    }
-
-    requestAnimationFrame(renderCursor);
-  }
-  requestAnimationFrame(renderCursor);
 
   // Reakcja powiększenia nad klikalnymi elementami
   const attachHoverEffects = () => {
@@ -144,7 +176,7 @@ function initCustomCursor() {
     clickable.forEach(el => {
       el.addEventListener('mouseenter', () => {
         if (cursorInner && cursorEnabled) {
-          cursorInner.style.transform = 'scale(1.28) rotate(-6deg)';
+          cursorInner.style.transform = 'scale(1.22) rotate(-6deg)';
         }
       });
       el.addEventListener('mouseleave', () => {
@@ -156,12 +188,6 @@ function initCustomCursor() {
   };
   attachHoverEffects();
 
-  // Iskierki przy kliknięciu
-  window.addEventListener('click', (e) => {
-    if (cursorEnabled) {
-      createSparkleBurst(e.clientX, e.clientY);
-    }
-  });
 }
 
 function toggleCustomCursor() {
@@ -191,15 +217,7 @@ function toggleCustomCursor() {
 }
 
 function createSparkleBurst(x, y) {
-  for (let i = 0; i < 4; i++) {
-    const sparkle = document.createElement('div');
-    sparkle.className = 'click-sparkle text-caramel-500 text-lg font-bold select-none';
-    sparkle.textContent = '✦';
-    sparkle.style.left = `${x + (Math.random() * 28 - 14)}px`;
-    sparkle.style.top = `${y + (Math.random() * 28 - 14)}px`;
-    document.body.appendChild(sparkle);
-    setTimeout(() => sparkle.remove(), 700);
-  }
+  // Wyłączono generowanie cząsteczek przy kursorze i kliknięciach
 }
 
 /* ==========================================================================
@@ -266,16 +284,14 @@ function initScrollAnimations() {
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
-        // Element pojawia się w widoku -> powoli przypływa
+        // Element pojawia się w widoku -> płynnie przypływa i zostaje na stałe
         entry.target.classList.add('is-visible');
-      } else {
-        // Element opuszcza widok (np. przy scrollowaniu w górę) -> powoli oddala się
-        entry.target.classList.remove('is-visible');
+        observer.unobserve(entry.target);
       }
     });
   }, {
-    threshold: 0.1,
-    rootMargin: '0px 0px -40px 0px'
+    threshold: 0.08,
+    rootMargin: '0px 0px -20px 0px'
   });
 
   document.querySelectorAll('.slide-from-left, .slide-from-right, .reveal-fade-up').forEach(el => {
@@ -852,23 +868,19 @@ function initNavSlimeIndicator() {
     const scrollPos = window.scrollY || window.pageYOffset || 0;
 
     if (mainHeader) {
-      // 100% przezroczyste na samej górze, po przescrollowaniu > 10px (~1mm) płynny fade-in tła
-      if (scrollPos > 10) {
-        mainHeader.classList.add('has-scrolled');
-      } else {
-        mainHeader.classList.remove('has-scrolled');
+      const hasScrolled = scrollPos > 10;
+      if (mainHeader.classList.contains('has-scrolled') !== hasScrolled) {
+        mainHeader.classList.toggle('has-scrolled', hasScrolled);
       }
 
-      // Dynamiczne wsuwanie napisu pod logo poniżej sekcji Hero
-      if (scrollPos > heroThreshold) {
-        mainHeader.classList.add('is-scrolled');
-      } else {
-        mainHeader.classList.remove('is-scrolled');
+      const isScrolled = scrollPos > heroThreshold;
+      if (mainHeader.classList.contains('is-scrolled') !== isScrolled) {
+        mainHeader.classList.toggle('is-scrolled', isScrolled);
       }
     }
 
     // Jeśli użytkownik jest na samej górze (Hero)
-    if (window.scrollY < 200) {
+    if (scrollPos < 200) {
       if (activeLink !== null) {
         activeLink = null;
         moveTo(null, false);
@@ -897,10 +909,21 @@ function initNavSlimeIndicator() {
     }
   }
 
-  // Nasłuchiwanie przewijania (zarówno z Lenis jak i natywne)
-  window.addEventListener('scroll', checkScroll, { passive: true });
+  // Wydajne nasłuchiwanie przewijania z throttlingiem rAF (maksymalnie 1 przeliczenie na klatkę)
+  let isScrollTicking = false;
+  function handleScrollThrottle() {
+    if (!isScrollTicking) {
+      isScrollTicking = true;
+      requestAnimationFrame(() => {
+        checkScroll();
+        isScrollTicking = false;
+      });
+    }
+  }
+
+  window.addEventListener('scroll', handleScrollThrottle, { passive: true });
   if (typeof lenis !== 'undefined' && lenis) {
-    lenis.on('scroll', checkScroll);
+    lenis.on('scroll', handleScrollThrottle);
   }
 
   // Przeliczenie przy zmianie wielkości okna
@@ -964,14 +987,41 @@ function initHeroNotificationStream() {
   let isPaused = false;
   let isAnimating = false;
 
+  let streamTimer = null;
+  function startStream() {
+    if (!streamTimer) {
+      streamTimer = setInterval(slideNext, 3800);
+    }
+  }
+  function stopStream() {
+    if (streamTimer) {
+      clearInterval(streamTimer);
+      streamTimer = null;
+    }
+  }
+
   if (mockupEl) {
     mockupEl.addEventListener('mouseenter', () => { isPaused = true; });
     mockupEl.addEventListener('mouseleave', () => { isPaused = false; });
+
+    // Pauzowanie strumienia gdy sekcja Hero jest poza widokiem (zero zbędnej pracy CPU w tle)
+    const heroObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          startStream();
+        } else {
+          stopStream();
+        }
+      });
+    }, { threshold: 0.05 });
+    heroObserver.observe(mockupEl);
+  } else {
+    startStream();
   }
 
   function createCardElement(data) {
     const card = document.createElement('div');
-    card.className = 'notification-card rounded-2xl p-2.5 bg-white/90 dark:bg-[#2A201A]/90 backdrop-blur-md border border-caramel-500/20 dark:border-caramel-500/25 shadow-xs flex items-center gap-2.5 transition-all cursor-default';
+    card.className = 'notification-card rounded-2xl p-2.5 bg-white/95 dark:bg-[#2A201A]/95 border border-caramel-500/20 dark:border-caramel-500/25 shadow-xs flex items-center gap-2.5 transition-all cursor-default';
     
     const iconHtml = data.icon === 'mail-check'
       ? `<i data-lucide="mail-check" class="phone-icon-light w-4 h-4"></i><i data-lucide="mail-open" class="phone-icon-dark w-4 h-4"></i>`
@@ -1048,9 +1098,6 @@ function initHeroNotificationStream() {
       isAnimating = false;
     }, 660);
   }
-
-  // Pętla powiadomień co 3.6 sekundy
-  setInterval(slideNext, 3600);
 }
 
 /* ==========================================================================
@@ -1095,5 +1142,35 @@ document.addEventListener('click', (e) => {
   }
 });
 
+/* ==========================================================================
+   20. SEZONOWY KLIMAT HALLOWEEN (Aktywny od teraz do 8 listopada włącznie)
+   ========================================================================== */
+function isHalloweenSeason() {
+  const now = new Date();
+  const month = now.getMonth(); // 9 = Październik, 10 = Listopad
+  const day = now.getDate();
 
+  // Aktywne od teraz (dowolny dzień października) do 8 listopada włącznie:
+  const inRange = (month === 9) || (month === 10 && day <= 8);
 
+  // Opcjonalny parametr w URL do testowania w dowolnym momencie (?halloween=1 lub ?halloween=0)
+  try {
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('halloween') === '1' || urlParams.get('halloween') === 'true') return true;
+    if (urlParams.get('halloween') === '0' || urlParams.get('halloween') === 'false') return false;
+  } catch (err) {}
+
+  return inRange;
+}
+
+function initHalloweenSeason() {
+  if (isHalloweenSeason()) {
+    document.documentElement.classList.add('halloween-active');
+  } else {
+    document.documentElement.classList.remove('halloween-active');
+  }
+}
+
+// Globalny eksport dla możliwości testowania
+window.isHalloweenSeason = isHalloweenSeason;
+window.initHalloweenSeason = initHalloweenSeason;

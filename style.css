@@ -69,18 +69,17 @@ html.lenis, html.lenis body {
   position: absolute;
   border-radius: 50%;
   pointer-events: none;
-  filter: blur(28px);
   will-change: transform;
   transform: translateZ(0);
 }
 
-/* Kula 1: Ciepły karmel / Bursztynowe toffee */
+/* Kula 1: Ciepły karmel / Bursztynowe toffee - naturalnie miękki gradient bez kosztownego filtra Gaussa */
 .blob-caramel {
   width: 660px;
   height: 660px;
   top: -120px;
   left: -120px;
-  background: radial-gradient(circle, rgba(226, 168, 108, 0.55) 0%, rgba(205, 140, 78, 0.30) 35%, rgba(205, 140, 78, 0.10) 55%, transparent 72%);
+  background: radial-gradient(circle, rgba(226, 168, 108, 0.42) 0%, rgba(205, 140, 78, 0.22) 32%, rgba(205, 140, 78, 0.06) 55%, transparent 70%);
   animation: blobMotion1 22s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite alternate;
 }
 
@@ -90,7 +89,7 @@ html.lenis, html.lenis body {
   height: 740px;
   top: 28%;
   right: -150px;
-  background: radial-gradient(circle, rgba(182, 215, 170, 0.60) 0%, rgba(144, 185, 130, 0.30) 38%, rgba(144, 185, 130, 0.08) 58%, transparent 72%);
+  background: radial-gradient(circle, rgba(182, 215, 170, 0.45) 0%, rgba(144, 185, 130, 0.22) 35%, rgba(144, 185, 130, 0.05) 55%, transparent 70%);
   animation: blobMotion2 28s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite alternate;
 }
 
@@ -100,7 +99,7 @@ html.lenis, html.lenis body {
   height: 590px;
   bottom: 12%;
   left: 6%;
-  background: radial-gradient(circle, rgba(246, 198, 150, 0.55) 0%, rgba(230, 165, 108, 0.28) 35%, rgba(230, 165, 108, 0.08) 55%, transparent 70%);
+  background: radial-gradient(circle, rgba(246, 198, 150, 0.42) 0%, rgba(230, 165, 108, 0.20) 32%, rgba(230, 165, 108, 0.05) 55%, transparent 70%);
   animation: blobMotion3 20s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite alternate;
 }
 
@@ -110,7 +109,7 @@ html.lenis, html.lenis body {
   height: 640px;
   top: 60%;
   right: 16%;
-  background: radial-gradient(circle, rgba(238, 185, 132, 0.52) 0%, rgba(210, 145, 88, 0.26) 38%, rgba(210, 145, 88, 0.08) 58%, transparent 72%);
+  background: radial-gradient(circle, rgba(238, 185, 132, 0.40) 0%, rgba(210, 145, 88, 0.18) 35%, rgba(210, 145, 88, 0.05) 55%, transparent 70%);
   animation: blobMotion4 25s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite alternate;
 }
 
@@ -194,19 +193,23 @@ html.lenis, html.lenis body {
 }
 
 .cursor-aura {
-  pointer-events: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 360px;
-  height: 360px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(234, 219, 206, 0.35) 0%, rgba(226, 234, 217, 0.15) 35%, transparent 70%);
-  z-index: 1;
-  opacity: 0.85;
-  transition: opacity 0.4s ease;
-  will-change: transform;
-  transform: translate3d(-9999px, -9999px, 0);
+  display: none !important;
+}
+
+/* Poświaty w tle sekcji - miękkie radialne przejścia tonalne (0% narzutu GPU, brak ostrych kółek w jasnym motywie) */
+.hero-glow-blob {
+  background: radial-gradient(ellipse at center, rgba(226, 168, 108, 0.30) 0%, rgba(246, 226, 202, 0.16) 42%, transparent 70%) !important;
+  filter: none !important;
+}
+
+.section-glow-blob {
+  background: radial-gradient(circle, rgba(226, 168, 108, 0.28) 0%, rgba(226, 168, 108, 0.10) 38%, transparent 70%) !important;
+  filter: none !important;
+}
+
+.section-glow-sage {
+  background: radial-gradient(circle, rgba(182, 215, 170, 0.32) 0%, rgba(182, 215, 170, 0.10) 38%, transparent 70%) !important;
+  filter: none !important;
 }
 
 /* ==========================================================================
@@ -214,20 +217,20 @@ html.lenis, html.lenis body {
    Wymuszone !important, aby żadna klasa narzędziowa nie skracała animacji
    ========================================================================== */
 
-/* Stan wyjściowy: odsunięte na boki z akceleracją sprzętową translate3d (bez kosztownego blur) */
+/* Stan wyjściowy: odsunięte na boki z akceleracją sprzętową translate3d */
 .slide-from-left {
   opacity: 0 !important;
   transform: translate3d(-45px, 0, 0) !important;
-  transition: opacity 0.65s cubic-bezier(0.2, 0.9, 0.3, 1),
-              transform 0.65s cubic-bezier(0.2, 0.9, 0.3, 1) !important;
+  transition: opacity 0.55s cubic-bezier(0.2, 0.9, 0.3, 1),
+              transform 0.55s cubic-bezier(0.2, 0.9, 0.3, 1) !important;
   will-change: transform, opacity;
 }
 
 .slide-from-right {
   opacity: 0 !important;
   transform: translate3d(45px, 0, 0) !important;
-  transition: opacity 0.65s cubic-bezier(0.2, 0.9, 0.3, 1),
-              transform 0.65s cubic-bezier(0.2, 0.9, 0.3, 1) !important;
+  transition: opacity 0.55s cubic-bezier(0.2, 0.9, 0.3, 1),
+              transform 0.55s cubic-bezier(0.2, 0.9, 0.3, 1) !important;
   will-change: transform, opacity;
 }
 
@@ -235,27 +238,28 @@ html.lenis, html.lenis body {
 .reveal-fade-up {
   opacity: 0 !important;
   transform: translate3d(0, 24px, 0) !important;
-  transition: opacity 0.55s cubic-bezier(0.2, 0.9, 0.3, 1),
-              transform 0.55s cubic-bezier(0.2, 0.9, 0.3, 1) !important;
+  transition: opacity 0.45s cubic-bezier(0.2, 0.9, 0.3, 1),
+              transform 0.45s cubic-bezier(0.2, 0.9, 0.3, 1) !important;
   will-change: transform, opacity;
 }
 
 /* Na desktopie optymalny zasięg wlotu */
 @media (min-width: 768px) {
   .slide-from-left {
-    transform: translate3d(-60px, 0, 0) !important;
+    transform: translate3d(-50px, 0, 0) !important;
   }
   .slide-from-right {
-    transform: translate3d(60px, 0, 0) !important;
+    transform: translate3d(50px, 0, 0) !important;
   }
 }
 
-/* Stan aktywny / przypłynięty do środka */
+/* Stan aktywny: po wlocie warstwa zostaje scalona (will-change: auto zwalnia VRAM) */
 .slide-from-left.is-visible,
 .slide-from-right.is-visible,
 .reveal-fade-up.is-visible {
   opacity: 1 !important;
   transform: translate3d(0, 0, 0) !important;
+  will-change: auto !important;
 }
 
 /* Kaskadowe opóźnienia - szybkie i zwinne */
@@ -323,23 +327,9 @@ html.lenis, html.lenis body {
   border-color: #9E7A56;
 }
 
-/* Efekt iskierek po kliknięciu */
+/* Efekt iskierek po kliknięciu - wyłączony */
 .click-sparkle {
-  position: fixed;
-  pointer-events: none;
-  z-index: 10000;
-  animation: sparklePop 0.75s forwards ease-out;
-}
-
-@keyframes sparklePop {
-  0% {
-    transform: scale(0.2) rotate(0deg);
-    opacity: 1;
-  }
-  100% {
-    transform: scale(1.5) rotate(60deg) translateY(-20px);
-    opacity: 0;
-  }
+  display: none !important;
 }
 
 /* ==========================================================================
@@ -445,7 +435,8 @@ html.dark .bg-grain {
 
 /* Poświaty w sekcjach - mocno przygaszone w Dark Mode */
 html.dark .hero-glow-blob,
-html.dark .section-glow-blob {
+html.dark .section-glow-blob,
+html.dark .section-glow-sage {
   opacity: 0.12 !important;
   background: radial-gradient(circle, rgba(212, 163, 115, 0.3) 0%, transparent 70%) !important;
 }
@@ -764,21 +755,19 @@ html.dark #navSlimeIndicator {
    DYNAMIC NAVBAR (80% przezroczyste na górze + delikatna ramka, płynny fade-in)
    ========================================================================== */
 #mainNavbar {
-  background-color: rgba(255, 255, 255, 0.20);
-  -webkit-backdrop-filter: blur(10px);
-  backdrop-filter: blur(10px);
+  background-color: rgba(255, 255, 255, 0.35);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
   border: 1px solid rgba(158, 122, 86, 0.16);
   box-shadow: 0 4px 16px -4px rgba(45, 36, 30, 0.04);
-  transition: background-color 0.38s cubic-bezier(0.16, 1, 0.3, 1),
-              backdrop-filter 0.38s cubic-bezier(0.16, 1, 0.3, 1),
-              -webkit-backdrop-filter 0.38s cubic-bezier(0.16, 1, 0.3, 1),
-              border-color 0.38s cubic-bezier(0.16, 1, 0.3, 1),
-              box-shadow 0.38s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: background-color 0.28s ease,
+              border-color 0.28s ease,
+              box-shadow 0.28s ease;
 }
 
 /* Stan na samej górze w trybie ciemnym */
 html.dark #mainNavbar {
-  background-color: rgba(30, 23, 19, 0.25);
+  background-color: rgba(30, 23, 19, 0.45);
   border-color: rgba(212, 163, 115, 0.16);
   box-shadow: 0 4px 16px -4px rgba(0, 0, 0, 0.25);
 }
@@ -796,15 +785,15 @@ html.dark #mainNavbar {
 
 #desktopNav .nav-link,
 a[href^="tel:"] {
-  transition: opacity 0.35s ease, color 0.2s ease, background-color 0.2s ease;
+  transition: opacity 0.25s ease, color 0.2s ease, background-color 0.2s ease;
 }
 
-/* Po przescrollowaniu chociaż o 1mm w dół (> 10px) lub otwarciu menu: pełniejsze, bardziej kryjące tło */
+/* Po przescrollowaniu chociaż o 1mm w dół (> 10px) lub otwarciu menu: pełniejsze, kryjące tło o wysokiej płynności */
 #mainHeader.has-scrolled #mainNavbar,
 #mainHeader.menu-open #mainNavbar {
-  background-color: rgba(255, 255, 255, 0.95);
-  -webkit-backdrop-filter: blur(20px);
-  backdrop-filter: blur(20px);
+  background-color: rgba(255, 255, 255, 0.97);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
   border-color: rgba(158, 122, 86, 0.22);
   box-shadow: 0 4px 20px -2px rgba(45, 36, 30, 0.06), 0 1px 3px rgba(45, 36, 30, 0.04);
 }
@@ -815,7 +804,7 @@ a[href^="tel:"] {
 
 html.dark #mainHeader.has-scrolled #mainNavbar,
 html.dark #mainHeader.menu-open #mainNavbar {
-  background-color: rgba(30, 23, 19, 0.95);
+  background-color: rgba(30, 23, 19, 0.97);
   border-color: rgba(212, 163, 115, 0.22);
   box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.45), 0 1px 3px rgba(0, 0, 0, 0.3);
 }
@@ -995,6 +984,145 @@ html:not(.dark) .phone-icon-light {
   font-feature-settings: "tnum";
   font-variant-numeric: tabular-nums;
   letter-spacing: -0.025em;
+}
+
+/* ==========================================================================
+   HALLOWEEN SEASONAL THEME (Subtelne smaczki od teraz do 8 listopada)
+   ========================================================================== */
+.halloween-item {
+  display: none !important;
+}
+.halloween-item-inline {
+  display: none !important;
+}
+
+html.halloween-active .halloween-item {
+  display: block !important;
+}
+html.halloween-active .halloween-item-inline {
+  display: inline-flex !important;
+}
+
+/* Kapelusik czarownicy na logo - dopasowany idealnie do głowy maskotki */
+.halloween-hat {
+  transform: rotate(-10deg);
+  transform-origin: 50% 90%;
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.25));
+}
+#navBrandLink:hover .halloween-hat {
+  transform: rotate(-4deg) scale(1.08) translateY(-3px);
+}
+
+/* Delikatne kołysanie pajączka na nici */
+@keyframes spiderSway {
+  0%, 100% {
+    transform: rotate(0deg);
+  }
+  30% {
+    transform: rotate(9deg);
+  }
+  70% {
+    transform: rotate(-7deg);
+  }
+}
+.animate-spider-sway {
+  animation: spiderSway 4.5s ease-in-out infinite;
+  transform-origin: top center;
+}
+
+/* Płynne unoszenie się duszka w tle */
+@keyframes floatSlow {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-9px) rotate(3deg);
+  }
+}
+.animate-float-slow {
+  animation: floatSlow 6s ease-in-out infinite;
+}
+
+/* Subtelne cienie nietoperzy w tle (delikatne, niska przezroczystość) */
+.halloween-ambient-bats {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.halloween-bat {
+  position: absolute;
+  width: 24px;
+  height: 12px;
+  background-color: currentColor;
+  color: #755536;
+  opacity: 0.15;
+  clip-path: path('M12,4 C15,0 20,0 24,3 C22,7 20,9 16,9 C15,11 13,12 12,12 C11,12 9,11 8,9 C4,9 2,7 0,3 C4,0 9,0 12,4 Z');
+  will-change: transform;
+}
+
+html.dark .halloween-bat {
+  color: #D4A373;
+  opacity: 0.18;
+}
+
+.bat-1 {
+  top: 15%;
+  left: -40px;
+  animation: flyBat1 42s linear infinite;
+}
+
+.bat-2 {
+  top: 52%;
+  left: -40px;
+  animation: flyBat2 52s linear infinite 19s;
+  transform: scale(0.72);
+}
+
+@keyframes flyBat1 {
+  0% {
+    transform: translate3d(-30px, 0, 0) scaleX(1);
+    opacity: 0;
+  }
+  8% {
+    opacity: 0.15;
+  }
+  48% {
+    transform: translate3d(55vw, 35px, 0) scaleX(1);
+  }
+  50% {
+    transform: translate3d(57vw, 36px, 0) scaleX(-1);
+  }
+  92% {
+    opacity: 0.15;
+  }
+  100% {
+    transform: translate3d(-40px, 15px, 0) scaleX(-1);
+    opacity: 0;
+  }
+}
+
+@keyframes flyBat2 {
+  0% {
+    transform: translate3d(105vw, 0, 0) scaleX(-0.75) scaleY(0.75);
+    opacity: 0;
+  }
+  8% {
+    opacity: 0.14;
+  }
+  50% {
+    transform: translate3d(48vw, -28px, 0) scaleX(-0.75) scaleY(0.75);
+  }
+  92% {
+    opacity: 0.14;
+  }
+  100% {
+    transform: translate3d(-40px, 20px, 0) scaleX(-0.75) scaleY(0.75);
+    opacity: 0;
+  }
 }
 
 
