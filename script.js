@@ -24,6 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initMobileMenu();
   initCounters();
   initPortfolioSlider();
+  initOfertaMobileDeck();
   initCookieConsent();
   initModalListeners();
   initNavSlimeIndicator();
@@ -683,51 +684,67 @@ function animateAllCounters(counterEls) {
 }
 
 /* ==========================================================================
-   10b. PORTFOLIO SLIDER (Mobilna karuzela z kropkami i płynnym snapem)
+   10b. PORTFOLIO SLIDER (Mobilna karuzela ze strzałkami, kropkami i płynnym snapem)
    ========================================================================== */
+function getSliderCurrentIndex(slider, cards) {
+  const sliderRect = slider.getBoundingClientRect();
+  const sliderCenter = sliderRect.left + sliderRect.width / 2;
+  let closestIndex = 0;
+  let minDiff = Infinity;
+
+  cards.forEach((card, idx) => {
+    const cardRect = card.getBoundingClientRect();
+    const cardCenter = cardRect.left + cardRect.width / 2;
+    const diff = Math.abs(sliderCenter - cardCenter);
+    if (diff < minDiff) {
+      minDiff = diff;
+      closestIndex = idx;
+    }
+  });
+  return closestIndex;
+}
+
+function updatePortfolioDots(targetIdx) {
+  const dots = document.querySelectorAll('#portfolioDots .portfolio-dot');
+  if (!dots.length) return;
+  dots.forEach((dot, idx) => {
+    if (idx === targetIdx) {
+      dot.className = 'portfolio-dot w-6 h-2 rounded-full bg-caramel-500 transition-all duration-300';
+    } else {
+      dot.className = 'portfolio-dot w-2 h-2 rounded-full bg-caramel-500/30 dark:bg-caramel-500/20 transition-all duration-300';
+    }
+  });
+}
+
 function initPortfolioSlider() {
   const slider = document.getElementById('portfolioSlider');
-  const dots = document.querySelectorAll('#portfolioDots .portfolio-dot');
-  if (!slider || !dots.length) return;
+  if (!slider) return;
+  const cards = slider.querySelectorAll('.portfolio-card');
+  if (!cards.length) return;
 
-  const updateDots = () => {
-    const cards = slider.querySelectorAll('.portfolio-card');
-    if (!cards.length) return;
-
-    const sliderCenter = slider.scrollLeft + slider.clientWidth / 2;
-    let closestIndex = 0;
-    let minDiff = Infinity;
-
-    cards.forEach((card, idx) => {
-      const cardCenter = card.offsetLeft + card.offsetWidth / 2;
-      const diff = Math.abs(sliderCenter - cardCenter);
-      if (diff < minDiff) {
-        minDiff = diff;
-        closestIndex = idx;
-      }
-    });
-
-    dots.forEach((dot, idx) => {
-      if (idx === closestIndex) {
-        dot.className = 'portfolio-dot w-6 h-2 rounded-full bg-caramel-500 transition-all duration-300';
-      } else {
-        dot.className = 'portfolio-dot w-2 h-2 rounded-full bg-caramel-500/30 dark:bg-caramel-500/20 transition-all duration-300';
-      }
-    });
+  const onScroll = () => {
+    const activeIdx = getSliderCurrentIndex(slider, cards);
+    updatePortfolioDots(activeIdx);
   };
 
-  slider.addEventListener('scroll', updateDots, { passive: true });
+  slider.addEventListener('scroll', onScroll, { passive: true });
+  slider.addEventListener('touchend', () => setTimeout(onScroll, 120), { passive: true });
+  onScroll();
 }
 
 window.scrollToProject = function(index) {
   const slider = document.getElementById('portfolioSlider');
   if (!slider) return;
   const cards = slider.querySelectorAll('.portfolio-card');
-  if (cards[index]) {
-    const card = cards[index];
-    const targetScroll = card.offsetLeft - (slider.clientWidth - card.offsetWidth) / 2;
-    slider.scrollTo({ left: targetScroll, behavior: 'smooth' });
-  }
+  if (!cards[index]) return;
+
+  const card = cards[index];
+  const sliderRect = slider.getBoundingClientRect();
+  const cardRect = card.getBoundingClientRect();
+  const delta = (cardRect.left + cardRect.width / 2) - (sliderRect.left + sliderRect.width / 2);
+
+  slider.scrollBy({ left: delta, behavior: 'smooth' });
+  updatePortfolioDots(index);
 };
 
 window.slidePortfolio = function(direction) {
@@ -736,22 +753,150 @@ window.slidePortfolio = function(direction) {
   const cards = slider.querySelectorAll('.portfolio-card');
   if (!cards.length) return;
 
-  const sliderCenter = slider.scrollLeft + slider.clientWidth / 2;
-  let currentIndex = 0;
-  let minDiff = Infinity;
+  const currentIndex = getSliderCurrentIndex(slider, cards);
+  const nextIndex = Math.max(0, Math.min(cards.length - 1, currentIndex + direction));
+  window.scrollToProject(nextIndex);
+};
+
+/* ==========================================================================
+   10c. OFERTA MOBILE 3D DECK (1 karta na 1. planie, 2 w tle, zamiana podczas scrollowania)
+   ========================================================================== */
+let activeOfertaIndex = 0;
+let ofertaManualLockUntil = 0;
+
+function updateOfertaDeckUI(activeIndex) {
+  const container = document.getElementById('ofertaDeckContainer');
+  if (!container) return;
+  const cards = container.querySelectorAll('.oferta-deck-card');
+  if (cards.length < 3) return;
+
+  activeOfertaIndex = Math.max(0, Math.min(cards.length - 1, activeIndex));
 
   cards.forEach((card, idx) => {
-    const cardCenter = card.offsetLeft + card.offsetWidth / 2;
-    const diff = Math.abs(sliderCenter - cardCenter);
-    if (diff < minDiff) {
-      minDiff = diff;
-      currentIndex = idx;
+    card.classList.remove('deck-active', 'deck-prev', 'deck-next', 'deck-far-prev', 'deck-far-next');
+
+    if (idx === activeOfertaIndex) {
+      card.classList.add('deck-active');
+    } else if (idx === activeOfertaIndex - 1) {
+      card.classList.add('deck-prev');
+    } else if (idx === activeOfertaIndex + 1) {
+      card.classList.add('deck-next');
+    } else if (idx < activeOfertaIndex) {
+      card.classList.add('deck-far-prev');
+    } else {
+      card.classList.add('deck-far-next');
     }
   });
 
-  const nextIndex = Math.max(0, Math.min(cards.length - 1, currentIndex + direction));
-  scrollToProject(nextIndex);
+  const dots = document.querySelectorAll('#ofertaDeckDots .deck-dot');
+  dots.forEach((dot, idx) => {
+    if (idx === activeOfertaIndex) {
+      dot.className = 'deck-dot w-6 h-2 rounded-full bg-caramel-500 transition-all duration-500';
+    } else {
+      dot.className = 'deck-dot w-2 h-2 rounded-full bg-caramel-500/30 dark:bg-caramel-500/20 transition-all duration-500';
+    }
+  });
+}
+
+window.switchOfertaCard = function(index) {
+  ofertaManualLockUntil = Date.now() + 2500;
+  updateOfertaDeckUI(index);
 };
+
+function initOfertaMobileDeck() {
+  const container = document.getElementById('ofertaDeckContainer');
+  const section = document.getElementById('oferta');
+  if (!container || !section) return;
+
+  const cards = container.querySelectorAll('.oferta-deck-card');
+  cards.forEach((card, idx) => {
+    card.addEventListener('click', (e) => {
+      if (window.innerWidth < 768) {
+        e.stopPropagation();
+        ofertaManualLockUntil = Date.now() + 2500;
+        // Kliknięcie w aktywną kartę przeskakuje na kolejną (pętla 0 -> 1 -> 2 -> 0)
+        // Kliknięcie w kartę wystającą w tle przełącza od razu na nią
+        if (idx === activeOfertaIndex) {
+          updateOfertaDeckUI((activeOfertaIndex + 1) % cards.length);
+        } else {
+          updateOfertaDeckUI(idx);
+        }
+      }
+    });
+  });
+
+  // Obsługa gestu przesunięcia palcem (swipe w lewo / w prawo) na kartach
+  let touchStartX = 0;
+  let touchStartY = 0;
+  container.addEventListener('touchstart', (e) => {
+    if (window.innerWidth >= 768) return;
+    if (e.touches && e.touches.length === 1) {
+      touchStartX = e.touches[0].clientX;
+      touchStartY = e.touches[0].clientY;
+    }
+  }, { passive: true });
+
+  container.addEventListener('touchend', (e) => {
+    if (window.innerWidth >= 768) return;
+    if (e.changedTouches && e.changedTouches.length === 1) {
+      const deltaX = e.changedTouches[0].clientX - touchStartX;
+      const deltaY = e.changedTouches[0].clientY - touchStartY;
+
+      if (Math.abs(deltaX) > 40 && Math.abs(deltaX) > Math.abs(deltaY)) {
+        ofertaManualLockUntil = Date.now() + 2500;
+        if (deltaX < 0) {
+          // Przesunięcie w lewo -> kolejna karta
+          updateOfertaDeckUI((activeOfertaIndex + 1) % cards.length);
+        } else {
+          // Przesunięcie w prawo -> poprzednia karta
+          updateOfertaDeckUI((activeOfertaIndex - 1 + cards.length) % cards.length);
+        }
+      }
+    }
+  }, { passive: true });
+
+  let ticking = false;
+  function onScroll() {
+    if (window.innerWidth >= 768) return;
+    // Blokada scrolla na chwilę po ręcznym kliknięciu/swipe, aby pęd scrolla nie nadpisywał wyboru
+    if (Date.now() < ofertaManualLockUntil) return;
+
+    if (!ticking) {
+      requestAnimationFrame(() => {
+        if (Date.now() < ofertaManualLockUntil) {
+          ticking = false;
+          return;
+        }
+
+        const rect = section.getBoundingClientRect();
+        const vh = window.innerHeight;
+
+        const sectionCenter = rect.top + rect.height / 2;
+        const viewportCenter = vh / 2;
+        const diff = viewportCenter - sectionCenter;
+
+        // Poszerzona strefa karty 2 (od -220px do +220px = aż 440px płynnego przytrzymania w centrum ekranu)
+        let target = 1;
+        if (diff < -220) {
+          target = 0;
+        } else if (diff > 220) {
+          target = 2;
+        } else {
+          target = 1;
+        }
+
+        if (target !== activeOfertaIndex) {
+          updateOfertaDeckUI(target);
+        }
+        ticking = false;
+      });
+      ticking = true;
+    }
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  updateOfertaDeckUI(0);
+}
 
 /* ==========================================================================
    11. COOKIE CONSENT & BANER (Zgodność z RODO)

@@ -279,13 +279,127 @@ html.lenis, html.lenis body {
   border-color: rgba(158, 122, 86, 0.45);
 }
 
-/* Ukrywanie scrollbara w poziomej karuzeli na telefonach */
-.scrollbar-none {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
+/* ==========================================================================
+   OFERTA 3D CARD DECK (Mobile Only)
+   Na telefonie 1 karta na 1. planie, 2 za nią (jedna lekko wyżej, druga niżej, peeking ~1/4).
+   Na komputerze tradycyjna siatka 3 kolumn.
+   ========================================================================== */
+@media (max-width: 767px) {
+  .oferta-deck-container {
+    position: relative;
+    height: 380px;
+    max-width: 330px;
+    margin: 0 auto;
+    perspective: 1000px;
+  }
+
+  .oferta-deck-card {
+    position: absolute !important;
+    left: 0 !important;
+    right: 0 !important;
+    top: 48px !important;
+    min-height: 240px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    will-change: transform, opacity, box-shadow;
+    transition: transform 0.65s cubic-bezier(0.33, 1, 0.68, 1),
+                opacity 0.65s cubic-bezier(0.33, 1, 0.68, 1),
+                box-shadow 0.65s cubic-bezier(0.33, 1, 0.68, 1);
+    cursor: pointer;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    transform-style: preserve-3d;
+  }
+
+  /* Karta aktywna (1. plan na wprost) */
+  .oferta-deck-card.deck-active {
+    transform: translate3d(0, 0, 0) scale(1) !important;
+    z-index: 20 !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    box-shadow: 0 16px 36px -8px rgba(45, 36, 30, 0.2), 0 0 0 1px rgba(158, 122, 86, 0.3) !important;
+  }
+
+  /* Karta powyżej (peek ~1/4 za kartą główną - wyraźnie klikalna) */
+  .oferta-deck-card.deck-prev {
+    transform: translate3d(0, -42px, 0) scale(0.93) !important;
+    z-index: 10 !important;
+    opacity: 0.8 !important;
+    pointer-events: auto !important;
+    box-shadow: 0 8px 20px -4px rgba(45, 36, 30, 0.12) !important;
+  }
+
+  /* Karta poniżej (peek ~1/4 za kartą główną - wyraźnie klikalna) */
+  .oferta-deck-card.deck-next {
+    transform: translate3d(0, 42px, 0) scale(0.93) !important;
+    z-index: 10 !important;
+    opacity: 0.8 !important;
+    pointer-events: auto !important;
+    box-shadow: 0 8px 20px -4px rgba(45, 36, 30, 0.12) !important;
+  }
+
+  /* Karta głębiej wyżej */
+  .oferta-deck-card.deck-far-prev {
+    transform: translate3d(0, -68px, 0) scale(0.86) !important;
+    z-index: 5 !important;
+    opacity: 0.35 !important;
+    pointer-events: auto !important;
+  }
+
+  /* Karta głębiej niżej */
+  .oferta-deck-card.deck-far-next {
+    transform: translate3d(0, 68px, 0) scale(0.86) !important;
+    z-index: 5 !important;
+    opacity: 0.35 !important;
+    pointer-events: auto !important;
+  }
+
+  html.dark .oferta-deck-card.deck-active {
+    box-shadow: 0 18px 40px -8px rgba(0, 0, 0, 0.75), 0 0 0 1px rgba(212, 163, 115, 0.35) !important;
+  }
+  html.dark .oferta-deck-card.deck-prev,
+  html.dark .oferta-deck-card.deck-next {
+    box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.5) !important;
+  }
 }
+
+@media (min-width: 768px) {
+  .oferta-deck-container {
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    height: auto !important;
+    max-width: none !important;
+    perspective: none !important;
+  }
+  .oferta-deck-card {
+    position: relative !important;
+    top: auto !important;
+    inset: auto !important;
+    transform: none !important;
+    opacity: 1 !important;
+    z-index: auto !important;
+    pointer-events: auto !important;
+    height: auto !important;
+    min-height: 0 !important;
+  }
+}
+
+/* Ukrywanie scrollbara w poziomej karuzeli na telefonach */
+#portfolioSlider,
+.portfolio-slider,
+.scrollbar-none {
+  -ms-overflow-style: none !important;
+  scrollbar-width: none !important;
+}
+#portfolioSlider::-webkit-scrollbar,
+.portfolio-slider::-webkit-scrollbar,
 .scrollbar-none::-webkit-scrollbar {
-  display: none;
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  background: transparent !important;
 }
 
 /* Karuzela Portfolio na telefonach */
@@ -375,6 +489,39 @@ html.lenis, html.lenis body {
   transform: translateY(0) !important;
   opacity: 1 !important;
   pointer-events: auto !important;
+}
+
+/* Baner ciasteczek - precyzyjnie wyśrodkowany z równymi marginesami na każdym smartfonie */
+#cookieBanner {
+  box-sizing: border-box !important;
+}
+
+@media (max-width: 639px) {
+  #cookieBanner {
+    left: 0.75rem !important; /* równe 12px od lewego brzegu */
+    right: 0.75rem !important; /* równe 12px od prawego brzegu */
+    margin-left: auto !important;
+    margin-right: auto !important;
+    max-width: 24rem !important; /* do 384px, perfekcyjnie wyśrodkowany */
+    width: auto !important;
+  }
+}
+
+@media (min-width: 480px) and (max-width: 639px) {
+  #cookieBanner {
+    left: 1rem !important;
+    right: 1rem !important;
+  }
+}
+
+@media (min-width: 640px) {
+  #cookieBanner {
+    left: 1.5rem !important;
+    right: auto !important;
+    max-width: 28rem !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
 }
 
 #privacyModal.is-open {
@@ -872,14 +1019,104 @@ html.dark #mainHeader.is-scrolled #mainNavbar {
   pointer-events: none;
 }
 
-/* Po najechaniu myszką na pasek nawigacji: napis sprężyście wysuwa się z powrotem */
-#mainHeader.is-scrolled:hover .nav-brand-text,
-#mainHeader.is-scrolled #mainNavbar:hover .nav-brand-text {
-  max-width: 180px;
-  opacity: 1;
-  transform: translateX(0);
-  margin-left: 0;
-  pointer-events: auto;
+/* Po najechaniu myszką na pasek nawigacji: napis sprężyście wysuwa się z powrotem (Desktop) */
+@media (min-width: 768px) {
+  #mainHeader.is-scrolled:hover .nav-brand-text,
+  #mainHeader.is-scrolled #mainNavbar:hover .nav-brand-text {
+    max-width: 180px;
+    opacity: 1;
+    transform: translateX(0);
+    margin-left: 0;
+    pointer-events: auto;
+  }
+}
+
+/* Mobilne zakładki widoczne TYLKO po zescrollowaniu gdy zniknie napis GładkaStronka */
+.mobile-scrolled-nav {
+  display: none !important;
+}
+
+@media (max-width: 767px) {
+  .mobile-scrolled-nav {
+    display: flex !important;
+    opacity: 0;
+    max-width: 0;
+    transform: translateX(-10px);
+    pointer-events: none;
+    transition: max-width 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+                opacity 0.25s ease,
+                transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    white-space: nowrap;
+  }
+
+  #mainHeader.is-scrolled .mobile-scrolled-nav {
+    opacity: 1;
+    max-width: 240px;
+    transform: translateX(0);
+    pointer-events: auto;
+  }
+
+  .mobile-scrolled-nav a {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+}
+
+/* Pływające przyciski w rogach ekranu (Identyczny rozmiar, zaokrąglenie, ramka i cień dla obu przycisków w lewym i prawym dolnym rogu) */
+#cookieFloatingBtn,
+#mobileContactFloatingBtn {
+  width: 2.5rem !important; /* 40px */
+  height: 2.5rem !important; /* 40px */
+  border-radius: 1rem !important; /* 16px - rounded-2xl */
+  background-color: #FFFFFF !important;
+  border: 1px solid rgba(158, 122, 86, 0.25) !important;
+  box-shadow: 0 4px 16px -4px rgba(45, 36, 30, 0.16), 0 2px 6px -1px rgba(45, 36, 30, 0.08) !important;
+}
+
+#cookieFloatingBtn:hover,
+#mobileContactFloatingBtn:hover {
+  box-shadow: 0 10px 24px -4px rgba(158, 122, 86, 0.28), 0 3px 8px -2px rgba(45, 36, 30, 0.12) !important;
+}
+
+html.dark #cookieFloatingBtn,
+html.dark #mobileContactFloatingBtn {
+  background-color: #221A15 !important;
+  border: 1px solid rgba(212, 163, 115, 0.25) !important;
+  box-shadow: 0 4px 16px -4px rgba(0, 0, 0, 0.6), 0 2px 6px -1px rgba(0, 0, 0, 0.35) !important;
+}
+
+html.dark #cookieFloatingBtn:hover,
+html.dark #mobileContactFloatingBtn:hover {
+  box-shadow: 0 10px 24px -4px rgba(0, 0, 0, 0.85), 0 3px 8px -2px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* Rozwijane menu szybkiego kontaktu z pływającego przycisku (100% kryjące tło) */
+#mobileContactMenu {
+  background-color: #FFFFFF !important;
+  border: 1.5px solid rgba(158, 122, 86, 0.35) !important;
+  box-shadow: 0 20px 45px -10px rgba(45, 36, 30, 0.3), 0 4px 16px rgba(45, 36, 30, 0.12) !important;
+}
+
+html.dark #mobileContactMenu {
+  background-color: #221A15 !important;
+  border: 1.5px solid rgba(212, 163, 115, 0.35) !important;
+  box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.85), 0 4px 16px rgba(0, 0, 0, 0.6) !important;
+}
+
+/* Rozwijane menu nawigacji z hamburgera (3 kreski - 100% kryjące tło) */
+#mobileMenu {
+  background-color: #FFFFFF !important;
+  border: 1.5px solid rgba(158, 122, 86, 0.3) !important;
+  box-shadow: 0 20px 50px -10px rgba(45, 36, 30, 0.3), 0 6px 20px rgba(45, 36, 30, 0.15) !important;
+  z-index: 100 !important;
+}
+
+html.dark #mobileMenu {
+  background-color: #1E1713 !important;
+  border: 1.5px solid rgba(212, 163, 115, 0.3) !important;
+  box-shadow: 0 20px 55px -10px rgba(0, 0, 0, 0.9), 0 6px 20px rgba(0, 0, 0, 0.6) !important;
 }
 
 /* ==========================================================================
@@ -913,6 +1150,13 @@ html.dark #heroPhoneMockup {
 
 html.dark #heroPhoneMockup:hover {
   box-shadow: 0 32px 65px -15px rgba(0, 0, 0, 0.85), 0 0 0 1px rgba(212, 163, 115, 0.3);
+}
+
+/* Okno strumienia powiadomień - dokładnie na 3 karty (3x 78px + 2x 10px odstęp = 254px + 2px bufor) */
+#heroNotificationWindow {
+  height: 256px !important;
+  max-height: 256px !important;
+  overflow: hidden !important;
 }
 
 .notification-card {
