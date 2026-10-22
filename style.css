@@ -290,7 +290,9 @@ html.lenis, html.lenis body {
     height: 380px;
     max-width: 330px;
     margin: 0 auto;
-    perspective: 1000px;
+    perspective: 1200px;
+    perspective-origin: 50% 50%;
+    touch-action: pan-y;
   }
 
   .oferta-deck-card {
@@ -301,13 +303,14 @@ html.lenis, html.lenis body {
     min-height: 240px !important;
     width: 100% !important;
     box-sizing: border-box !important;
-    will-change: transform, opacity, box-shadow;
-    transition: transform 0.65s cubic-bezier(0.33, 1, 0.68, 1),
-                opacity 0.65s cubic-bezier(0.33, 1, 0.68, 1),
-                box-shadow 0.65s cubic-bezier(0.33, 1, 0.68, 1);
+    will-change: transform, opacity;
+    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+                opacity 0.4s cubic-bezier(0.22, 1, 0.36, 1) !important;
+    transition-delay: 0s !important;
     cursor: pointer;
     user-select: none;
     -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
     transform-style: preserve-3d;
@@ -315,8 +318,8 @@ html.lenis, html.lenis body {
 
   /* Karta aktywna (1. plan na wprost) */
   .oferta-deck-card.deck-active {
-    transform: translate3d(0, 0, 0) scale(1) !important;
-    z-index: 20 !important;
+    transform: translate3d(0, 0, 0px) scale(1) !important;
+    z-index: 30 !important;
     opacity: 1 !important;
     pointer-events: auto !important;
     box-shadow: 0 16px 36px -8px rgba(45, 36, 30, 0.2), 0 0 0 1px rgba(158, 122, 86, 0.3) !important;
@@ -324,8 +327,8 @@ html.lenis, html.lenis body {
 
   /* Karta powyżej (peek ~1/4 za kartą główną - wyraźnie klikalna) */
   .oferta-deck-card.deck-prev {
-    transform: translate3d(0, -42px, 0) scale(0.93) !important;
-    z-index: 10 !important;
+    transform: translate3d(0, -40px, -50px) scale(0.92) !important;
+    z-index: 20 !important;
     opacity: 0.8 !important;
     pointer-events: auto !important;
     box-shadow: 0 8px 20px -4px rgba(45, 36, 30, 0.12) !important;
@@ -333,8 +336,8 @@ html.lenis, html.lenis body {
 
   /* Karta poniżej (peek ~1/4 za kartą główną - wyraźnie klikalna) */
   .oferta-deck-card.deck-next {
-    transform: translate3d(0, 42px, 0) scale(0.93) !important;
-    z-index: 10 !important;
+    transform: translate3d(0, 40px, -50px) scale(0.92) !important;
+    z-index: 20 !important;
     opacity: 0.8 !important;
     pointer-events: auto !important;
     box-shadow: 0 8px 20px -4px rgba(45, 36, 30, 0.12) !important;
@@ -342,16 +345,16 @@ html.lenis, html.lenis body {
 
   /* Karta głębiej wyżej */
   .oferta-deck-card.deck-far-prev {
-    transform: translate3d(0, -68px, 0) scale(0.86) !important;
-    z-index: 5 !important;
+    transform: translate3d(0, -68px, -100px) scale(0.85) !important;
+    z-index: 10 !important;
     opacity: 0.35 !important;
     pointer-events: auto !important;
   }
 
   /* Karta głębiej niżej */
   .oferta-deck-card.deck-far-next {
-    transform: translate3d(0, 68px, 0) scale(0.86) !important;
-    z-index: 5 !important;
+    transform: translate3d(0, 68px, -100px) scale(0.85) !important;
+    z-index: 10 !important;
     opacity: 0.35 !important;
     pointer-events: auto !important;
   }

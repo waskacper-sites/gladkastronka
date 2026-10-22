@@ -770,18 +770,20 @@ function updateOfertaDeckUI(activeIndex) {
   const cards = container.querySelectorAll('.oferta-deck-card');
   if (cards.length < 3) return;
 
-  activeOfertaIndex = Math.max(0, Math.min(cards.length - 1, activeIndex));
+  const targetIndex = Math.max(0, Math.min(cards.length - 1, activeIndex));
+  activeOfertaIndex = targetIndex;
 
   cards.forEach((card, idx) => {
+    // Reset klas decka
     card.classList.remove('deck-active', 'deck-prev', 'deck-next', 'deck-far-prev', 'deck-far-next');
 
-    if (idx === activeOfertaIndex) {
+    if (idx === targetIndex) {
       card.classList.add('deck-active');
-    } else if (idx === activeOfertaIndex - 1) {
+    } else if (idx === targetIndex - 1) {
       card.classList.add('deck-prev');
-    } else if (idx === activeOfertaIndex + 1) {
+    } else if (idx === targetIndex + 1) {
       card.classList.add('deck-next');
-    } else if (idx < activeOfertaIndex) {
+    } else if (idx < targetIndex) {
       card.classList.add('deck-far-prev');
     } else {
       card.classList.add('deck-far-next');
@@ -790,16 +792,16 @@ function updateOfertaDeckUI(activeIndex) {
 
   const dots = document.querySelectorAll('#ofertaDeckDots .deck-dot');
   dots.forEach((dot, idx) => {
-    if (idx === activeOfertaIndex) {
-      dot.className = 'deck-dot w-6 h-2 rounded-full bg-caramel-500 transition-all duration-500';
+    if (idx === targetIndex) {
+      dot.className = 'deck-dot w-6 h-2 rounded-full bg-caramel-500 transition-all duration-400';
     } else {
-      dot.className = 'deck-dot w-2 h-2 rounded-full bg-caramel-500/30 dark:bg-caramel-500/20 transition-all duration-500';
+      dot.className = 'deck-dot w-2 h-2 rounded-full bg-caramel-500/30 dark:bg-caramel-500/20 transition-all duration-400';
     }
   });
 }
 
 window.switchOfertaCard = function(index) {
-  ofertaManualLockUntil = Date.now() + 2500;
+  ofertaManualLockUntil = Date.now() + 600;
   updateOfertaDeckUI(index);
 };
 
@@ -813,9 +815,9 @@ function initOfertaMobileDeck() {
     card.addEventListener('click', (e) => {
       if (window.innerWidth < 768) {
         e.stopPropagation();
-        ofertaManualLockUntil = Date.now() + 2500;
+        ofertaManualLockUntil = Date.now() + 600;
         // Kliknięcie w aktywną kartę przeskakuje na kolejną (pętla 0 -> 1 -> 2 -> 0)
-        // Kliknięcie w kartę wystającą w tle przełącza od razu na nią
+        // Kliknięcie w kartę z tyłu przełącza bezpośrednio na nią
         if (idx === activeOfertaIndex) {
           updateOfertaDeckUI((activeOfertaIndex + 1) % cards.length);
         } else {
@@ -842,8 +844,8 @@ function initOfertaMobileDeck() {
       const deltaX = e.changedTouches[0].clientX - touchStartX;
       const deltaY = e.changedTouches[0].clientY - touchStartY;
 
-      if (Math.abs(deltaX) > 40 && Math.abs(deltaX) > Math.abs(deltaY)) {
-        ofertaManualLockUntil = Date.now() + 2500;
+      if (Math.abs(deltaX) > 35 && Math.abs(deltaX) > Math.abs(deltaY)) {
+        ofertaManualLockUntil = Date.now() + 600;
         if (deltaX < 0) {
           // Przesunięcie w lewo -> kolejna karta
           updateOfertaDeckUI((activeOfertaIndex + 1) % cards.length);
@@ -858,7 +860,6 @@ function initOfertaMobileDeck() {
   let ticking = false;
   function onScroll() {
     if (window.innerWidth >= 768) return;
-    // Blokada scrolla na chwilę po ręcznym kliknięciu/swipe, aby pęd scrolla nie nadpisywał wyboru
     if (Date.now() < ofertaManualLockUntil) return;
 
     if (!ticking) {
@@ -875,14 +876,15 @@ function initOfertaMobileDeck() {
         const viewportCenter = vh / 2;
         const diff = viewportCenter - sectionCenter;
 
-        // Poszerzona strefa karty 2 (od -220px do +220px = aż 440px płynnego przytrzymania w centrum ekranu)
-        let target = 1;
-        if (diff < -220) {
-          target = 0;
-        } else if (diff > 220) {
-          target = 2;
-        } else {
-          target = 1;
+        // Płynna histereza - eliminuje jakiekolwiek drżenie na granicach stref
+        let target = activeOfertaIndex;
+        if (activeOfertaIndex === 0) {
+          if (diff > -160) target = 1;
+        } else if (activeOfertaIndex === 1) {
+          if (diff < -240) target = 0;
+          else if (diff > 240) target = 2;
+        } else if (activeOfertaIndex === 2) {
+          if (diff < 160) target = 1;
         }
 
         if (target !== activeOfertaIndex) {
@@ -895,6 +897,9 @@ function initOfertaMobileDeck() {
   }
 
   window.addEventListener('scroll', onScroll, { passive: true });
+  if (typeof lenis !== 'undefined' && lenis) {
+    lenis.on('scroll', onScroll);
+  }
   updateOfertaDeckUI(0);
 }
 
