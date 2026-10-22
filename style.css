@@ -580,6 +580,24 @@ html.dark .portfolio-inner-badge span {
   color: #FAF6F0 !important;
 }
 
+.portfolio-browser-bar {
+  background-color: rgba(244, 239, 230, 0.9);
+  border-bottom: 1px solid rgba(158, 122, 86, 0.15);
+}
+
+.portfolio-browser-dot {
+  background-color: rgba(158, 122, 86, 0.45);
+}
+
+html.dark .portfolio-browser-bar {
+  background-color: #251D18 !important;
+  border-bottom: 1px solid rgba(212, 163, 115, 0.2) !important;
+}
+
+html.dark .portfolio-browser-dot {
+  background-color: rgba(212, 163, 115, 0.5) !important;
+}
+
 /* Sekcja Jak to działa: Ciemne karty kroków */
 html.dark .step-card {
   background: linear-gradient(135deg, rgba(38, 29, 24, 0.95) 0%, rgba(28, 21, 18, 0.95) 100%) !important;
@@ -631,6 +649,37 @@ html.dark select:focus,
 html.dark textarea:focus {
   border-color: #D4A373 !important;
   box-shadow: 0 0 0 2px rgba(212, 163, 115, 0.3) !important;
+}
+
+/* Customowe okienko wyboru oferty w sekcji Kontakt */
+#customSelectDropdown {
+  animation: selectDropdownIn 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes selectDropdownIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+html.dark #customSelectTrigger {
+  background-color: #140E0B !important;
+  border-color: rgba(212, 163, 115, 0.25) !important;
+}
+
+html.dark #customSelectTrigger:hover {
+  border-color: rgba(212, 163, 115, 0.45) !important;
+}
+
+html.dark #customSelectDropdown {
+  background-color: #1E1713 !important;
+  border-color: rgba(212, 163, 115, 0.25) !important;
+  box-shadow: 0 16px 36px -8px rgba(0, 0, 0, 0.7) !important;
 }
 
 /* Obwódki w Dark Mode */

@@ -25,6 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initModalListeners();
   initNavSlimeIndicator();
   initHeroNotificationStream();
+  initCustomServiceSelect();
 });
 
 /* ==========================================================================
@@ -336,13 +337,99 @@ function initMobileMenu() {
 }
 
 /* ==========================================================================
-   7. WYBÓR PAKIETU Z CENNIKA I PRZEJŚCIE DO FORMULARZA
+   7. WYBÓR PAKIETU Z CENNIKA I CUSTOMOWE OKIENKO WYBORU OFERTY
    ========================================================================== */
+function initCustomServiceSelect() {
+  const container = document.getElementById('customServiceSelect');
+  const trigger = document.getElementById('customSelectTrigger');
+  const dropdown = document.getElementById('customSelectDropdown');
+  const chevron = document.getElementById('customSelectChevron');
+  const hiddenInput = document.getElementById('serviceSelect');
+
+  if (!container || !trigger || !dropdown) return;
+
+  function toggleDropdown(forceState) {
+    const isCurrentlyOpen = !dropdown.classList.contains('hidden');
+    const nextState = typeof forceState === 'boolean' ? forceState : !isCurrentlyOpen;
+
+    if (nextState) {
+      dropdown.classList.remove('hidden');
+      trigger.setAttribute('aria-expanded', 'true');
+      if (chevron) chevron.style.transform = 'rotate(180deg)';
+    } else {
+      dropdown.classList.add('hidden');
+      trigger.setAttribute('aria-expanded', 'false');
+      if (chevron) chevron.style.transform = 'rotate(0deg)';
+    }
+  }
+
+  trigger.addEventListener('click', (e) => {
+    e.stopPropagation();
+    toggleDropdown();
+  });
+
+  dropdown.querySelectorAll('.custom-select-option').forEach(option => {
+    option.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const val = option.getAttribute('data-value');
+      if (val && hiddenInput) {
+        hiddenInput.value = val;
+        updateCustomSelectUI(val);
+      }
+      toggleDropdown(false);
+    });
+  });
+
+  // Zamknij okienko przy kliknięciu w dowolne inne miejsce na stronie
+  document.addEventListener('click', (e) => {
+    if (!container.contains(e.target)) {
+      toggleDropdown(false);
+    }
+  });
+
+  // Klawisz Escape zamyka okienko
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') toggleDropdown(false);
+  });
+}
+
+function updateCustomSelectUI(value) {
+  const dropdown = document.getElementById('customSelectDropdown');
+  const titleEl = document.getElementById('selectedServiceTitle');
+  const badgeEl = document.getElementById('selectedServiceBadge');
+  const iconContainer = document.getElementById('selectedServiceIcon');
+  if (!dropdown) return;
+
+  dropdown.querySelectorAll('.custom-select-option').forEach(opt => {
+    const optVal = opt.getAttribute('data-value');
+    const isSelected = optVal === value;
+    const checkIcon = opt.querySelector('.option-check-icon');
+
+    if (isSelected) {
+      opt.classList.add('bg-cream-50/90', 'dark:bg-[#2A201A]/80');
+      if (checkIcon) checkIcon.classList.remove('hidden');
+
+      if (titleEl) titleEl.textContent = opt.getAttribute('data-title');
+      if (badgeEl) badgeEl.textContent = opt.getAttribute('data-badge');
+      if (iconContainer) {
+        const iconName = opt.getAttribute('data-icon') || 'calendar';
+        iconContainer.innerHTML = `<i data-lucide="${iconName}" class="w-3.5 h-3.5"></i>`;
+        if (window.lucide) lucide.createIcons({ root: iconContainer });
+      }
+    } else {
+      opt.classList.remove('bg-cream-50/90', 'dark:bg-[#2A201A]/80');
+      if (checkIcon) checkIcon.classList.add('hidden');
+    }
+  });
+}
+
 function selectPackage(packageName) {
   const select = document.getElementById('serviceSelect');
   if (select) {
     select.value = packageName;
   }
+  updateCustomSelectUI(packageName);
+
   const formSection = document.getElementById('kontakt');
   if (formSection) {
     if (lenis) {
@@ -356,13 +443,107 @@ function selectPackage(packageName) {
 }
 
 /* ==========================================================================
-   8. OBSŁUGA FORMULARZA KONTAKTOWEGO
+   8. OBSŁUGA FORMULARZA KONTAKTOWEGO (Supabase & EmailJS)
    ========================================================================== */
-function handleFormSubmit(e) {
+async function handleFormSubmit(e) {
   e.preventDefault();
   const form = document.getElementById('contactForm');
   const modal = document.getElementById('formSuccessModal');
+  const submitBtn = form ? form.querySelector('button[type="submit"]') : null;
 
+  const nameInput = document.getElementById('name');
+  const emailInput = document.getElementById('email');
+  const phoneInput = document.getElementById('phone');
+  const serviceInput = document.getElementById('serviceSelect');
+  const messageInput = document.getElementById('message');
+
+  const name = nameInput ? nameInput.value.trim() : '';
+  const email = emailInput ? emailInput.value.trim() : '';
+  const phone = phoneInput ? phoneInput.value.trim() : '';
+  const service = serviceInput ? serviceInput.value : 'Strona + Rezerwacje (od 800 zł)';
+  const message = messageInput ? messageInput.value.trim() : '';
+
+  // Stan ładowania na przycisku
+  let originalBtnHtml = '';
+  if (submitBtn) {
+    originalBtnHtml = submitBtn.innerHTML;
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = `
+      <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+      </svg>
+      <span>Wysyłanie zgłoszenia...</span>
+    `;
+  }
+
+  // 1. Zapis do bazy danych Supabase (jeśli zainicjalizowano)
+  if (window.supabaseClient) {
+    try {
+      const { error: dbError } = await window.supabaseClient
+        .from('contact_messages')
+        .insert([{
+          name,
+          email,
+          phone,
+          service,
+          message,
+          status: 'new'
+        }]);
+
+      if (dbError) {
+        console.warn('Uwaga podczas zapisu do bazy Supabase:', dbError);
+      }
+    } catch (dbErr) {
+      console.error('Błąd zapisu do Supabase:', dbErr);
+    }
+  } else {
+    console.info('Supabase: Brak konfiguracji kluczy w config.js - pomijam zapis do bazy.');
+  }
+
+  // 2. Wysłanie powiadomień przez EmailJS (jeśli skonfigurowano)
+  if (typeof window.emailjs !== 'undefined' && window.APP_CONFIG && window.APP_CONFIG.emailjs) {
+    const { publicKey, serviceId, templateAdmin, templateClient } = window.APP_CONFIG.emailjs;
+    
+    if (publicKey && publicKey !== 'TUTAJ_WKLEJ_EMAILJS_PUBLIC_KEY' && serviceId && serviceId !== 'TUTAJ_WKLEJ_EMAILJS_SERVICE_ID') {
+      try {
+        emailjs.init({ publicKey });
+
+        const emailParams = {
+          client_name: name,
+          client_email: email,
+          client_phone: phone,
+          service: service,
+          message: message || '(Brak dodatkowej wiadomości)',
+          date: new Date().toLocaleString('pl-PL')
+        };
+
+        // Mail 1: Do CIEBIE (Nowe zapytanie ze strony)
+        if (templateAdmin && templateAdmin !== 'TUTAJ_WKLEJ_TEMPLATE_ID_ADMIN') {
+          await emailjs.send(serviceId, templateAdmin, emailParams);
+        }
+
+        // Mail 2: Do KLIENTA (Potwierdzenie wysłania formularza)
+        if (templateClient && templateClient !== 'TUTAJ_WKLEJ_TEMPLATE_ID_KLIENT' && email) {
+          await emailjs.send(serviceId, templateClient, {
+            ...emailParams,
+            to_email: email,
+            to_name: name
+          });
+        }
+      } catch (mailErr) {
+        console.error('Błąd wysyłki e-maili przez EmailJS:', mailErr);
+      }
+    } else {
+      console.info('EmailJS: Brak konfiguracji kluczy w config.js - pomijam wysyłkę e-maili.');
+    }
+  }
+
+  // Przywrócenie przycisku i pokazanie ekranu sukcesu
+  if (submitBtn) {
+    submitBtn.disabled = false;
+    submitBtn.innerHTML = originalBtnHtml;
+  }
   if (form) form.classList.add('hidden');
   if (modal) modal.classList.remove('hidden');
   createSparkleBurst(window.innerWidth / 2, window.innerHeight / 2);
@@ -375,6 +556,11 @@ function resetContactForm() {
   if (form) {
     form.reset();
     form.classList.remove('hidden');
+    const select = document.getElementById('serviceSelect');
+    if (select) {
+      select.value = 'Strona + Rezerwacje (od 800 zł)';
+      updateCustomSelectUI('Strona + Rezerwacje (od 800 zł)');
+    }
   }
   if (modal) modal.classList.add('hidden');
 }
@@ -762,16 +948,16 @@ function initHeroNotificationStream() {
   setInterval(updatePhoneClockAndDate, 10000);
 
   const bookingsData = [
-    { icon: 'mail-check', type: 'Nowy zapis online', badge: 'przed chwilą', title: 'Katarzyna Z. • Manicure hybrydowy', detail: 'Jutro 14:00 • 140 zł • E-mail wysłany' },
-    { icon: 'calendar-check', type: 'Zapis w kalendarzu', badge: '2 min temu', title: 'Tomasz W. • Strzyżenie + Broda', detail: 'Piątek 16:30 • 90 zł • Zapis online' },
-    { icon: 'sparkles', type: 'Rezerwacja ze strony', badge: '4 min temu', title: 'Studio Lumina • Makijaż ślubny', detail: 'Sobota 11:00 • 250 zł • Zadatek opłacony' },
-    { icon: 'mail-check', type: 'Nowy klient WWW', badge: '6 min temu', title: 'Piotr B. • Fizjoterapia (1. wizyta)', detail: 'Środa 18:00 • 180 zł • E-mail do Ciebie' },
-    { icon: 'calendar-check', type: 'Automatyczny zapis', badge: '9 min temu', title: 'Anna M. • Sombre + modelowanie', detail: 'Czwartek 15:30 • 320 zł • Potwierdzono' },
-    { icon: 'check-circle-2', type: 'Potwierdzenie wizyty', badge: '12 min temu', title: 'Michał K. • Masaż Relaksacyjny', detail: 'Poniedziałek 17:00 • 160 zł • Rezerwacja 24/7' },
-    { icon: 'mail-check', type: 'Rezerwacja nocna 24/7', badge: '15 min temu', title: 'Karolina S. • Laminacja brwi', detail: 'Jutro 12:30 • 130 zł • E-mail wysłany' },
-    { icon: 'calendar-check', type: 'Zapis ze smartfona', badge: '19 min temu', title: 'Barber Shop • Fade + Broda', detail: 'Piątek 14:00 • 110 zł • Dawid L.' },
-    { icon: 'sparkles', type: 'Konsultacja online', badge: '24 min temu', title: 'Paulina D. • Konsultacja Beauty', detail: 'Wtorek 12:00 • 0 zł • Bezpłatna' },
-    { icon: 'mail-check', type: 'Zapis ze strony WWW', badge: '28 min temu', title: 'Magdalena W. • Przedłużanie rzęs', detail: 'Sobota 10:00 • 200 zł • E-mail do Ciebie' }
+    { icon: 'mail-check', type: 'Addict Tattoo • Nowy Sącz', badge: 'przed chwilą', title: 'Michał P. • Mroczny realizm (Sesja)', detail: 'Sobota 11:00 • Zadatek 300 zł • E-mail wysłany' },
+    { icon: 'calendar-check', type: 'Me Dead Art • Limanowa', badge: '2 min temu', title: 'Aleksandra B. • Mikrotatuaż floral', detail: 'Czwartek 14:00 • Zapis online 24/7' },
+    { icon: 'sparkles', type: 'Ceguaink • Tarnów', badge: '4 min temu', title: 'Natalia Z. • Precyzyjny Fineline', detail: 'Piątek 16:30 • Stały cennik • Potwierdzono' },
+    { icon: 'mail-check', type: 'Addict Tattoo • Nowy Sącz', badge: '6 min temu', title: 'Kacper R. • Piercing industrial', detail: 'Środa 17:00 • 120 zł • E-mail do Ciebie' },
+    { icon: 'calendar-check', type: 'Me Dead Art • Limanowa', badge: '9 min temu', title: 'Patryk W. • Konsultacja autorska', detail: 'Poniedziałek 18:00 • Bezpłatna • Zapis WWW' },
+    { icon: 'check-circle-2', type: 'Ceguaink • Tarnów', badge: '12 min temu', title: 'Julia K. • Motyw botaniczny', detail: 'Wtorek 13:30 • Zapis online 24/7' },
+    { icon: 'mail-check', type: 'Addict Tattoo • Nowy Sącz', badge: '15 min temu', title: 'Artur S. • Dotwork na przedramieniu', detail: 'Jutro 12:00 • Zadatek 200 zł • E-mail wysłany' },
+    { icon: 'calendar-check', type: 'Me Dead Art • Limanowa', badge: '19 min temu', title: 'Karolina D. • Kompozycja florystyczna', detail: 'Piątek 11:00 • Potwierdzenie z kalendarza' },
+    { icon: 'sparkles', type: 'Ceguaink • Tarnów', badge: '24 min temu', title: 'Magdalena S. • Cienkoliniowy tatuaż', detail: 'Sobota 15:00 • Rezerwacja ze strony' },
+    { icon: 'mail-check', type: 'Addict Tattoo • Nowy Sącz', badge: '28 min temu', title: 'Bartek M. • Rękaw biomechanika', detail: 'Czwartek 10:00 • Sesja całodzienna' }
   ];
 
   let bookingIdx = 3;
@@ -866,5 +1052,48 @@ function initHeroNotificationStream() {
   // Pętla powiadomień co 3.6 sekundy
   setInterval(slideNext, 3600);
 }
+
+/* ==========================================================================
+   19. PŁYWAJĄCY PRZYCISK KONTAKTU NA TELEFONACH (Mobile Quick Contact)
+   ========================================================================== */
+function toggleMobileContactMenu(e) {
+  if (e) e.stopPropagation();
+  const menu = document.getElementById('mobileContactMenu');
+  const iconPhone = document.getElementById('mobileContactIconPhone');
+  const iconClose = document.getElementById('mobileContactIconClose');
+  if (!menu) return;
+
+  const isOpen = !menu.classList.contains('pointer-events-none');
+  if (isOpen) {
+    closeMobileContactMenu();
+  } else {
+    menu.classList.remove('pointer-events-none', 'opacity-0', 'translate-y-4');
+    menu.classList.add('opacity-100', 'translate-y-0');
+    if (iconPhone) iconPhone.classList.add('hidden');
+    if (iconClose) iconClose.classList.remove('hidden');
+  }
+}
+
+function closeMobileContactMenu() {
+  const menu = document.getElementById('mobileContactMenu');
+  const iconPhone = document.getElementById('mobileContactIconPhone');
+  const iconClose = document.getElementById('mobileContactIconClose');
+  if (!menu) return;
+
+  menu.classList.add('pointer-events-none', 'opacity-0', 'translate-y-4');
+  menu.classList.remove('opacity-100', 'translate-y-0');
+  if (iconPhone) iconPhone.classList.remove('hidden');
+  if (iconClose) iconClose.classList.add('hidden');
+}
+
+// Zamknięcie po kliknięciu poza menu kontaktowe
+document.addEventListener('click', (e) => {
+  const menu = document.getElementById('mobileContactMenu');
+  const btn = document.getElementById('mobileContactFloatingBtn');
+  if (menu && btn && !menu.contains(e.target) && !btn.contains(e.target)) {
+    closeMobileContactMenu();
+  }
+});
+
 
 
