@@ -91,7 +91,12 @@ function initSmoothScroll() {
 /* ==========================================================================
    2. CUSTOMOWY KURSOR (Uśmieszek bez systemowego kursora)
    ========================================================================== */
+/* ==========================================================================
+   2. NIEZAWODNY KURSOR MASKOTKI (1:1 natychmiast bez opóźnienia i bez pływania)
+   ========================================================================== */
 let cursorEnabled = true;
+let currentMouseX = -9999;
+let currentMouseY = -9999;
 
 function initCustomCursor() {
   const customCursor = document.getElementById('customCursor');
@@ -108,55 +113,23 @@ function initCustomCursor() {
   // Włączamy ukrywanie domyślnego kursora
   body.classList.add('custom-cursor-active');
 
-  let mouseX = window.innerWidth / 2;
-  let mouseY = window.innerHeight / 2;
-  let cursorX = mouseX;
-  let cursorY = mouseY;
   let isMouseInside = false;
-  let isLoopRunning = false;
 
-  function renderCursor() {
-    if (!cursorEnabled || !isMouseInside) {
-      isLoopRunning = false;
-      return;
-    }
-
-    const dx = mouseX - cursorX;
-    const dy = mouseY - cursorY;
-
-    // Szybka, bezpośrednia interpolacja (0.85)
-    cursorX += dx * 0.85;
-    cursorY += dy * 0.85;
-
-    if (customCursor) {
-      customCursor.style.transform = `translate3d(${cursorX}px, ${cursorY}px, 0) translate(-38%, -24.5%)`;
-    }
-
-    // Pętla rAF działa tylko gdy kursor dogania myszkę (różnica > 0.25px).
-    // Gdy mysz stoi w miejscu, pętla natychmiast się wyłącza (0% CPU / 0% GPU w spoczynku).
-    if (Math.abs(dx) > 0.25 || Math.abs(dy) > 0.25) {
-      requestAnimationFrame(renderCursor);
-    } else {
-      isLoopRunning = false;
-    }
-  }
-
-  function wakeCursor() {
-    if (!isLoopRunning && isMouseInside && cursorEnabled) {
-      isLoopRunning = true;
-      requestAnimationFrame(renderCursor);
-    }
-  }
-
+  // 1:1 natychmiastowa aktualizacja pozycji na zdarzeniu myszy - zero pływania, zero opóźnienia
   window.addEventListener('mousemove', (e) => {
-    mouseX = e.clientX;
-    mouseY = e.clientY;
+    currentMouseX = e.clientX;
+    currentMouseY = e.clientY;
+
+    if (!cursorEnabled) return;
 
     if (!isMouseInside) {
       isMouseInside = true;
-      if (customCursor && cursorEnabled) customCursor.style.opacity = '1';
+      if (customCursor) customCursor.style.opacity = '1';
     }
-    wakeCursor();
+
+    if (customCursor) {
+      customCursor.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0) translate(-38%, -24.5%)`;
+    }
   }, { passive: true });
 
   document.addEventListener('mouseleave', () => {
@@ -164,11 +137,15 @@ function initCustomCursor() {
     if (customCursor) customCursor.style.opacity = '0';
   });
 
-  document.addEventListener('mouseenter', () => {
+  document.addEventListener('mouseenter', (e) => {
     if (cursorEnabled) {
       isMouseInside = true;
-      if (customCursor) customCursor.style.opacity = '1';
-      wakeCursor();
+      currentMouseX = e.clientX;
+      currentMouseY = e.clientY;
+      if (customCursor) {
+        customCursor.style.opacity = '1';
+        customCursor.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0) translate(-38%, -24.5%)`;
+      }
     }
   });
 
@@ -189,7 +166,6 @@ function initCustomCursor() {
     });
   };
   attachHoverEffects();
-
 }
 
 function toggleCustomCursor() {
@@ -204,6 +180,9 @@ function toggleCustomCursor() {
     if (customCursor) {
       customCursor.style.display = 'flex';
       customCursor.style.opacity = '1';
+      if (currentMouseX > -1000) {
+        customCursor.style.transform = `translate3d(${currentMouseX}px, ${currentMouseY}px, 0) translate(-38%, -24.5%)`;
+      }
     }
     if (dot) dot.className = 'w-1.5 h-1.5 rounded-full bg-emerald-500';
     if (label) label.textContent = 'Kursor: WŁ.';
